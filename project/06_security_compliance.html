@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VeloceOps — Security Architecture &amp; PostgreSQL RLS Policies</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&f[]=general-sans@500,600,700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400,500,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/veloceops.css">
+  <style>
+    pre.sql-code {
+      background: #121316;
+      color: #F4F4F0;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.6;
+      padding: 24px;
+      border-radius: 14px;
+      overflow-x: auto;
+      margin-top: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-frame">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div>
+      <div class="brand-switcher">
+        <div style="display:flex; align-items:center;">
+          <div class="brand-mark">AC</div>
+          <div class="brand-info">
+            <div class="brand-title">Acme Cloud Inc.</div>
+            <div class="brand-sub">acme_01 • USD</div>
+          </div>
+        </div>
+        <a href="11_tenant_switcher.html" class="kbd">⌘1</a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-title">Governance &amp; Handover</div>
+        <ul class="nav-list">
+          <li><a href="12_dashboard_overview.html" class="nav-link"><span>Dashboard</span></a></li>
+          <li><a href="06_security_compliance.html" class="nav-link active"><span>Supabase RLS Policy</span></a></li>
+          <li><a href="29_settings_team_rbac.html" class="nav-link"><span>Team &amp; Roles</span></a></li>
+          <li><a href="33_design_system_ui_kit.html" class="nav-link"><span>Design System UI Kit</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CANVAS -->
+  <main class="workspace-canvas">
+    <header class="canvas-header">
+      <div class="header-left">
+        <h1 class="canvas-title">Security Architecture &amp; PostgreSQL RLS</h1>
+        <span class="status-dot-cell"><span class="dot-emerald"></span> SOC2 Audit Verified</span>
+      </div>
+
+      <div class="header-controls">
+        <a href="12_dashboard_overview.html" class="btn">Open App Dashboard</a>
+      </div>
+    </header>
+
+    <div style="padding:32px;">
+      <div style="font-family:var(--font-display); font-size:22px; font-weight:600; margin-bottom:8px;">Database-Enforced Multi-Tenant Isolation</div>
+      <p style="font-size:14px; color:var(--ink-secondary); max-width:820px; line-height:1.6; margin-bottom:28px;">
+        VeloceOps strictly avoids vulnerable frontend-only filtering. All database queries execute against PostgreSQL 16 Row-Level Security policies. Even if a bad actor modifies the client query, PostgreSQL automatically guarantees zero cross-tenant data leakage.
+      </p>
+
+      <div style="font-family:var(--font-display); font-size:16px; font-weight:600;">Active Production Policy (`supabase/migrations/20261024000001_core_schema.sql`)</div>
+      <pre class="sql-code">-- 1. Helper function to extract tenant_id from cryptographically verified JWT
+CREATE OR REPLACE FUNCTION public.current_tenant_id()
+RETURNS UUID AS $$
+BEGIN
+    RETURN (auth.jwt() ->> 'tenant_id')::uuid;
+END;
+$$ LANGUAGE plpgsql STABLE SECURITY DEFINER;
+
+-- 2. Strict read isolation policy on invoices
+ALTER TABLE public.invoices ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "tenant_isolation_invoices_select"
+ON public.invoices FOR SELECT
+USING (tenant_id = public.current_tenant_id());
+
+-- 3. Role-Based Access Control (RBAC) write guard
+CREATE POLICY "rbac_invoices_write"
+ON public.invoices FOR INSERT
+WITH CHECK (
+    tenant_id = public.current_tenant_id()
+    AND (auth.jwt() ->> 'app_role') IN ('OWNER', 'FINANCE')
+);</pre>
+
+      <div style="margin-top:28px; padding-top:20px; border-top:1px solid var(--border-hairline); display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <div style="font-size:14px; font-weight:600;">Automated Migration-First Handover SOP</div>
+          <div style="font-size:13px; color:var(--ink-secondary);">Zero manual clicks in the Supabase dashboard. Deployed via CLI `npx supabase db push`.</div>
+        </div>
+        <span class="status-dot-cell"><span class="dot-emerald"></span> Ready for Client Cutover</span>
+      </div>
+    </div>
+  </main>
+</div>
+
+</body>
+</html>

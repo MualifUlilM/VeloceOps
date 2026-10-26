@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VeloceOps — AI CFO Copilot &amp; Autonomous Anomaly Hub</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&f[]=general-sans@500,600,700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400,500,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/veloceops.css">
+  <style>
+    .ai-feed-layout {
+      display: grid;
+      grid-template-columns: 1.45fr 1fr;
+      gap: 32px;
+      padding: 32px;
+    }
+    .anomaly-card {
+      background: var(--bg-canvas);
+      border: 1px solid var(--border-canvas);
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(18, 19, 22, 0.03);
+    }
+    .simulator-box {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-canvas);
+      border-radius: 16px;
+      padding: 28px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-frame">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div>
+      <div class="brand-switcher">
+        <div style="display:flex; align-items:center;">
+          <div class="brand-mark">AC</div>
+          <div class="brand-info">
+            <div class="brand-title">Acme Cloud Inc.</div>
+            <div class="brand-sub">acme_01 • USD</div>
+          </div>
+        </div>
+        <a href="11_tenant_switcher.html" class="kbd">⌘1</a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-title">Financial Operations</div>
+        <ul class="nav-list">
+          <li><a href="12_dashboard_overview.html" class="nav-link"><span>Treasury &amp; Cashflow</span></a></li>
+          <li><a href="16_invoices_list.html" class="nav-link"><span>Smart Invoicing Studio</span></a></li>
+          <li><a href="22_spend_management.html" class="nav-link"><span>Spend Caps &amp; RevOps</span></a></li>
+          <li><a href="25_ai_cfo_feed.html" class="nav-link active"><span>AI CFO Copilot</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CANVAS -->
+  <main class="workspace-canvas">
+    <header class="canvas-header">
+      <div class="header-left">
+        <h1 class="canvas-title">AI CFO Copilot &amp; Anomaly Engine</h1>
+        <span class="status-dot-cell"><span class="dot-emerald"></span> pgvector Autonomous Engine Active</span>
+      </div>
+
+      <div class="header-controls">
+        <button class="btn btn-volt" onclick="alert('Running continuous ledger scan...')">Re-run Anomaly Scan</button>
+      </div>
+    </header>
+
+    <div class="ai-feed-layout">
+      <!-- ANOMALY FEED -->
+      <div>
+        <div style="font-family:var(--font-display); font-size:18px; font-weight:600; margin-bottom:6px;">Active Financial Variance Detections</div>
+        <p style="font-size:13px; color:var(--ink-secondary); margin-bottom:20px;">Deterministic rule engines combined with pgvector revenue anomaly embeddings.</p>
+
+        <!-- CARD 1 -->
+        <div class="anomaly-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <span class="status-dot-cell"><span class="dot-coral"></span> <strong style="font-size:12px; color:var(--coral);">OVERDUE RECEIVABLES ESCALATION</strong></span>
+            <span class="tabular text-coral" style="font-size:15px; font-weight:600;">$14,200.00 Overdue</span>
+          </div>
+          <div style="font-weight:600; font-size:16px; color:var(--ink); margin-bottom:8px;">
+            Linear Orbit Ltd (`INV-2026-089`) is 14 days past net 30 terms
+          </div>
+          <p style="font-size:13px; color:var(--ink-secondary); line-height:1.55; margin-bottom:14px;">
+            Customer has opened the Stripe hosted invoice 3 times in the past 48 hours without authorization. Collecting this single invoice immediately extends operating runway from 14.2 to <strong>15.0 Months (+0.8 Mos)</strong>.
+          </p>
+          <div style="display:flex; gap:10px;">
+            <button class="btn btn-charcoal" onclick="alert('Sent dunning notice via Resend API')">Dispatch Automated Notice</button>
+            <a href="18_invoice_detail.html" class="btn">Inspect Invoice Document</a>
+          </div>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="anomaly-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <span class="status-dot-cell"><span class="dot-amber"></span> <strong style="font-size:12px; color:var(--amber);">INFRASTRUCTURE SPEND SPIKE</strong></span>
+            <span class="tabular text-amber" style="font-size:15px; font-weight:600;">+$2,410 / mo</span>
+          </div>
+          <div style="font-weight:600; font-size:16px; color:var(--ink); margin-bottom:8px;">
+            AWS NAT Gateway Data Egress Spike (`us-east-1`)
+          </div>
+          <p style="font-size:13px; color:var(--ink-secondary); line-height:1.55; margin-bottom:14px;">
+            Cloud infrastructure exceeded approved Q4 cap by +14.2%. Re-routing internal S3 bucket transfers through an AWS VPC Gateway Endpoint eliminates NAT data processing charges, reducing monthly burn by ~$1,850.
+          </p>
+          <div style="display:flex; gap:10px;">
+            <button class="btn btn-volt" onclick="alert('Optimization playbook exported to GitHub Issue')">Apply VPC Endpoint Rule</button>
+            <a href="22_spend_management.html" class="btn">View Spend Caps</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE RUNWAY SIMULATOR -->
+      <aside class="simulator-box">
+        <div style="font-family:var(--font-display); font-size:16px; font-weight:600; margin-bottom:4px;">Cash Runway Scenario Simulator</div>
+        <p style="font-size:13px; color:var(--ink-secondary); margin-bottom:20px;">Model impact on net runway in real-time.</p>
+
+        <div style="margin-bottom:18px;">
+          <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:600; margin-bottom:6px;">
+            <span>Overdue Collection Rate</span>
+            <span class="tabular" id="collectRateLabel">100% Collected</span>
+          </div>
+          <input type="range" min="0" max="100" value="100" style="width:100%; cursor:pointer;" oninput="updateSim(this.value)" />
+        </div>
+
+        <div style="background:var(--bg-canvas); border:1px solid var(--border-canvas); border-radius:12px; padding:18px; margin-top:20px;">
+          <div style="font-size:12px; color:var(--ink-tertiary);">PROJECTED NET RUNWAY</div>
+          <div class="tabular" style="font-family:var(--font-display); font-size:28px; font-weight:600; color:var(--ink); margin:6px 0;" id="simRunway">15.0 Months</div>
+          <div style="font-size:12px; color:var(--emerald); font-weight:600;" id="simDelta">+0.8 Months vs Baseline</div>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+
+<script>
+  function updateSim(val) {
+    document.getElementById("collectRateLabel").textContent = val + "% Collected";
+    const extraMonths = (0.8 * (val / 100)).toFixed(1);
+    const total = (14.2 + parseFloat(extraMonths)).toFixed(1);
+    document.getElementById("simRunway").textContent = total + " Months";
+    document.getElementById("simDelta").textContent = "+" + extraMonths + " Months vs Baseline";
+  }
+</script>
+
+</body>
+</html>

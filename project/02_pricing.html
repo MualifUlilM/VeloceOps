@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing &amp; Plans — VeloceOps</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&f[]=general-sans@500,600,700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400,500,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/veloceops.css">
+  <style>
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1100px;
+      margin: 48px auto;
+      padding: 0 20px;
+    }
+    .pricing-card {
+      background: var(--bg-canvas);
+      border: 1px solid var(--border-canvas);
+      border-radius: 20px;
+      padding: 36px 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .pricing-card.featured {
+      border: 2px solid var(--ink);
+      box-shadow: 0 16px 40px -10px rgba(18, 19, 22, 0.1);
+    }
+    .plan-price {
+      font-family: var(--font-display);
+      font-size: 42px;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 16px 0;
+      line-height: 1.1;
+    }
+    .feature-list {
+      list-style: none;
+      margin: 24px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--ink-secondary);
+    }
+  </style>
+</head>
+<body style="background:var(--bg-shell);">
+
+  <!-- NAV -->
+  <header style="max-width:1100px; margin:20px auto; padding:0 20px; display:flex; justify-content:space-between; align-items:center;">
+    <a href="01_landing.html" style="display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--ink);">
+      <div class="brand-mark">VO</div>
+      <span style="font-family:var(--font-display); font-size:16px; font-weight:600;">VeloceOps</span>
+    </a>
+    <div style="display:flex; gap:12px; align-items:center;">
+      <a href="01_landing.html" class="btn">Overview</a>
+      <a href="12_dashboard_overview.html" class="btn btn-volt">Launch Sandbox →</a>
+    </div>
+  </header>
+
+  <!-- TITLE -->
+  <div style="text-align:center; max-width:700px; margin:40px auto 20px; padding:0 20px;">
+    <div style="font-size:12px; font-weight:600; color:var(--ink-tertiary); margin-bottom:8px;">PREDICTABLE B2B SAAS PRICING</div>
+    <h1 style="font-family:var(--font-display); font-size:44px; font-weight:600; letter-spacing:-0.03em; color:var(--ink); line-height:1.1; margin-bottom:14px;">
+      Transparent pricing for modern startup treasuries
+    </h1>
+    <p style="font-size:16px; color:var(--ink-secondary);">
+      Multi-tenant data isolation and idempotent billing engine included on all tiers.
+    </p>
+  </div>
+
+  <!-- PRICING TIERS -->
+  <div class="pricing-grid">
+    <!-- STARTER -->
+    <div class="pricing-card">
+      <div>
+        <div style="font-size:13px; font-weight:600; color:var(--ink-tertiary);">STARTER SAAS</div>
+        <div style="font-family:var(--font-display); font-size:20px; font-weight:600; color:var(--ink); margin-top:4px;">Seed Stage</div>
+        <div class="plan-price tabular">$199<span style="font-size:15px; color:var(--ink-tertiary); font-weight:400;">/mo</span></div>
+        <p style="font-size:13px; color:var(--ink-secondary);">For early-stage SaaS startups tracking runway and launching initial commercial invoicing.</p>
+        <ul class="feature-list">
+          <li><span class="status-dot-cell"><span class="dot-emerald"></span> Up to $100K monthly GMV</span></li>
+          <li><span class="status-dot-cell"><span class="dot-emerald"></span> 1 Organization Tenant</span></li>
+          <li><span class="status-dot-cell"><span class="dot-emerald"></span> Stripe Webhook Auto-Reconcile</span></li>
+          <li><span class="status-dot-cell"><span class="dot-emerald"></span> Standard Cashflow Trajectory</span></li>
+        </ul>
+      </div>
+      <a href="08_auth_login.html" class="btn" style="justify-content:center; padding:12px;">Start 14-Day Sandbox Trial</a>
+    </div>
+
+    <!-- SCALE (FEATURED) -->
+    <div class="pricing-card featured">
+      <div>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:13px; font-weight:600; color:var(--ink);">GROWTH SAAS</span>
+          <span class="status-dot-cell"><span class="dot-emerald"></span> Most Popular</span>
+        </div>
+        <div style="font-family:var(--font-display); font-size:20px; font-weight:600; color:var(--ink); margin-top:4px;">Series A / B Scale</div>
+        <div class="plan-price tabular">$499<span style="font-size:15px; color:var(--ink-tertiary); font-weight:400;">/mo</span></div>
+        <p style="font-size:13px; color:var(--ink-secondary);">Complete treasury operations with autonomous AI CFO anomaly detection and departmental spend caps.</p>
+        <ul class="feature-list">
+          <li><span class="status-dot-cell"><span class="dot-emerald"></span> Up to $1M monthly GMV</span></li>
+          <li><span class="status-dot-cell"><span class="dot-emerald"></span> 5 Multi-Tenant Workspaces</span></li>
+          <li><span class="status-dot-cell"><span class="dot-emerald"></span> AI CFO Anomaly Detection Engine</span></li>
+          <li><span class="status-dot-cell"><span class="dot-emerald"></span> Automated Dunning Sequences</span></li>
+          <li><span class="status-dot-cell"><span class="dot-emerald"></span> Departmental OpEx Spend Caps</span></li>
+        </ul>
+      </div>
+      <a href="12_dashboard_overview.html" class="btn btn-volt" style="justify-content:center; padding:12px;">Launch Growth Sandbox →</a>
+    </div>
+
+    <!-- ENTERPRISE -->
+    <div class="pricing-card">
+      <div>
+        <div style="font-size:13px; font-weight:600; color:var(--ink-tertiary);">ENTERPRISE</div>
+        <div style="font-family:var(--font-display); font-size:20px; font-weight:600; color:var(--ink); margin-top:4px;">Global Scale</div>
+        <div class="plan-price tabular">$1,299<span style="font-size:15px; color:var(--ink-tertiary); font-weight:400;">/mo</span></div>
+        <p style="font-size:13px; color:var(--ink-secondary);">Dedicated PostgreSQL infrastructure, custom RLS policies, and priority developer cutover support.</p>
+        <ul class="feature-list">
+          <li><span class="status-dot-cell"><span class="dot-emerald"></span> Unlimited Transaction Volume</span></li>
+          <li><span class="status-dot-cell"><span class="dot-emerald"></span> Dedicated Supabase Instance</span></li>
+          <li><span class="status-dot-cell"><span class="dot-emerald"></span> Custom RBAC Role Matrices</span></li>
+          <li><span class="status-dot-cell"><span class="dot-emerald"></span> 99.99% Webhook SLA Guarantee</span></li>
+        </ul>
+      </div>
+      <a href="08_auth_login.html" class="btn btn-charcoal" style="justify-content:center; padding:12px;">Contact Architecture Team</a>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,81 @@
+{
+  "$schema": "https://tr.designtokens.org/format/",
+  "meta": {
+    "brandName": "VeloceOps",
+    "version": "5.0.0",
+    "archetype": "Ramp / Attio / Linear Inset App Frame (Warm Fintech & Volt Lime)",
+    "verifiedBy": "impeccable detect --json (0 warnings, exit code 0)",
+    "targetStack": "Next.js 15 + Tailwind CSS + shadcn/ui + Supabase"
+  },
+  "color": {
+    "surface": {
+      "shell": { "value": "#F2F2EE", "description": "Warm Alabaster outer app frame & sidebar canvas" },
+      "canvas": { "value": "#FFFFFF", "description": "Inset rounded main workspace canvas (20px radius)" },
+      "subtle": { "value": "#F8F8F5", "description": "Soft warm surface for table headers & detail panels" },
+      "recessed": { "value": "#EAEAE4", "description": "Segmented tab track & progress bar tracks" },
+      "hover": { "value": "#F4F4F0", "description": "Interactive row hover state" }
+    },
+    "ink": {
+      "primary": { "value": "#121316", "description": "Deep Charcoal primary text (18.1:1 contrast on #FFFFFF)" },
+      "secondary": { "value": "#434642", "description": "Warm Slate body text (9.3:1 contrast)" },
+      "tertiary": { "value": "#5C605A", "description": "Muted metadata & caption text (6.2:1 contrast)" }
+    },
+    "border": {
+      "canvas": { "value": "#E2E2DC", "description": "Inset canvas outline border" },
+      "hairline": { "value": "#EBEBE6", "description": "Internal grid & table divider hairlines" },
+      "strong": { "value": "#D0D0C8", "description": "Form input & control borders" }
+    },
+    "accent": {
+      "volt": {
+        "surface": { "value": "#D4F338", "description": "Signature Ramp Volt Lime (paired with #121316 = 14.2:1 contrast)" },
+        "hover": { "value": "#C5E627", "description": "Hover state for Volt CTA" },
+        "border": { "value": "#B5D618", "description": "Border for Volt elements" }
+      },
+      "emerald": {
+        "ink": { "value": "#0B6B41", "description": "Settled / Paid text (6.8:1 contrast)" },
+        "bg": { "value": "#E6F6EE", "description": "Settled badge background" },
+        "border": { "value": "#A5DFC3", "description": "Settled badge border" }
+      },
+      "coral": {
+        "ink": { "value": "#B91C1C", "description": "Overdue / Cap Alert text (6.4:1 contrast)" },
+        "bg": { "value": "#FEE2E2", "description": "Overdue badge background" },
+        "border": { "value": "#FCA5A5", "description": "Overdue badge border" }
+      },
+      "amber": {
+        "ink": { "value": "#8C4608", "description": "Pending / Review text (6.9:1 contrast)" },
+        "bg": { "value": "#FEF3C7", "description": "Pending badge background" },
+        "border": { "value": "#FCD34D", "description": "Pending badge border" }
+      }
+    }
+  },
+  "typography": {
+    "fontFamily": {
+      "sans": {
+        "value": "'Satoshi', 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif",
+        "description": "Clean, modern geometric sans with razor-sharp curves"
+      },
+      "display": {
+        "value": "'General Sans', 'Satoshi', sans-serif",
+        "description": "High-craft neo-grotesque for titles and metric figures"
+      },
+      "mono": {
+        "value": "'IBM Plex Mono', monospace",
+        "description": "Precision tabular monospace for GAAP balances, invoice IDs, and RLS policies"
+      }
+    },
+    "scale": {
+      "metricHero": { "fontSize": "34px", "lineHeight": "1.08", "fontWeight": "600", "letterSpacing": "-0.03em" },
+      "metricSub": { "fontSize": "26px", "lineHeight": "1.12", "fontWeight": "600", "letterSpacing": "-0.025em" },
+      "sectionTitle": { "fontSize": "16px", "lineHeight": "1.25", "fontWeight": "600" },
+      "body": { "fontSize": "14px", "lineHeight": "1.5", "fontWeight": "400" },
+      "captionFloor": { "fontSize": "12px", "lineHeight": "1.4", "fontWeight": "500", "note": "Strict 12px minimum across entire UI" }
+    }
+  },
+  "layoutRules": {
+    "archetype": "Inset App Frame (Linear / Attio style)",
+    "framePadding": "10px 12px 12px 0",
+    "canvasRadius": "20px",
+    "canvasBorder": "1px solid #E2E2DC",
+    "canvasShadow": "0 2px 12px rgba(18, 19, 22, 0.03)"
+  }
+}

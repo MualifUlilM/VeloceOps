@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* Surfaces & Frame */
+    --bg-shell: #F2F2EE;          /* Outer Frame & Sidebar Backdrop */
+    --bg-canvas: #FFFFFF;         /* Inset Rounded Main Workspace Canvas */
+    --bg-subtle: #F8F8F5;         /* Soft Warm Table Headers & Panels */
+    --bg-recessed: #EAEAE4;       /* Segmented Tab & Progress Tracks */
+    --bg-hover: #F4F4F0;          /* Interactive Row Hover */
+
+    /* High-Contrast Typography Ink (WCAG AA/AAA) */
+    --ink: #121316;               /* Deep Charcoal Primary (18.1:1) */
+    --ink-secondary: #434642;     /* Warm Slate Body (9.3:1) */
+    --ink-tertiary: #5C605A;      /* Muted Labels & Captions (6.2:1) */
+
+    /* Hairlines & Borders */
+    --border-canvas: #E2E2DC;     /* Inset Canvas Border */
+    --border-hairline: #EBEBE6;   /* Internal Table & Grid Dividers */
+    --border-strong: #D0D0C8;     /* Form Input Borders */
+
+    /* Signature Ramp Volt Lime Accent */
+    --volt: #D4F338;              /* Primary Action Surface */
+    --volt-hover: #C5E627;
+    --volt-border: #B5D618;
+
+    /* Semantic Status Dots */
+    --emerald: #0B6B41;           /* Settled / Paid */
+    --emerald-bg: #E6F6EE;
+    --coral: #B91C1C;             /* Overdue / Alert */
+    --coral-bg: #FEE2E2;
+    --amber: #8C4608;             /* Pending / Review */
+    --amber-bg: #FEF3C7;
+    --cobalt: #1D4ED8;            /* Information */
+
+    /* Typography */
+    --font-sans: 'Satoshi', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-display: 'General Sans', 'Satoshi', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+  }
+
+  body {
+    background-color: var(--bg-shell);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+.tabular {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}

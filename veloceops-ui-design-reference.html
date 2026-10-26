@@ -1,0 +1,1709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VeloceOps — Modern Financial Operations &amp; Smart Invoicing</title>
+  <!-- Clean & Modern Geometric Sans: Satoshi / General Sans (Fontshare) + Instrument Sans + IBM Plex Mono -->
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&f[]=general-sans@500,600,700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400,500,600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Warm Fintech Palette (Ramp / Wise / Brex / Attio Inspired) */
+      --bg-shell: #F2F2EE;          /* Warm Alabaster App Frame (Sidebar & Outer Margin) */
+      --bg-canvas: #FFFFFF;         /* Inset Rounded Main Workspace Canvas */
+      --bg-subtle: #F8F8F5;         /* Soft Warm Surface for Table Headers & Panels */
+      --bg-recessed: #EAEAE4;       /* Segmented Pill Track & Meter Track */
+      --bg-hover: #F4F4F0;          /* Interactive Row Hover */
+
+      /* Crisp Charcoal & Warm Slate Ink (All WCAG AA/AAA Verified) */
+      --ink: #121316;               /* Deep Charcoal Primary Ink (18.1:1) */
+      --ink-secondary: #434642;     /* Warm Slate Body Ink (9.3:1) */
+      --ink-tertiary: #5C605A;      /* Muted Label & Caption Ink (6.2:1 — Passes AA) */
+
+      /* Borders & Hairlines */
+      --border-canvas: #E2E2DC;     /* Inset Canvas Frame Border */
+      --border-hairline: #EBEBE6;   /* Internal Grid & Table Dividers */
+      --border-strong: #D0D0C8;     /* Input & Control Border */
+
+      /* Signature Ramp Volt Lime & Botanical Emerald Accents */
+      --volt: #D4F338;              /* Signature Volt Lime Surface (Always paired with --ink #121316 = 14.2:1 contrast) */
+      --volt-hover: #C5E627;
+      --volt-border: #B5D618;
+
+      --emerald: #0B6B41;           /* Settled / Paid Ink (6.8:1) */
+      --emerald-bg: #E6F6EE;
+      --emerald-border: #A5DFC3;
+
+      --coral: #B91C1C;             /* Overdue / Variance Ink (6.4:1) */
+      --coral-bg: #FEE2E2;
+      --coral-border: #FCA5A5;
+
+      --amber: #8C4608;             /* Pending / Review Ink (6.9:1) */
+      --amber-bg: #FEF3C7;
+      --amber-border: #FCD34D;
+
+      /* Typography */
+      --font-sans: 'Satoshi', 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-display: 'General Sans', 'Satoshi', 'Instrument Sans', sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: var(--bg-shell);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .tabular {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
+    }
+
+    /* ==========================================
+       INSET APP FRAME LAYOUT (LINEAR / ATTIO STYLE)
+       ========================================== */
+    .app-frame {
+      display: grid;
+      grid-template-columns: 248px 1fr;
+      min-height: 100vh;
+      padding: 10px 12px 12px 0;
+    }
+
+    /* Unified Light Sidebar sitting directly on --bg-shell */
+    .sidebar {
+      padding: 14px 14px 16px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      height: calc(100vh - 22px);
+    }
+
+    .brand-switcher {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      background: var(--bg-canvas);
+      border: 1px solid var(--border-canvas);
+      border-radius: 12px;
+      box-shadow: 0 1px 2px rgba(18, 19, 22, 0.04);
+      margin-bottom: 14px;
+    }
+
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--volt);
+      border: 1px solid var(--volt-border);
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .brand-info {
+      margin-left: 10px;
+      flex: 1;
+    }
+
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+
+    .brand-sub {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--ink-tertiary);
+      margin-top: 2px;
+    }
+
+    /* Quick Command Bar Button */
+    .search-pill {
+      width: 100%;
+      background: var(--bg-recessed);
+      border: 1px solid transparent;
+      border-radius: 10px;
+      padding: 8px 12px;
+      color: var(--ink-secondary);
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      margin-bottom: 22px;
+      transition: all 0.15s ease;
+    }
+
+    .search-pill:hover {
+      background: var(--bg-canvas);
+      border-color: var(--border-strong);
+      color: var(--ink);
+    }
+
+    .kbd {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      background: var(--bg-canvas);
+      border: 1px solid var(--border-canvas);
+      padding: 1px 6px;
+      border-radius: 5px;
+      color: var(--ink-secondary);
+    }
+
+    .nav-group {
+      margin-bottom: 22px;
+    }
+
+    .nav-group-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-tertiary);
+      padding: 0 10px 6px;
+    }
+
+    .nav-list {
+      list-style: none;
+    }
+
+    .nav-btn {
+      width: 100%;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--ink-secondary);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 9px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 3px;
+      transition: all 0.14s ease;
+    }
+
+    .nav-btn-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-btn:hover {
+      background: rgba(18, 19, 22, 0.04);
+      color: var(--ink);
+    }
+
+    .nav-btn.active {
+      background: var(--bg-canvas);
+      border-color: var(--border-canvas);
+      color: var(--ink);
+      font-weight: 600;
+      box-shadow: 0 1px 2px rgba(18, 19, 22, 0.04);
+    }
+
+    .count-chip {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 1px 7px;
+      border-radius: 999px;
+      background: var(--coral-bg);
+      color: var(--coral);
+      border: 1px solid var(--coral-border);
+    }
+
+    /* Connected Treasury Accounts in Sidebar Footer */
+    .sidebar-accounts {
+      border-top: 1px solid var(--border-canvas);
+      padding-top: 16px;
+    }
+
+    .acct-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 8px;
+      font-size: 13px;
+      color: var(--ink-secondary);
+      border-radius: 8px;
+    }
+
+    .acct-row strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    /* ==========================================
+       INSET ROUNDED WHITE WORKSPACE CANVAS
+       ========================================== */
+    .workspace-canvas {
+      background: var(--bg-canvas);
+      border: 1px solid var(--border-canvas);
+      border-radius: 20px;
+      box-shadow: 0 2px 12px rgba(18, 19, 22, 0.03);
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    /* Top Header inside Inset Canvas */
+    .canvas-header {
+      padding: 16px 32px;
+      border-bottom: 1px solid var(--border-hairline);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-canvas);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .canvas-title {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .env-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink-secondary);
+    }
+
+    .env-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--emerald);
+      box-shadow: 0 0 0 2px rgba(11, 107, 65, 0.15);
+    }
+
+    /* Status Dot Cells (No Candy Capsule Pills) */
+    .status-dot-cell {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    .dot-emerald { width: 6px; height: 6px; border-radius: 50%; background: var(--emerald); }
+    .dot-coral { width: 6px; height: 6px; border-radius: 50%; background: var(--coral); }
+    .dot-amber { width: 6px; height: 6px; border-radius: 50%; background: var(--amber); }
+
+    .nav-count {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-tertiary);
+    }
+
+    /* Integrated Sandbox Controls + Primary Actions */
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .control-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-canvas);
+      padding: 5px 10px;
+      border-radius: 9px;
+      font-size: 13px;
+      color: var(--ink-secondary);
+    }
+
+    .control-select {
+      border: none;
+      background: transparent;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      cursor: pointer;
+      outline: none;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 9px;
+      border: 1px solid var(--border-strong);
+      background: var(--bg-canvas);
+      color: var(--ink);
+      cursor: pointer;
+      transition: all 0.14s ease;
+    }
+
+    .btn:hover:not(:disabled) {
+      background: var(--bg-hover);
+    }
+
+    /* Ramp-style Volt Lime CTA with Deep Charcoal Ink (14.2:1 contrast) */
+    .btn-volt {
+      background: var(--volt);
+      color: var(--ink);
+      border-color: var(--volt-border);
+    }
+
+    .btn-volt:hover:not(:disabled) {
+      background: var(--volt-hover);
+    }
+
+    .btn-charcoal {
+      background: var(--ink);
+      color: #FFFFFF;
+      border-color: var(--ink);
+    }
+
+    .btn-charcoal:hover:not(:disabled) {
+      background: #26282E;
+      color: #FFFFFF;
+    }
+
+    .btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    /* ==========================================
+       ROW 1: AIRY 4-COLUMN TREASURY METRIC STRIP
+       ========================================== */
+    .metric-strip {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr 1fr 1fr;
+      border-bottom: 1px solid var(--border-hairline);
+    }
+
+    .metric-cell {
+      padding: 26px 32px;
+      border-right: 1px solid var(--border-hairline);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .metric-cell:last-child {
+      border-right: none;
+    }
+
+    .metric-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink-secondary);
+    }
+
+    .metric-hero-val {
+      font-family: var(--font-display);
+      font-size: 34px;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -0.03em;
+      margin: 10px 0 8px;
+      line-height: 1.08;
+    }
+
+    .metric-sub-val {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -0.025em;
+      margin: 12px 0 8px;
+      line-height: 1.12;
+    }
+
+    .metric-foot {
+      font-size: 13px;
+      color: var(--ink-tertiary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* ==========================================
+       ROW 2: ASYMMETRIC MASTER-DETAIL SPLIT GRID
+       ========================================== */
+    .split-workspace {
+      display: grid;
+      grid-template-columns: 1.48fr 1fr;
+      min-height: 680px;
+    }
+
+    .master-column {
+      border-right: 1px solid var(--border-hairline);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .detail-column {
+      background: var(--bg-subtle);
+      padding: 28px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .section-block {
+      padding: 28px 32px;
+      border-bottom: 1px solid var(--border-hairline);
+    }
+
+    .section-block:last-child {
+      border-bottom: none;
+    }
+
+    .block-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .block-title {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .block-subtitle {
+      font-size: 13px;
+      color: var(--ink-tertiary);
+      margin-top: 2px;
+    }
+
+    /* Segmented Pill Switcher */
+    .segmented {
+      display: inline-flex;
+      background: var(--bg-recessed);
+      padding: 3px;
+      border-radius: 9px;
+    }
+
+    .seg-tab {
+      border: none;
+      background: transparent;
+      color: var(--ink-secondary);
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: all 0.12s ease;
+    }
+
+    .seg-tab.active {
+      background: var(--bg-canvas);
+      color: var(--ink);
+      box-shadow: 0 1px 2px rgba(18, 19, 22, 0.06);
+    }
+
+    /* ==========================================
+       CLEAN INTERACTIVE RECEIVABLES TABLE
+       ========================================== */
+    table.fintech-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    table.fintech-table th {
+      text-align: left;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-tertiary);
+      padding: 10px 16px;
+      border-top: 1px solid var(--border-hairline);
+      border-bottom: 1px solid var(--border-hairline);
+      background: var(--bg-subtle);
+    }
+
+    table.fintech-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border-hairline);
+      color: var(--ink);
+      vertical-align: middle;
+    }
+
+    table.fintech-table tbody tr {
+      cursor: pointer;
+      transition: background 0.12s ease;
+    }
+
+    table.fintech-table tbody tr:hover {
+      background: var(--bg-hover);
+    }
+
+    table.fintech-table tbody tr.selected {
+      background: #F4F8E2;
+    }
+
+    table.fintech-table tr.summary-row td {
+      background: var(--bg-subtle);
+      border-top: 1.5px solid var(--ink);
+      border-bottom: 3px double var(--ink);
+      font-weight: 600;
+    }
+
+    .org-cell {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .org-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-canvas);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .org-name {
+      font-weight: 600;
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    .org-rail {
+      font-size: 12px;
+      color: var(--ink-tertiary);
+    }
+
+    /* ==========================================
+       RIGHT INSPECTOR: LIVE INVOICE SHEET & AI CFO
+       ========================================== */
+    .invoice-sheet {
+      background: var(--bg-canvas);
+      border: 1px solid var(--border-canvas);
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .sheet-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 16px;
+      border-bottom: 1.5px solid var(--ink);
+      margin-bottom: 16px;
+    }
+
+    .line-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border-hairline);
+      font-size: 13px;
+      color: var(--ink-secondary);
+    }
+
+    .sheet-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-top: 1.5px solid var(--ink);
+      border-bottom: 3px double var(--ink);
+      margin: 12px 0 16px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .ai-insight-row {
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border-canvas);
+    }
+
+    .ai-insight-row:last-child {
+      border-bottom: none;
+    }
+
+    /* Status Badges */
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 3px 9px;
+      border-radius: 6px;
+    }
+
+    .chip-emerald { background: var(--emerald-bg); color: var(--emerald); border: 1px solid var(--emerald-border); }
+    .chip-coral { background: var(--coral-bg); color: var(--coral); border: 1px solid var(--coral-border); }
+    .chip-amber { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
+    .chip-volt { background: var(--volt); color: var(--ink); border: 1px solid var(--volt-border); font-weight: 600; }
+    .chip-neutral { background: var(--bg-subtle); color: var(--ink-secondary); border: 1px solid var(--border-canvas); }
+
+    .text-right { text-align: right !important; }
+    .text-emerald { color: var(--emerald); font-weight: 600; }
+    .text-coral { color: var(--coral); font-weight: 600; }
+    .text-amber { color: var(--amber); font-weight: 600; }
+
+    .view-pane { display: none; }
+    .view-pane.active { display: block; }
+
+    .inspector-pane { display: none; }
+    .inspector-pane.active { display: block; }
+
+    /* Progress Bar */
+    .bar-track {
+      width: 100%;
+      height: 8px;
+      background: var(--bg-recessed);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    .bar-fill { height: 100%; border-radius: 999px; }
+
+    /* Slide-Over Modal Drawer */
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(18, 19, 22, 0.45);
+      backdrop-filter: blur(3px);
+      z-index: 200;
+      display: none;
+      justify-content: flex-end;
+    }
+    .drawer-backdrop.open { display: flex; }
+    .drawer-panel {
+      width: 500px;
+      max-width: 92vw;
+      background: var(--bg-canvas);
+      border-left: 1px solid var(--border-canvas);
+      height: 100vh;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      overflow-y: auto;
+    }
+
+    pre.code-box {
+      background: #121316;
+      color: #F4F4F0;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      padding: 18px;
+      border-radius: 12px;
+      overflow-x: auto;
+      line-height: 1.6;
+    }
+
+    .toast-pill {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--ink);
+      color: var(--bg-canvas);
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-size: 13px;
+      font-family: var(--font-mono);
+      z-index: 150;
+      display: none;
+      box-shadow: 0 10px 24px rgba(18, 19, 22, 0.18);
+    }
+    .toast-pill.show { display: block; }
+
+    svg.icon {
+      width: 17px;
+      height: 17px;
+      stroke: currentColor;
+      stroke-width: 1.75;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-frame">
+  <!-- ==========================================
+       UNIFIED WARM ALABASTER SIDEBAR (ATTIO / RAMP STYLE)
+       ========================================== -->
+  <aside class="sidebar">
+    <div>
+      <div class="brand-switcher">
+        <div style="display:flex; align-items:center;">
+          <div class="brand-mark" id="railMonogram">AC</div>
+          <div class="brand-info">
+            <div class="brand-title" id="railTenantName">Acme Cloud Inc.</div>
+            <div class="brand-sub" id="railTenantCode">acme_01 • USD</div>
+          </div>
+        </div>
+        <span class="kbd">⌘1</span>
+      </div>
+
+      <button class="search-pill" onclick="openDrawer('rlsDrawer')">
+        <span style="display:flex; align-items:center; gap:8px;">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span>Search or inspect SQL...</span>
+        </span>
+        <span class="kbd">⌘K</span>
+      </button>
+
+      <div class="nav-group">
+        <div class="nav-group-title">Financial Operations</div>
+        <ul class="nav-list">
+          <li>
+            <button class="nav-btn active" onclick="switchPane('overview', this)">
+              <span class="nav-btn-left">
+                <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+                <span>Treasury &amp; Cashflow</span>
+              </span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-btn" onclick="switchPane('invoices', this)">
+              <span class="nav-btn-left">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                <span>Receivables &amp; Stripe</span>
+              </span>
+              <span class="nav-count" id="navOverdueCount">2</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-btn" onclick="switchPane('growth', this)">
+              <span class="nav-btn-left">
+                <svg class="icon" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                <span>Spend Caps &amp; RevOps</span>
+              </span>
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-title">Architecture &amp; Handover</div>
+        <ul class="nav-list">
+          <li>
+            <button class="nav-btn" onclick="switchPane('spec', this)">
+              <span class="nav-btn-left">
+                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                <span>Design Tokens &amp; UI Kit</span>
+              </span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-btn" onclick="openDrawer('rlsDrawer')">
+              <span class="nav-btn-left">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span>Supabase RLS Policy</span>
+              </span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Connected Treasury Vaults -->
+    <div class="sidebar-accounts">
+      <div class="nav-group-title" style="display:flex; justify-content:space-between;">
+        <span>Treasury Vaults</span>
+        <span class="tabular">LIVE</span>
+      </div>
+      <div class="acct-row">
+        <span>Mercury ••4829</span>
+        <strong class="tabular" id="coaCash">$148,920</strong>
+      </div>
+      <div class="acct-row">
+        <span>Stripe ••9012</span>
+        <strong class="tabular" id="coaAr">$31,450</strong>
+      </div>
+      <div class="acct-row">
+        <span>Yield Reserve</span>
+        <strong class="tabular" id="coaDef">$18,200</strong>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ==========================================
+       INSET ROUNDED WHITE WORKSPACE CANVAS
+       ========================================== -->
+  <main class="workspace-canvas">
+    
+    <!-- TOP WORKSPACE HEADER (WITH INTEGRATED SANDBOX SWITCHERS) -->
+    <header class="canvas-header">
+      <div class="header-left">
+        <h1 class="canvas-title" id="crumbText">Treasury &amp; Cashflow Command</h1>
+        <div class="env-indicator">
+          <span class="env-dot"></span>
+          <span id="rlsBadgeText">Protected by RLS • acme_01 (OWNER)</span>
+        </div>
+      </div>
+
+      <div class="header-controls">
+        <div class="control-pill">
+          <span>Tenant:</span>
+          <select class="control-select" aria-label="Select Tenant" onchange="switchTenant(this.value)">
+            <option value="acme">Acme Cloud (USD)</option>
+            <option value="nova">Nova Logistics (EUR)</option>
+            <option value="kinetix">Kinetix AI (GBP)</option>
+          </select>
+        </div>
+
+        <div class="control-pill">
+          <span>Role:</span>
+          <select class="control-select" aria-label="Select Role" onchange="switchRole(this.value)">
+            <option value="OWNER">OWNER</option>
+            <option value="FINANCE">FINANCE</option>
+            <option value="VIEWER">VIEWER (Read-Only)</option>
+          </select>
+        </div>
+
+        <button class="btn" onclick="fireStripeWebhook()">
+          <svg class="icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Simulate Webhook</span>
+        </button>
+
+        <button class="btn btn-volt" id="newInvoiceBtn" onclick="openDrawer('newInvDrawer')">
+          <svg class="icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span>New Invoice</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ==========================================
+         PANE 1: OVERVIEW (METRIC STRIP + MASTER-DETAIL)
+         ========================================== -->
+    <div id="pane-overview" class="view-pane active">
+      
+      <!-- ROW 1: 4-COLUMN METRIC STRIP -->
+      <section class="metric-strip">
+        <div class="metric-cell">
+          <div class="metric-top">
+            <span>Operating Cash Balance</span>
+            <span style="font-size:12px; color:var(--ink-tertiary);">Live Ledger</span>
+          </div>
+          <div class="metric-hero-val tabular" id="kpiLiquidity">$148,920.00</div>
+          <div class="metric-foot">
+            <span class="text-emerald tabular" id="kpiLiquidityDelta">+18.4% (+$23,140)</span>
+            <span>30d net change</span>
+          </div>
+        </div>
+
+        <div class="metric-cell">
+          <div class="metric-top">
+            <span>Open Receivables (AR)</span>
+            <span class="tabular">1200</span>
+          </div>
+          <div class="metric-sub-val tabular" id="kpiReceivables">$31,450.00</div>
+          <div class="metric-foot">
+            <span class="text-coral tabular" id="kpiOverdueSub">$14,200.00 overdue</span>
+            <span class="tabular" id="kpiOverdueCountText">2 open</span>
+          </div>
+        </div>
+
+        <div class="metric-cell">
+          <div class="metric-top">
+            <span>Monthly Burn &amp; Payroll</span>
+            <span class="tabular">5100</span>
+          </div>
+          <div class="metric-sub-val tabular" id="kpiBurn">$42,380.00</div>
+          <div class="metric-foot">
+            <span>Cash Runway</span>
+            <strong class="tabular" style="color:var(--ink);" id="kpiBurnRunway">14.2 Months</strong>
+          </div>
+        </div>
+
+        <div class="metric-cell">
+          <div class="metric-top">
+            <span>Annual Recurring (ARR)</span>
+            <span class="tabular">4100</span>
+          </div>
+          <div class="metric-sub-val tabular" id="kpiMrr">$528,000.00</div>
+          <div class="metric-foot">
+            <span class="text-emerald">109.4% Net Retention</span>
+            <span>Q4 Pace</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ROW 2: MASTER-DETAIL SPLIT WORKSPACE -->
+      <div class="split-workspace">
+        
+        <!-- LEFT MASTER COLUMN: CHART + INTERACTIVE SUB-LEDGER -->
+        <div class="master-column">
+          
+          <!-- Cashflow Velocity Chart Block -->
+          <div class="section-block">
+            <div class="block-header">
+              <div>
+                <div class="block-title">Cashflow Velocity &amp; Net Settlement Curve</div>
+                <div class="block-subtitle">Settled Stripe inflows vs. operating payroll &amp; cloud infrastructure burn</div>
+              </div>
+              <div class="segmented">
+                <button class="seg-tab" onclick="setChartRange('30D', this)">30D</button>
+                <button class="seg-tab active" onclick="setChartRange('90D', this)">90D</button>
+                <button class="seg-tab" onclick="setChartRange('12M', this)">12M</button>
+              </div>
+            </div>
+
+            <!-- Ramp-Inspired Clean Charcoal & Volt Lime Financial Chart -->
+            <svg viewBox="0 0 660 210" style="width:100%; height:210px; overflow:visible;">
+              <defs>
+                <linearGradient id="warmArea" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#D4F338" stop-opacity="0.32"/>
+                  <stop offset="100%" stop-color="#D4F338" stop-opacity="0.0"/>
+                </linearGradient>
+              </defs>
+              <line x1="42" y1="20" x2="648" y2="20" stroke="#EBEBE6" stroke-width="1"/>
+              <line x1="42" y1="72" x2="648" y2="72" stroke="#EBEBE6" stroke-width="1"/>
+              <line x1="42" y1="124" x2="648" y2="124" stroke="#EBEBE6" stroke-width="1"/>
+              <line x1="42" y1="176" x2="648" y2="176" stroke="#121316" stroke-width="1.5"/>
+
+              <text x="0" y="24" fill="#5C605A" font-family="IBM Plex Mono" font-size="12">$160k</text>
+              <text x="0" y="76" fill="#5C605A" font-family="IBM Plex Mono" font-size="12">$120k</text>
+              <text x="0" y="128" fill="#5C605A" font-family="IBM Plex Mono" font-size="12">$80k</text>
+              <text x="0" y="180" fill="#5C605A" font-family="IBM Plex Mono" font-size="12">$40k</text>
+
+              <!-- Paired Bars: Charcoal Inflow + Soft Stone Outflow -->
+              <rect x="78" y="108" width="20" height="68" rx="4" fill="#121316"/>
+              <rect x="102" y="138" width="20" height="38" rx="4" fill="#D0D0C8"/>
+
+              <rect x="194" y="92" width="20" height="84" rx="4" fill="#121316"/>
+              <rect x="218" y="132" width="20" height="44" rx="4" fill="#D0D0C8"/>
+
+              <rect x="310" y="76" width="20" height="100" rx="4" fill="#121316"/>
+              <rect x="334" y="126" width="20" height="50" rx="4" fill="#D0D0C8"/>
+
+              <rect x="426" y="56" width="20" height="120" rx="4" fill="#121316"/>
+              <rect x="450" y="116" width="20" height="60" rx="4" fill="#D0D0C8"/>
+
+              <!-- Active Month Highlight Bar in Volt Lime with Charcoal Stroke -->
+              <rect x="542" y="32" width="20" height="144" rx="4" fill="#D4F338" stroke="#121316" stroke-width="1.5"/>
+              <rect x="566" y="118" width="20" height="58" rx="4" fill="#D0D0C8"/>
+
+              <!-- Smooth Trajectory Curve -->
+              <path d="M88 102 C 145 96, 175 88, 204 86 C 260 82, 285 70, 320 68 C 375 64, 400 52, 436 48 C 490 44, 520 28, 552 24 L 552 176 L 88 176 Z" fill="url(#warmArea)"/>
+              <path d="M88 102 C 145 96, 175 88, 204 86 C 260 82, 285 70, 320 68 C 375 64, 400 52, 436 48 C 490 44, 520 28, 552 24" fill="none" stroke="#121316" stroke-width="2.2"/>
+
+              <circle cx="552" cy="24" r="5" fill="#D4F338" stroke="#121316" stroke-width="2"/>
+
+              <text x="78" y="198" fill="#434642" font-family="IBM Plex Mono" font-size="12">JUN</text>
+              <text x="194" y="198" fill="#434642" font-family="IBM Plex Mono" font-size="12">JUL</text>
+              <text x="310" y="198" fill="#434642" font-family="IBM Plex Mono" font-size="12">AUG</text>
+              <text x="426" y="198" fill="#434642" font-family="IBM Plex Mono" font-size="12">SEP</text>
+              <text x="538" y="198" fill="#121316" font-family="IBM Plex Mono" font-size="12" font-weight="600">OCT (LIVE)</text>
+            </svg>
+          </div>
+
+          <!-- Receivables Sub-Ledger Table Block -->
+          <div class="section-block" style="padding-left:0; padding-right:0; padding-bottom:0;">
+            <div class="block-header" style="padding:0 32px;">
+              <div>
+                <div class="block-title">Receivables &amp; Stripe Webhook Ledger</div>
+                <div class="block-subtitle">Select any row to inspect the live invoice document on the right</div>
+              </div>
+              <span style="font-size:12px; color:var(--ink-tertiary);" id="chartRangeLabel">90-Day Window</span>
+            </div>
+
+            <table class="fintech-table">
+              <thead>
+                <tr>
+                  <th style="padding-left:32px;">Invoice</th>
+                  <th>Customer &amp; Settlement Rail</th>
+                  <th>Status</th>
+                  <th class="text-right" style="padding-right:32px;">Amount</th>
+                </tr>
+              </thead>
+              <tbody id="overviewInvoiceBody">
+                <!-- Populated dynamically via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- RIGHT DETAIL COLUMN: CONTEXTUAL INSPECTOR (INVOICE PREVIEW OR AI COPILOT) -->
+        <aside class="detail-column">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div class="segmented">
+              <button class="seg-tab active" onclick="switchInspector('doc', this)">Invoice Preview</button>
+              <button class="seg-tab" onclick="switchInspector('ai', this)">AI CFO Copilot (2)</button>
+            </div>
+            <div class="status-dot-cell" id="previewStatusBadge"><span class="dot-emerald"></span> Paid</div>
+          </div>
+
+          <!-- INSPECTOR TAB 1: LIVE COMMERCIAL INVOICE PAPER -->
+          <div id="insp-doc" class="inspector-pane active">
+            <div class="invoice-sheet">
+              <div class="sheet-top">
+                <div>
+                  <div style="font-family:var(--font-mono); font-size:12px; color:var(--ink-tertiary);">COMMERCIAL INVOICE</div>
+                  <div style="font-family:var(--font-display); font-size:20px; font-weight:600; color:var(--ink); margin-top:2px;" class="tabular" id="previewInvId">INV-2026-092</div>
+                </div>
+                <div style="text-align:right;">
+                  <div style="font-size:13px; font-weight:600; color:var(--ink);" id="previewIssuer">Acme Cloud Inc.</div>
+                  <div style="font-family:var(--font-mono); font-size:12px; color:var(--ink-tertiary);" id="previewIssuedDate">Oct 21, 2026</div>
+                </div>
+              </div>
+
+              <div style="display:flex; justify-content:space-between; margin-bottom:18px; font-size:13px;">
+                <div>
+                  <div style="font-size:12px; color:var(--ink-tertiary); font-weight:500;">BILLED TO</div>
+                  <div style="font-weight:600; color:var(--ink); margin-top:2px;" id="previewClientName">Stripe Inc.</div>
+                  <div style="color:var(--ink-secondary); font-size:12px;" id="previewClientEmail">ap-treasury@stripe.com</div>
+                </div>
+                <div style="text-align:right;">
+                  <div style="font-size:12px; color:var(--ink-tertiary); font-weight:500;">PAYMENT RAIL</div>
+                  <div style="font-family:var(--font-mono); font-weight:500; color:var(--ink); margin-top:2px;" id="previewMethod">Stripe ACH Direct</div>
+                  <div style="color:var(--ink-secondary); font-size:12px;" id="previewDue">Settled Oct 21</div>
+                </div>
+              </div>
+
+              <div class="line-item">
+                <span>Enterprise Platform License (Annual Pool)</span>
+                <span class="tabular" style="color:var(--ink); font-weight:500;" id="previewLine1">$14,800.00</span>
+              </div>
+              <div class="line-item">
+                <span>Dedicated SOC2 Audit Log &amp; SLA Add-on</span>
+                <span class="tabular" style="color:var(--ink); font-weight:500;" id="previewLine2">$3,600.00</span>
+              </div>
+
+              <div class="sheet-total">
+                <span>Total Amount</span>
+                <span class="tabular" id="previewTotal">$18,400.00</span>
+              </div>
+
+              <div style="display:flex; flex-direction:column; gap:10px; font-size:13px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <span style="color:var(--ink-secondary);">1. Cryptographic hash signed</span>
+                  <span class="tabular" style="font-size:12px; color:var(--ink-tertiary);">sha256:8f9a</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <span style="color:var(--ink-secondary);" id="step2Text">2. Stripe webhook `invoice.paid`</span>
+                  <span class="tabular" style="font-size:12px; color:var(--emerald); font-weight:600;" id="step2Time">VERIFIED</span>
+                </div>
+              </div>
+
+              <div style="margin-top:20px; padding-top:16px; border-top:1px solid var(--border-hairline); display:flex; gap:8px;">
+                <button class="btn btn-volt" style="flex:1; justify-content:center;" onclick="fireStripeWebhook()">Simulate Webhook Paid</button>
+                <button class="btn" onclick="sendReminder()">Send Reminder</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- INSPECTOR TAB 2: AI CFO COPILOT FEED -->
+          <div id="insp-ai" class="inspector-pane">
+            <div class="ai-insight-row" style="padding-top:4px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <span class="tabular" style="font-size:12px; font-weight:600; color:var(--coral);" id="aiOverdueBadge">• OVERDUE ESCALATION</span>
+                <span class="tabular text-coral" id="aiOverdueAmount">$14,200.00</span>
+              </div>
+              <div style="font-weight:600; font-size:15px; margin-bottom:6px;" id="aiOverdueTitle">
+                Linear Orbit Ltd (`INV-2026-089`) is 14 days past net terms
+              </div>
+              <p style="font-size:13px; color:var(--ink-secondary); margin-bottom:12px;" id="aiOverdueDesc">
+                Customer opened the Stripe payment portal 3 times in the past 48 hours. Collecting this invoice adds +0.8 months of net runway.
+              </p>
+              <div style="display:flex; gap:8px;">
+                <button class="btn btn-charcoal" onclick="sendReminder()">Send Escalation Notice</button>
+                <button class="btn" onclick="fireStripeWebhook()">Mark Paid</button>
+              </div>
+            </div>
+
+            <div class="ai-insight-row">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <span class="tabular" style="font-size:12px; font-weight:600; color:var(--amber);">• SPEND ANOMALY</span>
+                <span class="tabular text-amber">+$2,410 / mo</span>
+              </div>
+              <div style="font-weight:600; font-size:15px; margin-bottom:6px;">
+                AWS NAT Gateway Egress Spike (`us-east-1`)
+              </div>
+              <p style="font-size:13px; color:var(--ink-secondary);">
+                Cloud egress exceeded Q4 engineering cap by +14.2%. Routing internal S3 traffic through a VPC Gateway Endpoint saves ~$1,850/month.
+              </p>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+
+    <!-- ==========================================
+         PANE 2: FULL RECEIVABLES & STRIPE LEDGER
+         ========================================== -->
+    <div id="pane-invoices" class="view-pane">
+      <div class="section-block">
+        <div class="block-header">
+          <div>
+            <div class="block-title">Commercial Invoices &amp; Idempotent Stripe Webhooks</div>
+            <div class="block-subtitle">Multi-tenant isolation enforced via PostgreSQL RLS (`tenant_id = auth.jwt()->>'tenant_id'`)</div>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <button class="btn" onclick="fireStripeWebhook()">Trigger `invoice.paid` Webhook</button>
+            <button class="btn btn-volt" onclick="openDrawer('newInvDrawer')">+ Issue Commercial Invoice</button>
+          </div>
+        </div>
+
+        <table class="fintech-table">
+          <thead>
+            <tr>
+              <th>Invoice ID</th>
+              <th>Customer</th>
+              <th>Payment Rail</th>
+              <th>Issued Date</th>
+              <th>Due / Status Note</th>
+              <th>Status</th>
+              <th class="text-right">Total</th>
+              <th class="text-right">Action</th>
+            </tr>
+          </thead>
+          <tbody id="fullInvoiceBody">
+            <!-- Populated dynamically via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         PANE 3: SPEND CAPS & REVOPS FUNNEL
+         ========================================== -->
+    <div id="pane-growth" class="view-pane">
+      <div class="split-workspace">
+        <div class="master-column" style="padding:28px 32px;">
+          <div class="block-header">
+            <div>
+              <div class="block-title">Departmental Spend Caps &amp; Card Controls</div>
+              <div class="block-subtitle">Automated Ramp-style spend limits vs. real-time ledger utilization</div>
+            </div>
+            <span style="font-size:12px; font-weight:600; color:var(--amber);">• 1 Cap Alert</span>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:20px;">
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:600;">
+                <span>Cloud Infrastructure (AWS + Supabase Production)</span>
+                <span class="tabular text-coral">$16,410 / $15,000 (109%)</span>
+              </div>
+              <div class="bar-track"><div class="bar-fill" style="width:100%; background:#B91C1C;"></div></div>
+            </div>
+
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:600;">
+                <span>Core Product &amp; AI Engineering Payroll</span>
+                <span class="tabular">$19,200 / $22,000 (87%)</span>
+              </div>
+              <div class="bar-track"><div class="bar-fill" style="width:87%; background:#121316;"></div></div>
+            </div>
+
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:600;">
+                <span>Outbound RevOps &amp; Growth Campaigns</span>
+                <span class="tabular text-emerald">$6,770 / $10,000 (68%)</span>
+              </div>
+              <div class="bar-track"><div class="bar-fill" style="width:68%; background:#0B6B41;"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="detail-column">
+          <div class="block-title">B2B Cohort Conversion Funnel</div>
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:600;">
+                <span>1. Qualified Enterprise Trials</span>
+                <span class="tabular">418 Orgs (100%)</span>
+              </div>
+              <div class="bar-track"><div class="bar-fill" style="width:100%; background:#121316;"></div></div>
+            </div>
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:600;">
+                <span>2. Multi-Tenant Sandbox Active</span>
+                <span class="tabular">264 Orgs (63.1%)</span>
+              </div>
+              <div class="bar-track"><div class="bar-fill" style="width:63.1%; background:#121316;"></div></div>
+            </div>
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:600;">
+                <span>3. Annual Contract Settled</span>
+                <span class="tabular text-emerald">112 Orgs (26.8%)</span>
+              </div>
+              <div class="bar-track"><div class="bar-fill" style="width:26.8%; background:#0B6B41;"></div></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         PANE 4: DESIGN TOKENS & SUPABASE HANDOVER
+         ========================================== -->
+    <div id="pane-spec" class="view-pane">
+      <div class="section-block">
+        <div class="block-header">
+          <div>
+            <div class="block-title">Design System Tokens &amp; CLI Cutover Protocol</div>
+            <div class="block-subtitle">Warm Fintech &amp; Volt Accent (`Satoshi` / `General Sans` + `IBM Plex Mono` + Inset App Frame)</div>
+          </div>
+          <span style="font-size:12px; font-weight:600; color:var(--emerald);">• Zero Warnings Verified</span>
+        </div>
+
+        <pre class="code-box"># Sprint 4 Production Supabase Cutover (Zero Manual Dashboard Clicks)
+npx supabase link --project-ref &lt;CLIENT_PROD_PROJECT_REF&gt;
+npx supabase db push
+npx supabase db seed</pre>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- DRAWER 1: SUPABASE RLS & SQL POLICY INSPECTOR -->
+<div class="drawer-backdrop" id="rlsDrawer" onclick="if(event.target===this) closeDrawer('rlsDrawer')">
+  <div class="drawer-panel">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <div style="font-family:var(--font-display); font-size:18px; font-weight:600;">Supabase RLS &amp; Migration Inspector</div>
+      <button class="btn" onclick="closeDrawer('rlsDrawer')">Close</button>
+    </div>
+    <p style="font-size:14px; color:var(--ink-secondary);">
+      All database tables enforce PostgreSQL Row-Level Security via JWT claims (`tenant_id` and `app_role`). Zero manual changes are made in the Supabase dashboard.
+    </p>
+    <pre class="code-box">-- supabase/migrations/20261024000001_rls_isolation.sql
+ALTER TABLE public.invoices ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "tenant_isolation_select"
+ON public.invoices FOR SELECT
+USING (
+  tenant_id = (auth.jwt() ->> 'tenant_id')::uuid
+);
+
+CREATE POLICY "rbac_write_guard"
+ON public.invoices FOR INSERT
+WITH CHECK (
+  tenant_id = (auth.jwt() ->> 'tenant_id')::uuid
+  AND (auth.jwt() ->> 'app_role') IN ('OWNER', 'FINANCE')
+);</pre>
+  </div>
+</div>
+
+<!-- DRAWER 2: CREATE NEW COMMERCIAL INVOICE -->
+<div class="drawer-backdrop" id="newInvDrawer" onclick="if(event.target===this) closeDrawer('newInvDrawer')">
+  <div class="drawer-panel">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <div style="font-family:var(--font-display); font-size:18px; font-weight:600;">Issue Commercial Invoice</div>
+      <button class="btn" onclick="closeDrawer('newInvDrawer')">Close</button>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:14px;">
+      <div>
+        <label style="display:block; font-size:13px; font-weight:600; margin-bottom:6px;" for="custInput">Customer Organization</label>
+        <input id="custInput" type="text" value="Raycast Technologies Ltd" style="width:100%; padding:10px 12px; font-family:var(--font-sans); font-size:14px; border:1px solid var(--border-strong); border-radius:9px;" />
+      </div>
+      <div>
+        <label style="display:block; font-size:13px; font-weight:600; margin-bottom:6px;" for="amtInput">Invoice Amount</label>
+        <input id="amtInput" type="number" value="9500" style="width:100%; padding:10px 12px; font-family:var(--font-mono); font-size:14px; border:1px solid var(--border-strong); border-radius:9px;" />
+      </div>
+      <button class="btn btn-volt" style="justify-content:center; padding:11px; margin-top:6px;" onclick="createNewInvoice()">Commit to Ledger &amp; Generate Stripe Link</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-pill" id="toastBanner">Webhook processed</div>
+
+<script>
+  const TENANTS = {
+    acme: {
+      code: "acme_01 • USD",
+      id: "acme_01",
+      name: "Acme Cloud Inc.",
+      monogram: "AC",
+      symbol: "$",
+      liquidity: 148920,
+      receivables: 31450,
+      deferred: 18200,
+      burn: 42380,
+      mrr: 528000,
+      runway: "14.2 Months",
+      delta: "+18.4% (+$23,140)",
+      invoices: [
+        { id: "INV-2026-092", logo: "ST", customer: "Stripe Inc.", email: "ap-treasury@stripe.com", method: "Stripe ACH Direct", issued: "Oct 21, 2026", due: "Settled Oct 21", status: "PAID", amount: 18400 },
+        { id: "INV-2026-091", logo: "VC", customer: "Vercel Enterprise", email: "finance@vercel.com", method: "Fedwire Transfer", issued: "Oct 19, 2026", due: "Due Nov 02", status: "PENDING", amount: 12450 },
+        { id: "INV-2026-089", logo: "LO", customer: "Linear Orbit Ltd", email: "billing@linearorbit.io", method: "Stripe Checkout Link", issued: "Sep 26, 2026", due: "14d Overdue", status: "OVERDUE", amount: 14200 },
+        { id: "INV-2026-088", logo: "SB", customer: "Supabase Inc.", email: "accounts@supabase.io", method: "Stripe ACH Direct", issued: "Sep 18, 2026", due: "Settled Sep 19", status: "PAID", amount: 24000 },
+        { id: "INV-2026-085", logo: "RT", customer: "Retool Corp", email: "ap@retool.com", method: "Corporate Card", issued: "Sep 10, 2026", due: "7d Overdue", status: "OVERDUE", amount: 4800 }
+      ]
+    },
+    nova: {
+      code: "nova_eu • EUR",
+      id: "nova_eu",
+      name: "Nova Logistics GmbH",
+      monogram: "NL",
+      symbol: "€",
+      liquidity: 284500,
+      receivables: 19800,
+      deferred: 24500,
+      burn: 31200,
+      mrr: 710400,
+      runway: "19.8 Months",
+      delta: "+22.1% (+€49,200)",
+      invoices: [
+        { id: "EUR-2026-404", logo: "SM", customer: "Siemens Mobility AG", email: "treasury@siemens.de", method: "SEPA Instant Credit", issued: "Oct 20, 2026", due: "Settled Oct 20", status: "PAID", amount: 32000 },
+        { id: "EUR-2026-403", logo: "DH", customer: "DHL Freight GmbH", email: "ap@dhl.de", method: "SEPA Direct Debit", issued: "Oct 15, 2026", due: "Due Oct 30", status: "PENDING", amount: 11400 },
+        { id: "EUR-2026-401", logo: "KN", customer: "Kühne + Nagel", email: "billing@kuehne-nagel.com", method: "Stripe SEPA Link", issued: "Sep 29, 2026", due: "9d Overdue", status: "OVERDUE", amount: 8400 }
+      ]
+    },
+    kinetix: {
+      code: "kinetix_uk • GBP",
+      id: "kinetix_uk",
+      name: "Kinetix AI Labs",
+      monogram: "KX",
+      symbol: "£",
+      liquidity: 92400,
+      receivables: 14600,
+      deferred: 9800,
+      burn: 27900,
+      mrr: 374400,
+      runway: "11.4 Months",
+      delta: "+11.8% (+£9,750)",
+      invoices: [
+        { id: "GBP-2026-112", logo: "DM", customer: "DeepMind Research UK", email: "finance@deepmind.com", method: "UK Faster Payments", issued: "Oct 22, 2026", due: "Settled Oct 22", status: "PAID", amount: 19500 },
+        { id: "GBP-2026-109", logo: "MZ", customer: "Monzo Bank Plc", email: "ap@monzo.com", method: "BACS Direct Credit", issued: "Oct 01, 2026", due: "6d Overdue", status: "OVERDUE", amount: 14600 }
+      ]
+    }
+  };
+
+  let activeTenantKey = "acme";
+  let activeRole = "OWNER";
+  let selectedInvIndex = 0;
+
+  function fmt(num, sym) {
+    return sym + num.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function fmtShort(num, sym) {
+    return sym + num.toLocaleString("en-US", { maximumFractionDigits: 0 });
+  }
+
+  function statusChip(status) {
+    if (status === "PAID") return '<span class="status-dot-cell"><span class="dot-emerald"></span> Paid</span>';
+    if (status === "OVERDUE") return '<span class="status-dot-cell"><span class="dot-coral"></span> Overdue</span>';
+    return '<span class="status-dot-cell"><span class="dot-amber"></span> Pending</span>';
+  }
+
+  function selectInvoice(idx) {
+    selectedInvIndex = idx;
+    renderWorkspace();
+  }
+
+  function switchInspector(tabId, btnEl) {
+    document.querySelectorAll(".inspector-pane").forEach(p => p.classList.remove("active"));
+    document.getElementById("insp-" + tabId).classList.add("active");
+    btnEl.parentElement.querySelectorAll(".seg-tab").forEach(b => b.classList.remove("active"));
+    btnEl.classList.add("active");
+  }
+
+  function renderWorkspace() {
+    const t = TENANTS[activeTenantKey];
+    const s = t.symbol;
+    if (selectedInvIndex >= t.invoices.length) selectedInvIndex = 0;
+
+    document.getElementById("railMonogram").textContent = t.monogram;
+    document.getElementById("railTenantName").textContent = t.name;
+    document.getElementById("railTenantCode").textContent = t.code;
+    document.getElementById("rlsBadgeText").textContent = `Protected by RLS • ${t.id} (${activeRole})`;
+
+    document.getElementById("coaCash").textContent = fmtShort(t.liquidity, s);
+    document.getElementById("coaAr").textContent = fmtShort(t.receivables, s);
+    document.getElementById("coaDef").textContent = fmtShort(t.deferred, s);
+
+    document.getElementById("kpiLiquidity").textContent = fmt(t.liquidity, s);
+    document.getElementById("kpiLiquidityDelta").textContent = t.delta;
+    document.getElementById("kpiReceivables").textContent = fmt(t.receivables, s);
+    document.getElementById("kpiBurn").textContent = fmt(t.burn, s);
+    document.getElementById("kpiBurnRunway").textContent = t.runway;
+    document.getElementById("kpiMrr").textContent = fmt(t.mrr, s);
+
+    const overdueList = t.invoices.filter(i => i.status === "OVERDUE");
+    const overdueSum = overdueList.reduce((acc, i) => acc + i.amount, 0);
+    document.getElementById("navOverdueCount").textContent = overdueList.length;
+    document.getElementById("kpiOverdueSub").textContent = `${fmt(overdueSum, s)} overdue`;
+    document.getElementById("kpiOverdueCountText").textContent = `${overdueList.length} open`;
+
+    const totalLedger = t.invoices.reduce((acc, i) => acc + i.amount, 0);
+
+    const overviewBody = document.getElementById("overviewInvoiceBody");
+    overviewBody.innerHTML = t.invoices.map((inv, idx) => `
+      <tr class="${idx === selectedInvIndex ? 'selected' : ''}" onclick="selectInvoice(${idx})">
+        <td class="tabular" style="padding-left:32px; font-weight:600;">${inv.id}</td>
+        <td>
+          <div class="org-cell">
+            <div class="org-avatar">${inv.logo}</div>
+            <div>
+              <div class="org-name">${inv.customer}</div>
+              <div class="org-rail">${inv.method} • ${inv.due}</div>
+            </div>
+          </div>
+        </td>
+        <td>${statusChip(inv.status)}</td>
+        <td class="tabular text-right" style="padding-right:32px; font-weight:600;">${fmt(inv.amount, s)}</td>
+      </tr>
+    `).join("") + `
+      <tr class="summary-row">
+        <td colspan="3" style="padding-left:32px;">Total Sub-Ledger Receivables</td>
+        <td class="tabular text-right" style="padding-right:32px;">${fmt(totalLedger, s)}</td>
+      </tr>
+    `;
+
+    // Update Right-Hand Live Invoice Sheet
+    const sel = t.invoices[selectedInvIndex];
+    if (sel) {
+      document.getElementById("previewInvId").textContent = sel.id;
+      document.getElementById("previewIssuer").textContent = t.name;
+      document.getElementById("previewIssuedDate").textContent = sel.issued;
+      document.getElementById("previewClientName").textContent = sel.customer;
+      document.getElementById("previewClientEmail").textContent = sel.email;
+      document.getElementById("previewMethod").textContent = sel.method;
+      document.getElementById("previewDue").textContent = sel.due;
+      const p1 = Math.round(sel.amount * 0.8);
+      const p2 = sel.amount - p1;
+      document.getElementById("previewLine1").textContent = fmt(p1, s);
+      document.getElementById("previewLine2").textContent = fmt(p2, s);
+      document.getElementById("previewTotal").textContent = fmt(sel.amount, s);
+
+      const pBadge = document.getElementById("previewStatusBadge");
+      const s2Text = document.getElementById("step2Text");
+      const s2Time = document.getElementById("step2Time");
+
+      if (sel.status === "PAID") {
+        pBadge.innerHTML = '<span class="dot-emerald"></span> Paid';
+        s2Text.textContent = "2. Stripe webhook `invoice.paid`";
+        s2Time.style.color = "var(--emerald)";
+        s2Time.textContent = "SETTLED";
+      } else if (sel.status === "OVERDUE") {
+        pBadge.innerHTML = '<span class="dot-coral"></span> Overdue';
+        s2Text.textContent = "2. Awaiting client settlement";
+        s2Time.style.color = "var(--coral)";
+        s2Time.textContent = sel.due.toUpperCase();
+      } else {
+        pBadge.innerHTML = '<span class="dot-amber"></span> Pending';
+        s2Text.textContent = "2. Scheduled for net terms";
+        s2Time.style.color = "var(--amber)";
+        s2Time.textContent = sel.due.toUpperCase();
+      }
+    }
+
+    // Full Receivables Table
+    const fullBody = document.getElementById("fullInvoiceBody");
+    const isViewer = activeRole === "VIEWER";
+    fullBody.innerHTML = t.invoices.map(inv => `
+      <tr>
+        <td class="tabular" style="font-weight:600;">${inv.id}</td>
+        <td style="font-weight:600;">${inv.customer}</td>
+        <td><span style="font-size:13px; color:var(--ink-secondary);">${inv.method}</span></td>
+        <td class="tabular" style="color:var(--ink-secondary);">${inv.issued}</td>
+        <td class="tabular" style="color:var(--ink-secondary);">${inv.due}</td>
+        <td>${statusChip(inv.status)}</td>
+        <td class="tabular text-right" style="font-weight:600;">${fmt(inv.amount, s)}</td>
+        <td class="text-right">
+          ${inv.status !== "PAID"
+            ? `<button class="btn" style="padding:5px 10px; font-size:12px;" ${isViewer ? "disabled" : ""} onclick="settleSingle('${inv.id}')">Mark Paid</button>`
+            : `<span class="tabular" style="font-size:12px; color:var(--ink-tertiary);">RECONCILED</span>`
+          }
+        </td>
+      </tr>
+    `).join("") + `
+      <tr class="summary-row">
+        <td colspan="6">Consolidated Sub-Ledger Total</td>
+        <td class="tabular text-right">${fmt(totalLedger, s)}</td>
+        <td></td>
+      </tr>
+    `;
+
+    document.getElementById("newInvoiceBtn").disabled = isViewer;
+  }
+
+  function switchPane(paneId, btnEl) {
+    document.querySelectorAll(".view-pane").forEach(p => p.classList.remove("active"));
+    document.getElementById("pane-" + paneId).classList.add("active");
+    document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+    if (btnEl) btnEl.classList.add("active");
+
+    const titles = {
+      overview: "Treasury & Cashflow Command",
+      invoices: "Receivables & Stripe Webhook Ledger",
+      growth: "Spend Caps & RevOps Funnel",
+      spec: "Design Tokens & Supabase Handover"
+    };
+    document.getElementById("crumbText").textContent = titles[paneId] || "VeloceOps";
+  }
+
+  function switchTenant(val) {
+    activeTenantKey = val;
+    selectedInvIndex = 0;
+    renderWorkspace();
+    showToast(`Switched RLS Session -> tenant_id = '${TENANTS[val].id}'`);
+  }
+
+  function switchRole(role) {
+    activeRole = role;
+    renderWorkspace();
+    showToast(`RBAC Policy Role -> ${role}`);
+  }
+
+  function setChartRange(range, btn) {
+    btn.parentElement.querySelectorAll(".seg-tab").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById("chartRangeLabel").textContent = `WINDOW: ${range}`;
+    showToast(`Cashflow window set to ${range}`);
+  }
+
+  function fireStripeWebhook() {
+    if (activeRole === "VIEWER") {
+      showToast("RBAC Denied: VIEWER role cannot mutate ledger");
+      return;
+    }
+    const t = TENANTS[activeTenantKey];
+    const target = t.invoices.find(i => i.status === "OVERDUE" || i.status === "PENDING");
+    if (!target) {
+      showToast("All invoices for this tenant are already settled!");
+      return;
+    }
+    target.status = "PAID";
+    target.due = "Settled via Webhook";
+    t.liquidity += target.amount;
+    t.receivables = Math.max(0, t.receivables - target.amount);
+
+    document.getElementById("aiOverdueBadge").style.color = "var(--emerald)";
+    document.getElementById("aiOverdueBadge").textContent = "• WEBHOOK SETTLED";
+    document.getElementById("aiOverdueTitle").textContent = `${target.id} • Reconciled via Stripe`;
+    document.getElementById("aiOverdueAmount").className = "tabular text-emerald";
+    document.getElementById("aiOverdueDesc").textContent = `Stripe event evt_3Q9xLm verified. Operating cash balance automatically incremented by ${fmt(target.amount, t.symbol)}.`;
+
+    renderWorkspace();
+    showToast(`Stripe Webhook: ${target.id} settled (+${fmt(target.amount, t.symbol)})`);
+  }
+
+  function settleSingle(invId) {
+    if (activeRole === "VIEWER") return;
+    const t = TENANTS[activeTenantKey];
+    const inv = t.invoices.find(i => i.id === invId);
+    if (inv && inv.status !== "PAID") {
+      inv.status = "PAID";
+      inv.due = "Settled Manual";
+      t.liquidity += inv.amount;
+      t.receivables = Math.max(0, t.receivables - inv.amount);
+      renderWorkspace();
+      showToast(`Invoice ${invId} reconciled`);
+    }
+  }
+
+  function sendReminder() {
+    showToast("Automated CFO payment reminder dispatched via Resend API");
+  }
+
+  function createNewInvoice() {
+    if (activeRole === "VIEWER") return;
+    const cust = document.getElementById("custInput").value || "Enterprise Client";
+    const amt = parseFloat(document.getElementById("amtInput").value) || 5000;
+    const t = TENANTS[activeTenantKey];
+    const newId = `INV-2026-${Math.floor(100 + Math.random() * 899)}`;
+    const initials = cust.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase();
+    t.invoices.unshift({
+      id: newId,
+      logo: initials,
+      customer: cust,
+      email: "ap@" + cust.toLowerCase().replace(/[^a-z]/g, "") + ".com",
+      method: "Stripe Checkout Link",
+      issued: "Oct 24, 2026",
+      due: "Due Nov 24",
+      status: "PENDING",
+      amount: amt
+    });
+    t.receivables += amt;
+    selectedInvIndex = 0;
+    closeDrawer("newInvDrawer");
+    renderWorkspace();
+    showToast(`Created ${newId} (${fmt(amt, t.symbol)})`);
+  }
+
+  function openDrawer(id) {
+    document.getElementById(id).classList.add("open");
+  }
+
+  function closeDrawer(id) {
+    document.getElementById(id).classList.remove("open");
+  }
+
+  function showToast(msg) {
+    const el = document.getElementById("toastBanner");
+    el.textContent = msg;
+    el.classList.add("show");
+    clearTimeout(window.__toastTimer);
+    window.__toastTimer = setTimeout(() => el.classList.remove("show"), 3200);
+  }
+
+  renderWorkspace();
+</script>
+</body>
+</html>

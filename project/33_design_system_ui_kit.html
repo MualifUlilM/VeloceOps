@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UI Component Library &amp; Design Tokens — VeloceOps</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&f[]=general-sans@500,600,700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400,500,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/veloceops.css">
+</head>
+<body>
+
+<div class="app-frame">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div>
+      <div class="brand-switcher">
+        <div style="display:flex; align-items:center;">
+          <div class="brand-mark">AC</div>
+          <div class="brand-info">
+            <div class="brand-title">Acme Cloud Inc.</div>
+            <div class="brand-sub">acme_01 • USD</div>
+          </div>
+        </div>
+        <a href="11_tenant_switcher.html" class="kbd">⌘1</a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-title">Governance &amp; Handover</div>
+        <ul class="nav-list">
+          <li><a href="12_dashboard_overview.html" class="nav-link"><span>Dashboard</span></a></li>
+          <li><a href="06_security_compliance.html" class="nav-link"><span>Supabase RLS Policy</span></a></li>
+          <li><a href="29_settings_team_rbac.html" class="nav-link"><span>Team &amp; Roles</span></a></li>
+          <li><a href="33_design_system_ui_kit.html" class="nav-link active"><span>Design System UI Kit</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CANVAS -->
+  <main class="workspace-canvas">
+    <header class="canvas-header">
+      <div class="header-left">
+        <h1 class="canvas-title">Design System UI Kit &amp; Component Storybook</h1>
+        <span class="status-dot-cell"><span class="dot-emerald"></span> 0 Warnings Verified</span>
+      </div>
+
+      <div class="header-controls">
+        <a href="12_dashboard_overview.html" class="btn">Open App</a>
+      </div>
+    </header>
+
+    <div style="padding:32px; display:flex; flex-direction:column; gap:36px;">
+      <!-- PALETTE -->
+      <div>
+        <div style="font-family:var(--font-display); font-size:16px; font-weight:600; margin-bottom:12px;">1. Color Tokens (Warm Fintech Architecture)</div>
+        <div style="display:grid; grid-template-columns:repeat(5, 1fr); gap:14px;">
+          <div style="background:var(--bg-shell); border:1px solid var(--border-canvas); border-radius:10px; padding:14px; font-size:12px;">
+            <strong>Outer Shell</strong><div class="tabular">#F2F2EE</div>
+          </div>
+          <div style="background:var(--bg-canvas); border:1px solid var(--border-canvas); border-radius:10px; padding:14px; font-size:12px;">
+            <strong>Main Canvas</strong><div class="tabular">#FFFFFF</div>
+          </div>
+          <div style="background:var(--ink); color:#FFFFFF; border-radius:10px; padding:14px; font-size:12px;">
+            <strong>Deep Charcoal</strong><div class="tabular">#121316</div>
+          </div>
+          <div style="background:var(--volt); color:var(--ink); border:1px solid var(--volt-border); border-radius:10px; padding:14px; font-size:12px;">
+            <strong>Volt Lime</strong><div class="tabular">#D4F338</div>
+          </div>
+          <div style="background:var(--emerald-bg); color:var(--emerald); border:1px solid var(--emerald); border-radius:10px; padding:14px; font-size:12px;">
+            <strong>Botanical Emerald</strong><div class="tabular">#0B6B41</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BUTTONS -->
+      <div>
+        <div style="font-family:var(--font-display); font-size:16px; font-weight:600; margin-bottom:12px;">2. Button Variants</div>
+        <div style="display:flex; gap:12px; align-items:center;">
+          <button class="btn btn-volt">Primary Action (.btn-volt)</button>
+          <button class="btn btn-charcoal">Secondary Charcoal (.btn-charcoal)</button>
+          <button class="btn">Neutral Outline (.btn)</button>
+          <button class="btn" disabled>Disabled State</button>
+        </div>
+      </div>
+
+      <!-- DOT STATUSES -->
+      <div>
+        <div style="font-family:var(--font-display); font-size:16px; font-weight:600; margin-bottom:12px;">3. Status Indicators (Clean Dot Cells — No Bubble Candy Pills)</div>
+        <div style="display:flex; gap:24px; align-items:center;">
+          <span class="status-dot-cell"><span class="dot-emerald"></span> Settled / Paid</span>
+          <span class="status-dot-cell"><span class="dot-coral"></span> Overdue Escalation</span>
+          <span class="status-dot-cell"><span class="dot-amber"></span> Pending Net Terms</span>
+        </div>
+      </div>
+
+      <!-- TYPOGRAPHY -->
+      <div>
+        <div style="font-family:var(--font-display); font-size:16px; font-weight:600; margin-bottom:12px;">4. Typography Hierarchy</div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div style="font-family:var(--font-display); font-size:34px; font-weight:600;">Metric Hero: $148,920.00 (General Sans 34px)</div>
+          <div style="font-family:var(--font-display); font-size:20px; font-weight:600;">Section Title: Commercial Invoices (General Sans 20px)</div>
+          <div style="font-size:14px; color:var(--ink-secondary);">Body Text: Clean geometric sans with zero quirky ink traps (Satoshi 14px)</div>
+          <div class="tabular" style="font-size:13px; color:var(--ink);">Tabular Monospace: sha256:8f9a4b2c • 14:02:19 UTC (IBM Plex Mono 13px)</div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+</body>
+</html>

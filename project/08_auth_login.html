@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In — VeloceOps</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&f[]=general-sans@500,600,700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400,500,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/veloceops.css">
+  <style>
+    .auth-container {
+      max-width: 440px;
+      margin: 80px auto;
+      padding: 0 20px;
+    }
+    .auth-card {
+      background: var(--bg-canvas);
+      border: 1px solid var(--border-canvas);
+      border-radius: 20px;
+      padding: 36px;
+      box-shadow: 0 12px 36px -8px rgba(18, 19, 22, 0.08);
+    }
+    .input-field {
+      width: 100%;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-canvas);
+      padding: 11px 14px;
+      border-radius: 9px;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      color: var(--ink);
+      margin-bottom: 16px;
+      outline: none;
+    }
+    .input-field:focus {
+      background: var(--bg-canvas);
+      border-color: var(--border-strong);
+    }
+  </style>
+</head>
+<body style="background:var(--bg-shell);">
+
+<div class="auth-container">
+  <div style="text-align:center; margin-bottom:28px;">
+    <div style="display:inline-flex; align-items:center; gap:10px; margin-bottom:8px;">
+      <div class="brand-mark">VO</div>
+      <span style="font-family:var(--font-display); font-size:20px; font-weight:600;">VeloceOps</span>
+    </div>
+    <div style="font-size:14px; color:var(--ink-secondary);">Sign in to access your multi-tenant treasury</div>
+  </div>
+
+  <div class="auth-card">
+    <div style="font-size:13px; font-weight:600; margin-bottom:6px;">Work Email</div>
+    <input type="email" class="input-field" value="cfo@acmecloud.com" id="emailInput" />
+
+    <button class="btn btn-charcoal" style="width:100%; justify-content:center; padding:12px; margin-bottom:14px;" onclick="signIn()">
+      Send Supabase Magic Link
+    </button>
+
+    <div style="display:flex; align-items:center; gap:12px; margin:16px 0; font-size:12px; color:var(--ink-tertiary);">
+      <span style="flex:1; height:1px; background:var(--border-hairline);"></span>
+      <span>OR PREVIEW DEMO ROLE</span>
+      <span style="flex:1; height:1px; background:var(--border-hairline);"></span>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      <a href="12_dashboard_overview.html" class="btn" style="justify-content:space-between;">
+        <span>Enter as <strong>Acme Cloud Owner</strong></span>
+        <span class="status-dot-cell"><span class="dot-emerald"></span> Full Access</span>
+      </a>
+      <a href="11_tenant_switcher.html" class="btn" style="justify-content:space-between;">
+        <span>Switch Organization / Tenant</span>
+        <span class="tabular">3 Orgs →</span>
+      </a>
+    </div>
+
+    <div style="font-size:12px; color:var(--ink-tertiary); text-align:center; margin-top:24px;">
+      Protected by Supabase Auth &amp; PostgreSQL Row-Level Security
+    </div>
+  </div>
+
+  <div style="text-align:center; margin-top:20px;">
+    <a href="01_landing.html" style="font-size:13px; color:var(--ink-secondary); text-decoration:none;">← Return to Homepage</a>
+  </div>
+</div>
+
+<script>
+  function signIn() {
+    alert("Magic link dispatched! Redirecting to Acme Cloud treasury dashboard...");
+    window.location.href = "12_dashboard_overview.html";
+  }
+</script>
+
+</body>
+</html>

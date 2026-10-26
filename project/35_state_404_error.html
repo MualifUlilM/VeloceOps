@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>403 Forbidden — Access Denied by RBAC Policy — VeloceOps</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&f[]=general-sans@500,600,700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400,500,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/veloceops.css">
+</head>
+<body style="background:var(--bg-shell);">
+
+<div style="max-width:520px; margin:100px auto; padding:0 24px; text-align:center;">
+  <div style="width:64px; height:64px; border-radius:16px; background:var(--coral-bg); border:1px solid var(--coral); display:flex; align-items:center; justify-content:center; margin:0 auto 20px;">
+    <svg class="icon" viewBox="0 0 24 24" style="width:28px; height:28px; stroke:var(--coral);"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+  </div>
+
+  <div class="tabular" style="font-size:13px; font-weight:600; color:var(--coral); margin-bottom:8px;">403 FORBIDDEN • RBAC POLICY VIOLATION</div>
+  <h1 style="font-family:var(--font-display); font-size:26px; font-weight:600; color:var(--ink); margin-bottom:12px;">Access restricted by PostgreSQL security rule</h1>
+  <p style="font-size:14px; color:var(--ink-secondary); line-height:1.6; margin-bottom:28px;">
+    Your current session role (<code>VIEWER</code>) does not possess database write permissions for this tenant resource. Mutation attempts are blocked at the engine layer.
+  </p>
+
+  <div style="display:flex; justify-content:center; gap:12px;">
+    <a href="12_dashboard_overview.html" class="btn btn-volt">Return to Dashboard</a>
+    <a href="11_tenant_switcher.html" class="btn">Switch to OWNER Role</a>
+  </div>
+</div>
+
+</body>
+</html>

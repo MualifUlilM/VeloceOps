@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VeloceOps — Smart Invoicing Studio</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&f[]=general-sans@500,600,700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400,500,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/veloceops.css">
+  <style>
+    .filter-toolbar {
+      padding: 20px 32px;
+      border-bottom: 1px solid var(--border-hairline);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .search-input {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-canvas);
+      padding: 8px 14px;
+      border-radius: 9px;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      color: var(--ink);
+      width: 280px;
+      outline: none;
+    }
+    .search-input:focus {
+      border-color: var(--border-strong);
+      background: var(--bg-canvas);
+    }
+    .segmented {
+      display: inline-flex;
+      background: var(--bg-recessed);
+      padding: 3px;
+      border-radius: 9px;
+    }
+    .seg-tab {
+      border: none;
+      background: transparent;
+      color: var(--ink-secondary);
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: all 0.12s ease;
+    }
+    .seg-tab.active {
+      background: var(--bg-canvas);
+      color: var(--ink);
+      box-shadow: 0 1px 2px rgba(18, 19, 22, 0.06);
+    }
+    .org-cell {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .org-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-canvas);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-frame">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div>
+      <div class="brand-switcher">
+        <div style="display:flex; align-items:center;">
+          <div class="brand-mark">AC</div>
+          <div class="brand-info">
+            <div class="brand-title">Acme Cloud Inc.</div>
+            <div class="brand-sub">acme_01 • USD</div>
+          </div>
+        </div>
+        <a href="11_tenant_switcher.html" class="kbd">⌘1</a>
+      </div>
+
+      <a href="06_security_compliance.html" class="search-pill">
+        <span style="display:flex; align-items:center; gap:8px;">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span>Search or inspect SQL...</span>
+        </span>
+        <span class="kbd">⌘K</span>
+      </a>
+
+      <div class="nav-group">
+        <div class="nav-group-title">Financial Operations</div>
+        <ul class="nav-list">
+          <li>
+            <a href="12_dashboard_overview.html" class="nav-link">
+              <span class="nav-link-left">
+                <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+                <span>Treasury &amp; Cashflow</span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="16_invoices_list.html" class="nav-link active">
+              <span class="nav-link-left">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                <span>Smart Invoicing Studio</span>
+              </span>
+              <span class="nav-count">2</span>
+            </a>
+          </li>
+          <li>
+            <a href="22_spend_management.html" class="nav-link">
+              <span class="nav-link-left">
+                <svg class="icon" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                <span>Spend Caps &amp; RevOps</span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="25_ai_cfo_feed.html" class="nav-link">
+              <span class="nav-link-left">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10H12V2z"/><path d="M12 2a10 10 0 0 1 10 10h-10V2z"/></svg>
+                <span>AI CFO Copilot</span>
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-title">Governance &amp; Handover</div>
+        <ul class="nav-list">
+          <li>
+            <a href="33_design_system_ui_kit.html" class="nav-link">
+              <span class="nav-link-left">
+                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                <span>Design System UI Kit</span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="06_security_compliance.html" class="nav-link">
+              <span class="nav-link-left">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span>Supabase RLS Policy</span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="29_settings_team_rbac.html" class="nav-link">
+              <span class="nav-link-left">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span>Team &amp; Roles</span>
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CANVAS -->
+  <main class="workspace-canvas">
+    <header class="canvas-header">
+      <div class="header-left">
+        <h1 class="canvas-title">Smart Invoicing &amp; Receivables Ledger</h1>
+        <div class="env-indicator">
+          <span class="env-dot"></span>
+          <span>RLS Enforced • acme_01</span>
+        </div>
+      </div>
+
+      <div class="header-controls">
+        <button class="btn" onclick="alert('Exporting Sub-Ledger CSV...')">Export CSV</button>
+        <a href="17_invoice_create.html" class="btn btn-volt">+ Issue Commercial Invoice</a>
+      </div>
+    </header>
+
+    <!-- FILTER TOOLBAR -->
+    <div class="filter-toolbar">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <input type="text" class="search-input" id="searchBox" placeholder="Search customer, ID, or rail..." onkeyup="filterTable()" />
+        <div class="segmented">
+          <button class="seg-tab active" onclick="setStatusFilter('ALL', this)">All (5)</button>
+          <button class="seg-tab" onclick="setStatusFilter('PAID', this)">Paid (2)</button>
+          <button class="seg-tab" onclick="setStatusFilter('PENDING', this)">Pending (1)</button>
+          <button class="seg-tab" onclick="setStatusFilter('OVERDUE', this)">Overdue (2)</button>
+        </div>
+      </div>
+
+      <div style="font-size:13px; color:var(--ink-secondary);">
+        Sub-Ledger Total: <strong class="tabular" style="color:var(--ink);">$73,850.00</strong>
+      </div>
+    </div>
+
+    <!-- FULL TABLE -->
+    <table class="fintech-table">
+      <thead>
+        <tr>
+          <th style="padding-left:32px;">Invoice ID</th>
+          <th>Customer Organization</th>
+          <th>Settlement Rail</th>
+          <th>Issued Date</th>
+          <th>Due Date</th>
+          <th>Status</th>
+          <th class="text-right">Total Amount</th>
+          <th class="text-right" style="padding-right:32px;">Action</th>
+        </tr>
+      </thead>
+      <tbody id="invoicesTableBody">
+        <tr data-status="PAID">
+          <td class="tabular" style="padding-left:32px; font-weight:600;"><a href="18_invoice_detail.html" style="color:var(--ink); text-decoration:none;">INV-2026-092</a></td>
+          <td>
+            <div class="org-cell">
+              <div class="org-avatar">ST</div>
+              <div><strong style="color:var(--ink);">Stripe Inc.</strong><div style="font-size:12px; color:var(--ink-tertiary);">ap-treasury@stripe.com</div></div>
+            </div>
+          </td>
+          <td><span style="font-size:13px; color:var(--ink-secondary);">Stripe ACH Direct</span></td>
+          <td class="tabular" style="color:var(--ink-secondary);">Oct 21, 2026</td>
+          <td class="tabular" style="color:var(--ink-secondary);">Settled Oct 21</td>
+          <td><span class="status-dot-cell"><span class="dot-emerald"></span> Paid</span></td>
+          <td class="tabular text-right" style="font-weight:600;">$18,400.00</td>
+          <td class="text-right" style="padding-right:32px;"><a href="18_invoice_detail.html" class="btn" style="padding:4px 8px; font-size:12px;">View Sheet</a></td>
+        </tr>
+        <tr data-status="PENDING">
+          <td class="tabular" style="padding-left:32px; font-weight:600;"><a href="18_invoice_detail.html" style="color:var(--ink); text-decoration:none;">INV-2026-091</a></td>
+          <td>
+            <div class="org-cell">
+              <div class="org-avatar">VC</div>
+              <div><strong style="color:var(--ink);">Vercel Enterprise</strong><div style="font-size:12px; color:var(--ink-tertiary);">finance@vercel.com</div></div>
+            </div>
+          </td>
+          <td><span style="font-size:13px; color:var(--ink-secondary);">Fedwire Transfer</span></td>
+          <td class="tabular" style="color:var(--ink-secondary);">Oct 19, 2026</td>
+          <td class="tabular" style="color:var(--ink-secondary);">Due Nov 02</td>
+          <td><span class="status-dot-cell"><span class="dot-amber"></span> Pending</span></td>
+          <td class="tabular text-right" style="font-weight:600;">$12,450.00</td>
+          <td class="text-right" style="padding-right:32px;"><a href="19_customer_portal_view.html" class="btn" style="padding:4px 8px; font-size:12px;">Payment Link</a></td>
+        </tr>
+        <tr data-status="OVERDUE">
+          <td class="tabular" style="padding-left:32px; font-weight:600;"><a href="18_invoice_detail.html" style="color:var(--ink); text-decoration:none;">INV-2026-089</a></td>
+          <td>
+            <div class="org-cell">
+              <div class="org-avatar">LO</div>
+              <div><strong style="color:var(--ink);">Linear Orbit Ltd</strong><div style="font-size:12px; color:var(--ink-tertiary);">billing@linearorbit.io</div></div>
+            </div>
+          </td>
+          <td><span style="font-size:13px; color:var(--ink-secondary);">Stripe Checkout Link</span></td>
+          <td class="tabular" style="color:var(--ink-secondary);">Sep 26, 2026</td>
+          <td class="tabular text-coral" style="font-weight:600;">14d Overdue</td>
+          <td><span class="status-dot-cell"><span class="dot-coral"></span> Overdue</span></td>
+          <td class="tabular text-right" style="font-weight:600;">$14,200.00</td>
+          <td class="text-right" style="padding-right:32px;"><button class="btn btn-volt" style="padding:4px 8px; font-size:12px;" onclick="alert('Sent dunning notice')">Send Notice</button></td>
+        </tr>
+        <tr data-status="PAID">
+          <td class="tabular" style="padding-left:32px; font-weight:600;"><a href="18_invoice_detail.html" style="color:var(--ink); text-decoration:none;">INV-2026-088</a></td>
+          <td>
+            <div class="org-cell">
+              <div class="org-avatar">SB</div>
+              <div><strong style="color:var(--ink);">Supabase Inc.</strong><div style="font-size:12px; color:var(--ink-tertiary);">accounts@supabase.io</div></div>
+            </div>
+          </td>
+          <td><span style="font-size:13px; color:var(--ink-secondary);">Stripe ACH Direct</span></td>
+          <td class="tabular" style="color:var(--ink-secondary);">Sep 18, 2026</td>
+          <td class="tabular" style="color:var(--ink-secondary);">Settled Sep 19</td>
+          <td><span class="status-dot-cell"><span class="dot-emerald"></span> Paid</span></td>
+          <td class="tabular text-right" style="font-weight:600;">$24,000.00</td>
+          <td class="text-right" style="padding-right:32px;"><a href="18_invoice_detail.html" class="btn" style="padding:4px 8px; font-size:12px;">View Sheet</a></td>
+        </tr>
+        <tr data-status="OVERDUE">
+          <td class="tabular" style="padding-left:32px; font-weight:600;"><a href="18_invoice_detail.html" style="color:var(--ink); text-decoration:none;">INV-2026-085</a></td>
+          <td>
+            <div class="org-cell">
+              <div class="org-avatar">RT</div>
+              <div><strong style="color:var(--ink);">Retool Corp</strong><div style="font-size:12px; color:var(--ink-tertiary);">ap@retool.com</div></div>
+            </div>
+          </td>
+          <td><span style="font-size:13px; color:var(--ink-secondary);">Corporate Card</span></td>
+          <td class="tabular" style="color:var(--ink-secondary);">Sep 10, 2026</td>
+          <td class="tabular text-coral" style="font-weight:600;">7d Overdue</td>
+          <td><span class="status-dot-cell"><span class="dot-coral"></span> Overdue</span></td>
+          <td class="tabular text-right" style="font-weight:600;">$4,800.00</td>
+          <td class="text-right" style="padding-right:32px;"><button class="btn btn-volt" style="padding:4px 8px; font-size:12px;" onclick="alert('Sent dunning notice')">Send Notice</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+</div>
+
+<script>
+  let currentFilter = "ALL";
+
+  function setStatusFilter(status, btn) {
+    currentFilter = status;
+    btn.parentElement.querySelectorAll(".seg-tab").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    filterTable();
+  }
+
+  function filterTable() {
+    const q = document.getElementById("searchBox").value.toLowerCase();
+    const rows = document.querySelectorAll("#invoicesTableBody tr");
+    rows.forEach(r => {
+      const rowStatus = r.getAttribute("data-status");
+      const matchStatus = (currentFilter === "ALL" || rowStatus === currentFilter);
+      const matchQuery = r.innerText.toLowerCase().includes(q);
+      r.style.display = (matchStatus && matchQuery) ? "" : "none";
+    });
+  }
+</script>
+
+</body>
+</html>

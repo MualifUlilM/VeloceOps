@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Switch Organization / Tenant — VeloceOps</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&f[]=general-sans@500,600,700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400,500,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/veloceops.css">
+  <style>
+    .switcher-container {
+      max-width: 580px;
+      margin: 64px auto;
+      padding: 0 20px;
+    }
+    .tenant-card-select {
+      background: var(--bg-canvas);
+      border: 1px solid var(--border-canvas);
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      text-decoration: none;
+      color: var(--ink);
+      transition: all 0.14s ease;
+    }
+    .tenant-card-select:hover {
+      border-color: var(--ink);
+      box-shadow: 0 4px 12px rgba(18, 19, 22, 0.05);
+    }
+  </style>
+</head>
+<body style="background:var(--bg-shell);">
+
+<div class="switcher-container">
+  <div style="text-align:center; margin-bottom:28px;">
+    <div style="display:inline-flex; align-items:center; gap:10px; margin-bottom:8px;">
+      <div class="brand-mark">VO</div>
+      <span style="font-family:var(--font-display); font-size:20px; font-weight:600;">Select Tenant Workspace</span>
+    </div>
+    <div style="font-size:14px; color:var(--ink-secondary);">
+      Simulate multi-tenant PostgreSQL Row-Level Security isolation.
+    </div>
+  </div>
+
+  <!-- TENANT 1 -->
+  <a href="12_dashboard_overview.html" class="tenant-card-select">
+    <div style="display:flex; align-items:center; gap:14px;">
+      <div class="brand-mark">AC</div>
+      <div>
+        <div style="font-weight:600; font-size:16px;">Acme Cloud Inc.</div>
+        <div class="tabular" style="font-size:12px; color:var(--ink-tertiary);">UUID: a0000000-0000-0000-0000-000000000001 • Base Currency: USD</div>
+      </div>
+    </div>
+    <div style="text-align:right;">
+      <div class="tabular" style="font-weight:600;">$148,920.00</div>
+      <span class="status-dot-cell"><span class="dot-emerald"></span> Role: OWNER</span>
+    </div>
+  </a>
+
+  <!-- TENANT 2 -->
+  <a href="12_dashboard_overview.html" class="tenant-card-select">
+    <div style="display:flex; align-items:center; gap:14px;">
+      <div class="brand-mark" style="background:#E2E8F0; color:var(--ink); border-color:var(--border-canvas);">NL</div>
+      <div>
+        <div style="font-weight:600; font-size:16px;">Nova Logistics GmbH</div>
+        <div class="tabular" style="font-size:12px; color:var(--ink-tertiary);">UUID: a0000000-0000-0000-0000-000000000002 • Base Currency: EUR</div>
+      </div>
+    </div>
+    <div style="text-align:right;">
+      <div class="tabular" style="font-weight:600;">€284,500.00</div>
+      <span class="status-dot-cell"><span class="dot-emerald"></span> Role: FINANCE</span>
+    </div>
+  </a>
+
+  <!-- TENANT 3 -->
+  <a href="12_dashboard_overview.html" class="tenant-card-select">
+    <div style="display:flex; align-items:center; gap:14px;">
+      <div class="brand-mark" style="background:#E2E8F0; color:var(--ink); border-color:var(--border-canvas);">KX</div>
+      <div>
+        <div style="font-weight:600; font-size:16px;">Kinetix AI Labs</div>
+        <div class="tabular" style="font-size:12px; color:var(--ink-tertiary);">UUID: a0000000-0000-0000-0000-000000000003 • Base Currency: GBP</div>
+      </div>
+    </div>
+    <div style="text-align:right;">
+      <div class="tabular" style="font-weight:600;">£92,400.00</div>
+      <span class="status-dot-cell"><span class="dot-amber"></span> Role: VIEWER</span>
+    </div>
+  </a>
+
+  <div style="text-align:center; margin-top:24px;">
+    <a href="12_dashboard_overview.html" style="font-size:13px; color:var(--ink-secondary); text-decoration:none;">← Return to active session</a>
+  </div>
+</div>
+
+</body>
+</html>

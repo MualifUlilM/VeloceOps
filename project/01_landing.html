@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VeloceOps — Multi-Tenant Treasury, Smart Invoicing &amp; AI Revenue Operations</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&f[]=general-sans@500,600,700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400,500,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/veloceops.css">
+  <style>
+    /* Landing Page Specific High-Craft Styling */
+    .landing-body {
+      background: var(--bg-shell);
+      color: var(--ink);
+    }
+    .landing-nav {
+      max-width: 1240px;
+      margin: 16px auto;
+      padding: 12px 24px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-canvas);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-links-row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      list-style: none;
+    }
+    .nav-links-row a {
+      color: var(--ink-secondary);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.15s ease;
+    }
+    .nav-links-row a:hover {
+      color: var(--ink);
+    }
+    .hero-section {
+      max-width: 1240px;
+      margin: 48px auto;
+      padding: 0 24px;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-canvas);
+      border: 1px solid var(--border-canvas);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink-secondary);
+      margin-bottom: 24px;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: 58px;
+      line-height: 1.08;
+      font-weight: 600;
+      letter-spacing: -0.035em;
+      color: var(--ink);
+      max-width: 920px;
+      margin: 0 auto 20px;
+    }
+    .hero-subtitle {
+      font-size: 18px;
+      color: var(--ink-secondary);
+      max-width: 680px;
+      margin: 0 auto 36px;
+      line-height: 1.5;
+    }
+    .hero-cta-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 56px;
+    }
+    .preview-canvas-frame {
+      max-width: 1240px;
+      margin: 0 auto 72px;
+      padding: 16px;
+      background: var(--bg-canvas);
+      border: 1px solid var(--border-canvas);
+      border-radius: 24px;
+      box-shadow: 0 20px 48px -12px rgba(18, 19, 22, 0.08);
+    }
+    .bento-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 1240px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+    }
+    .bento-card {
+      background: var(--bg-canvas);
+      border: 1px solid var(--border-canvas);
+      border-radius: 18px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .bento-num {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--ink-tertiary);
+      margin-bottom: 16px;
+    }
+    .bento-card-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 10px;
+      line-height: 1.25;
+    }
+    .bento-card-desc {
+      font-size: 14px;
+      color: var(--ink-secondary);
+      line-height: 1.55;
+    }
+    .footer-bar {
+      border-top: 1px solid var(--border-hairline);
+      background: var(--bg-canvas);
+      padding: 32px 24px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--ink-tertiary);
+    }
+  </style>
+</head>
+<body class="landing-body">
+
+  <!-- TOP PUBLIC NAV -->
+  <header class="landing-nav">
+    <div style="display:flex; align-items:center; gap:12px;">
+      <div class="brand-mark">VO</div>
+      <span style="font-family:var(--font-display); font-size:16px; font-weight:600;">VeloceOps</span>
+    </div>
+
+    <ul class="nav-links-row">
+      <li><a href="01_landing.html">Overview</a></li>
+      <li><a href="02_pricing.html">Pricing</a></li>
+      <li><a href="06_security_compliance.html">Security &amp; RLS</a></li>
+      <li><a href="12_dashboard_overview.html">Live Sandbox Demo</a></li>
+      <li><a href="33_design_system_ui_kit.html">Design System</a></li>
+    </ul>
+
+    <div style="display:flex; align-items:center; gap:10px;">
+      <a href="08_auth_login.html" class="btn">Sign In</a>
+      <a href="12_dashboard_overview.html" class="btn btn-volt">Launch Sandbox →</a>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="hero-section">
+    <div class="hero-eyebrow">
+      <span class="env-dot"></span>
+      <span>Multi-Tenant Supabase RLS &amp; Idempotent Stripe Webhooks</span>
+    </div>
+
+    <h1 class="hero-title">Treasury operations &amp; invoicing engineered for modern B2B SaaS</h1>
+    <p class="hero-subtitle">
+      Automate receivables reconciliation, enforce strict multi-tenant Row-Level Security, and eliminate spend variances with an autonomous AI CFO.
+    </p>
+
+    <div class="hero-cta-group">
+      <a href="12_dashboard_overview.html" class="btn btn-volt" style="padding:12px 22px; font-size:15px;">Launch Interactive Sandbox Demo</a>
+      <a href="06_security_compliance.html" class="btn" style="padding:12px 20px; font-size:15px;">Inspect Security Architecture</a>
+    </div>
+
+    <!-- LIVE APP PREVIEW FRAME -->
+    <div class="preview-canvas-frame">
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 18px 18px; border-bottom:1px solid var(--border-hairline);">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="width:10px; height:10px; border-radius:50%; background:#E2E2DC; display:inline-block;"></span>
+          <span style="width:10px; height:10px; border-radius:50%; background:#E2E2DC; display:inline-block;"></span>
+          <span style="width:10px; height:10px; border-radius:50%; background:#E2E2DC; display:inline-block;"></span>
+          <span class="tabular" style="font-size:12px; color:var(--ink-tertiary); margin-left:8px;">app.veloceops.com/acme_01/treasury</span>
+        </div>
+        <a href="12_dashboard_overview.html" class="btn" style="padding:4px 10px; font-size:12px;">Open Fullscreen Demo ↗</a>
+      </div>
+      <iframe src="12_dashboard_overview.html" style="width:100%; height:580px; border:none; border-radius:12px; margin-top:12px;" title="VeloceOps Live Sandbox"></iframe>
+    </div>
+  </section>
+
+  <!-- BENTO FEATURE MATRIX -->
+  <section class="bento-grid-3">
+    <div class="bento-card">
+      <div>
+        <div class="bento-num">01 / ARCHITECTURE</div>
+        <div class="bento-card-title">Database-Enforced PostgreSQL RLS</div>
+        <div class="bento-card-desc">
+          Zero cross-tenant data leakage. Every SQL query is automatically scoped via JWT claims at the database engine level, not simple frontend filters.
+        </div>
+      </div>
+      <div style="margin-top:24px;">
+        <span class="status-dot-cell"><span class="dot-emerald"></span> Verified Clean Handover SOP</span>
+      </div>
+    </div>
+
+    <div class="bento-card">
+      <div>
+        <div class="bento-num">02 / BILLING ENGINE</div>
+        <div class="bento-card-title">Idempotent Stripe Webhook Ledger</div>
+        <div class="bento-card-desc">
+          Atomic database transactions prevent duplicate credits. Invoices settle in real-time and automatically reconcile to operating cash liquidity.
+        </div>
+      </div>
+      <div style="margin-top:24px;">
+        <span class="status-dot-cell"><span class="dot-emerald"></span> Deduplication via processed_events</span>
+      </div>
+    </div>
+
+    <div class="bento-card">
+      <div>
+        <div class="bento-num">03 / AI INTELLIGENCE</div>
+        <div class="bento-card-title">Autonomous AI CFO Copilot</div>
+        <div class="bento-card-desc">
+          Continuous anomaly detection flags cloud spend spikes and overdue accounts receivable, calculating precise net runway extensions.
+        </div>
+      </div>
+      <div style="margin-top:24px;">
+        <span class="status-dot-cell"><span class="dot-emerald"></span> 1-Click Executive Dunning Actions</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer-bar">
+    <div>VeloceOps B2B SaaS Platform • Built by <strong>Hanif Daffa N.</strong> • Full-Stack Next.js 15 &amp; Supabase Architecture</div>
+    <div style="margin-top:8px;">
+      <a href="12_dashboard_overview.html" style="color:var(--ink-secondary); text-decoration:none; margin:0 8px;">Dashboard</a> •
+      <a href="16_invoices_list.html" style="color:var(--ink-secondary); text-decoration:none; margin:0 8px;">Invoicing Studio</a> •
+      <a href="02_pricing.html" style="color:var(--ink-secondary); text-decoration:none; margin:0 8px;">Pricing</a> •
+      <a href="06_security_compliance.html" style="color:var(--ink-secondary); text-decoration:none; margin:0 8px;">Security</a>
+    </div>
+  </footer>
+
+</body>
+</html>

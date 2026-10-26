@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VeloceOps — Master Project Directory &amp; Multi-Page Suite</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&f[]=general-sans@500,600,700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400,500,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/veloceops.css">
+  <style>
+    .hub-container {
+      max-width: 1100px;
+      margin: 48px auto;
+      padding: 0 24px;
+    }
+    .page-category-section {
+      margin-bottom: 40px;
+    }
+    .category-title {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--ink);
+      padding-bottom: 10px;
+      border-bottom: 1.5px solid var(--ink);
+      margin-bottom: 16px;
+    }
+    .page-card-link {
+      background: var(--bg-canvas);
+      border: 1px solid var(--border-canvas);
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-decoration: none;
+      color: var(--ink);
+      margin-bottom: 10px;
+      transition: all 0.14s ease;
+    }
+    .page-card-link:hover {
+      border-color: var(--ink);
+      box-shadow: 0 4px 12px rgba(18, 19, 22, 0.05);
+    }
+    .file-tag {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--ink-tertiary);
+    }
+  </style>
+</head>
+<body style="background:var(--bg-shell);">
+
+<div class="hub-container">
+  <!-- HEADER -->
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:36px; padding-bottom:20px; border-bottom:1px solid var(--border-hairline);">
+    <div style="display:flex; align-items:center; gap:12px;">
+      <div class="brand-mark" style="width:38px; height:38px; font-size:15px;">VO</div>
+      <div>
+        <div style="font-family:var(--font-display); font-size:22px; font-weight:600; color:var(--ink);">VeloceOps Project Hub</div>
+        <div style="font-size:13px; color:var(--ink-secondary);">Complete Multi-Page B2B SaaS Application Suite • Built for Upwork Flagship Portfolio</div>
+      </div>
+    </div>
+    <div style="display:flex; gap:10px;">
+      <a href="01_landing.html" class="btn">Public Landing Page</a>
+      <a href="12_dashboard_overview.html" class="btn btn-volt">Launch Dashboard Sandbox →</a>
+    </div>
+  </div>
+
+  <!-- SUITE 1 -->
+  <div class="page-category-section">
+    <div class="category-title">I. Public Marketing &amp; Trust Suite</div>
+    <a href="01_landing.html" class="page-card-link">
+      <div>
+        <strong>01. Public Homepage &amp; Landing Page</strong>
+        <div style="font-size:13px; color:var(--ink-secondary);">Hero with live embedded sandbox, bento feature matrix, and conversion architecture.</div>
+      </div>
+      <span class="file-tag">01_landing.html ↗</span>
+    </a>
+    <a href="02_pricing.html" class="page-card-link">
+      <div>
+        <strong>02. Transparent B2B Pricing Calculator</strong>
+        <div style="font-size:13px; color:var(--ink-secondary);">Starter ($199), Growth ($499), and Enterprise ($1,299) tier comparison with feature checklists.</div>
+      </div>
+      <span class="file-tag">02_pricing.html ↗</span>
+    </a>
+    <a href="06_security_compliance.html" class="page-card-link">
+      <div>
+        <strong>06. Security Architecture &amp; PostgreSQL RLS Policies</strong>
+        <div style="font-size:13px; color:var(--ink-secondary);">Database engine row-level isolation inspection and zero-manual-clicks handover SOP.</div>
+      </div>
+      <span class="file-tag">06_security_compliance.html ↗</span>
+    </a>
+  </div>
+
+  <!-- SUITE 2 -->
+  <div class="page-category-section">
+    <div class="category-title">II. Authentication &amp; Multi-Tenant Workspace Suite</div>
+    <a href="08_auth_login.html" class="page-card-link">
+      <div>
+        <strong>08. Sign In &amp; Magic Link Authentication</strong>
+        <div style="font-size:13px; color:var(--ink-secondary);">Supabase Auth sign-in screen with role switcher shortcuts.</div>
+      </div>
+      <span class="file-tag">08_auth_login.html ↗</span>
+    </a>
+    <a href="11_tenant_switcher.html" class="page-card-link">
+      <div>
+        <strong>11. Multi-Tenant Workspace Selector</strong>
+        <div style="font-size:13px; color:var(--ink-secondary);">Simulate switching between Acme Cloud (USD), Nova Logistics (EUR), and Kinetix AI (GBP).</div>
+      </div>
+      <span class="file-tag">11_tenant_switcher.html ↗</span>
+    </a>
+  </div>
+
+  <!-- SUITE 3 -->
+  <div class="page-category-section">
+    <div class="category-title">III. Core Financial &amp; Treasury Suite</div>
+    <a href="12_dashboard_overview.html" class="page-card-link">
+      <div>
+        <strong>12. Consolidated Treasury Command Deck</strong>
+        <div style="font-size:13px; color:var(--ink-secondary);">Primary executive view: 4-column metric strip, cashflow velocity chart, and master-detail sub-ledger.</div>
+      </div>
+      <span class="file-tag">12_dashboard_overview.html ↗</span>
+    </a>
+  </div>
+
+  <!-- SUITE 4 -->
+  <div class="page-category-section">
+    <div class="category-title">IV. Smart Invoicing &amp; Receivables Operations</div>
+    <a href="16_invoices_list.html" class="page-card-link">
+      <div>
+        <strong>16. Smart Invoicing Studio Sub-Ledger</strong>
+        <div style="font-size:13px; color:var(--ink-secondary);">Full searchable invoice directory with status filters (Paid, Pending, Overdue) and CSV export.</div>
+      </div>
+      <span class="file-tag">16_invoices_list.html ↗</span>
+    </a>
+    <a href="17_invoice_create.html" class="page-card-link">
+      <div>
+        <strong>17. Full-Page Commercial Invoice Builder</strong>
+        <div style="font-size:13px; color:var(--ink-secondary);">Client selector, line-item studio with live calculation, and instant commit to Supabase ledger.</div>
+      </div>
+      <span class="file-tag">17_invoice_create.html ↗</span>
+    </a>
+    <a href="18_invoice_detail.html" class="page-card-link">
+      <div>
+        <strong>18. Commercial Invoice Detail &amp; Cryptographic Audit</strong>
+        <div style="font-size:13px; color:var(--ink-secondary);">Real rendered commercial invoice paper with itemized lines, PDF print, and webhook timeline.</div>
+      </div>
+      <span class="file-tag">18_invoice_detail.html ↗</span>
+    </a>
+    <a href="19_customer_portal_view.html" class="page-card-link">
+      <div>
+        <strong>19. Buyer Hosted Stripe Payment Portal</strong>
+        <div style="font-size:13px; color:var(--ink-secondary);">Customer-facing payment link view with 1-click payment simulation.</div>
+      </div>
+      <span class="file-tag">19_customer_portal_view.html ↗</span>
+    </a>
+  </div>
+
+  <!-- SUITE 5 -->
+  <div class="page-category-section">
+    <div class="category-title">V. Spend Management &amp; AI Revenue Intelligence</div>
+    <a href="22_spend_management.html" class="page-card-link">
+      <div>
+        <strong>22. Departmental Spend Caps &amp; RevOps Funnel</strong>
+        <div style="font-size:13px; color:var(--ink-secondary);">OpEx spend ceilings for Cloud AWS, Payroll, and Demand Gen with B2B cohort tracking.</div>
+      </div>
+      <span class="file-tag">22_spend_management.html ↗</span>
+    </a>
+    <a href="25_ai_cfo_feed.html" class="page-card-link">
+      <div>
+        <strong>25. AI CFO Copilot &amp; Autonomous Anomaly Hub</strong>
+        <div style="font-size:13px; color:var(--ink-secondary);">Real-time spend spike alerts, automated dunning dispatch, and interactive runway simulator.</div>
+      </div>
+      <span class="file-tag">25_ai_cfo_feed.html ↗</span>
+    </a>
+  </div>
+
+  <!-- SUITE 6 -->
+  <div class="page-category-section">
+    <div class="category-title">VI. Governance, UI Kit &amp; Edge States</div>
+    <a href="29_settings_team_rbac.html" class="page-card-link">
+      <div>
+        <strong>29. Team Members &amp; RBAC Roles Matrix</strong>
+        <div style="font-size:13px; color:var(--ink-secondary);">Role management for Owner, Finance Manager, and Auditor Read-Only sessions.</div>
+      </div>
+      <span class="file-tag">29_settings_team_rbac.html ↗</span>
+    </a>
+    <a href="33_design_system_ui_kit.html" class="page-card-link">
+      <div>
+        <strong>33. Design System UI Kit &amp; Component Storybook</strong>
+        <div style="font-size:13px; color:var(--ink-secondary);">Developer reference for buttons, color swatches, dot indicators, and typography scales.</div>
+      </div>
+      <span class="file-tag">33_design_system_ui_kit.html ↗</span>
+    </a>
+    <a href="34_state_empty_invoices.html" class="page-card-link">
+      <div>
+        <strong>34. Empty State Specification (Invoices)</strong>
+        <div style="font-size:13px; color:var(--ink-secondary);">Guidance for developers on onboarding zero-data states.</div>
+      </div>
+      <span class="file-tag">34_state_empty_invoices.html ↗</span>
+    </a>
+    <a href="35_state_404_error.html" class="page-card-link">
+      <div>
+        <strong>35. 403 Forbidden Access State (RBAC Violation)</strong>
+        <div style="font-size:13px; color:var(--ink-secondary);">Security error state when a VIEWER attempts unauthorized mutations.</div>
+      </div>
+      <span class="file-tag">35_state_404_error.html ↗</span>
+    </a>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="text-align:center; padding:32px 0; font-size:13px; color:var(--ink-tertiary); border-top:1px solid var(--border-hairline);">
+    VeloceOps Architecture Suite • Ready for Developer Onboarding &amp; Upwork Client Presentation
+  </div>
+</div>
+
+</body>
+</html>

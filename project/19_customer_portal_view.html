@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pay Invoice INV-2026-091 — Acme Cloud Inc.</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&f[]=general-sans@500,600,700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400,500,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/veloceops.css">
+  <style>
+    .portal-container {
+      max-width: 540px;
+      margin: 48px auto;
+      padding: 0 20px;
+    }
+    .portal-card {
+      background: var(--bg-canvas);
+      border: 1px solid var(--border-canvas);
+      border-radius: 20px;
+      padding: 36px;
+      box-shadow: 0 12px 36px -8px rgba(18, 19, 22, 0.08);
+    }
+    .pay-btn-primary {
+      width: 100%;
+      background: var(--ink);
+      color: #FFFFFF;
+      font-family: var(--font-sans);
+      font-size: 15px;
+      font-weight: 600;
+      padding: 13px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+      transition: opacity 0.15s ease;
+    }
+    .pay-btn-primary:hover {
+      opacity: 0.9;
+    }
+    .payment-method-tile {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid var(--border-canvas);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      background: var(--bg-subtle);
+    }
+    .payment-method-tile.selected {
+      border-color: var(--ink);
+      background: var(--bg-canvas);
+    }
+  </style>
+</head>
+<body style="background:var(--bg-shell);">
+
+<div class="portal-container">
+  <div style="text-align:center; margin-bottom:24px;">
+    <div style="font-size:13px; color:var(--ink-tertiary); font-weight:500;">SECURE HOSTED STRIPE CHECKOUT</div>
+    <div style="font-family:var(--font-display); font-size:22px; font-weight:600; color:var(--ink); margin-top:4px;">Acme Cloud Inc.</div>
+  </div>
+
+  <div class="portal-card">
+    <div style="display:flex; justify-content:space-between; align-items:baseline; padding-bottom:16px; border-bottom:1px solid var(--border-hairline); margin-bottom:20px;">
+      <div>
+        <div style="font-size:12px; color:var(--ink-tertiary);">INVOICE NUMBER</div>
+        <div class="tabular" style="font-family:var(--font-display); font-size:18px; font-weight:600; color:var(--ink);">INV-2026-091</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:12px; color:var(--ink-tertiary);">AMOUNT DUE</div>
+        <div class="tabular" style="font-family:var(--font-display); font-size:26px; font-weight:600; color:var(--ink);">$12,450.00</div>
+      </div>
+    </div>
+
+    <div style="font-size:13px; font-weight:600; color:var(--ink); margin-bottom:10px;">Select Settlement Method</div>
+
+    <div class="payment-method-tile selected" onclick="selectMethod(this)">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span style="font-family:var(--font-mono); font-size:12px; font-weight:600;">ACH</span>
+        <span>US Bank Account (Stripe Financial Connections)</span>
+      </div>
+      <span class="status-dot-cell"><span class="dot-emerald"></span></span>
+    </div>
+
+    <div class="payment-method-tile" onclick="selectMethod(this)">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span style="font-family:var(--font-mono); font-size:12px; font-weight:600;">WIRE</span>
+        <span>Fedwire Routing Transfer Details</span>
+      </div>
+    </div>
+
+    <div class="payment-method-tile" onclick="selectMethod(this)">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span style="font-family:var(--font-mono); font-size:12px; font-weight:600;">CARD</span>
+        <span>Corporate Debit / Credit Card</span>
+      </div>
+    </div>
+
+    <button class="pay-btn-primary" onclick="simulateBuyerPayment()">
+      <svg class="icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      <span>Authorize &amp; Pay $12,450.00</span>
+    </button>
+
+    <div style="text-align:center; font-size:12px; color:var(--ink-tertiary); margin-top:16px;">
+      Encrypted with 256-bit TLS • Powered by Stripe &amp; Supabase RLS
+    </div>
+  </div>
+
+  <div style="text-align:center; margin-top:20px;">
+    <a href="16_invoices_list.html" style="font-size:13px; color:var(--ink-secondary); text-decoration:none;">← Return to Merchant Ledger</a>
+  </div>
+</div>
+
+<script>
+  function selectMethod(el) {
+    document.querySelectorAll(".payment-method-tile").forEach(t => t.classList.remove("selected"));
+    el.classList.add("selected");
+  }
+
+  function simulateBuyerPayment() {
+    alert("Payment authorized! Stripe webhook 'invoice.paid' dispatched. VeloceOps operating cash balance has been credited.");
+    window.location.href = "12_dashboard_overview.html";
+  }
+</script>
+
+</body>
+</html>

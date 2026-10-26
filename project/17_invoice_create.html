@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VeloceOps — Issue Commercial Invoice</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&f[]=general-sans@500,600,700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400,500,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/veloceops.css">
+  <style>
+    .builder-layout {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 32px;
+      padding: 32px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .form-control {
+      width: 100%;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-canvas);
+      padding: 10px 14px;
+      border-radius: 9px;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      color: var(--ink);
+      outline: none;
+    }
+    .form-control:focus {
+      background: var(--bg-canvas);
+      border-color: var(--border-strong);
+    }
+    .invoice-preview-card {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-canvas);
+      border-radius: 16px;
+      padding: 28px;
+    }
+    .sheet-paper {
+      background: var(--bg-canvas);
+      border: 1px solid var(--border-canvas);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 16px rgba(18, 19, 22, 0.04);
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-frame">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div>
+      <div class="brand-switcher">
+        <div style="display:flex; align-items:center;">
+          <div class="brand-mark">AC</div>
+          <div class="brand-info">
+            <div class="brand-title">Acme Cloud Inc.</div>
+            <div class="brand-sub">acme_01 • USD</div>
+          </div>
+        </div>
+        <a href="11_tenant_switcher.html" class="kbd">⌘1</a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-title">Navigation</div>
+        <ul class="nav-list">
+          <li>
+            <a href="12_dashboard_overview.html" class="nav-link">
+              <span class="nav-link-left">
+                <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+                <span>Dashboard</span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="16_invoices_list.html" class="nav-link active">
+              <span class="nav-link-left">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                <span>Invoices Sub-Ledger</span>
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+  <!-- WORKSPACE CANVAS -->
+  <main class="workspace-canvas">
+    <header class="canvas-header">
+      <div class="header-left">
+        <a href="16_invoices_list.html" class="btn" style="padding:4px 8px; font-size:12px;">← Back</a>
+        <h1 class="canvas-title">Commercial Invoice Builder</h1>
+      </div>
+
+      <div class="header-controls">
+        <a href="16_invoices_list.html" class="btn">Cancel</a>
+        <button class="btn btn-volt" onclick="commitInvoice()">Commit to Ledger &amp; Generate Stripe Link</button>
+      </div>
+    </header>
+
+    <div class="builder-layout">
+      <!-- FORM LEFT -->
+      <div>
+        <div class="form-group">
+          <label class="form-label" for="custOrg">Customer Organization</label>
+          <input type="text" id="custOrg" class="form-control" value="Raycast Technologies Ltd" oninput="updateLiveSheet()" />
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          <div class="form-group">
+            <label class="form-label" for="custEmail">Accounts Payable Email</label>
+            <input type="email" id="custEmail" class="form-control" value="ap@raycast.com" oninput="updateLiveSheet()" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="payRail">Settlement Rail</label>
+            <select id="payRail" class="form-control" onchange="updateLiveSheet()">
+              <option value="Stripe ACH Direct">Stripe ACH Direct Debit</option>
+              <option value="Fedwire Transfer">Fedwire Domestic Transfer</option>
+              <option value="Corporate Card">Stripe Hosted Card Portal</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="border-top:1px solid var(--border-hairline); padding-top:20px; margin-top:10px;">
+          <div style="font-family:var(--font-display); font-size:16px; font-weight:600; margin-bottom:14px;">Line Items</div>
+          <div class="form-group">
+            <label class="form-label" for="itemDesc">Item 1: Description</label>
+            <input type="text" id="itemDesc" class="form-control" value="Enterprise Platform License (Annual Pool)" oninput="updateLiveSheet()" />
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+            <div class="form-group">
+              <label class="form-label" for="itemAmt">Amount (USD)</label>
+              <input type="number" id="itemAmt" class="form-control tabular" value="9500" oninput="updateLiveSheet()" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="dueDate">Payment Due Terms</label>
+              <select id="dueDate" class="form-control" onchange="updateLiveSheet()">
+                <option value="Net 15 Days">Net 15 Days</option>
+                <option value="Net 30 Days" selected>Net 30 Days</option>
+                <option value="Due on Receipt">Due on Receipt</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LIVE PREVIEW RIGHT -->
+      <aside class="invoice-preview-card">
+        <div style="font-size:12px; font-weight:600; color:var(--ink-tertiary); margin-bottom:14px;">LIVE DOCUMENT PREVIEW</div>
+        
+        <div class="sheet-paper">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; padding-bottom:14px; border-bottom:1.5px solid var(--ink); margin-bottom:14px;">
+            <div>
+              <div style="font-family:var(--font-mono); font-size:11px; color:var(--ink-tertiary);">COMMERCIAL INVOICE</div>
+              <div class="tabular" style="font-family:var(--font-display); font-size:18px; font-weight:600; color:var(--ink);" id="prevId">INV-2026-095</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:13px; font-weight:600;">Acme Cloud Inc.</div>
+              <div class="tabular" style="font-size:12px; color:var(--ink-tertiary);">Oct 26, 2026</div>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; margin-bottom:14px; font-size:13px;">
+            <div>
+              <div style="font-size:11px; color:var(--ink-tertiary); font-weight:500;">BILLED TO</div>
+              <strong id="prevCust" style="color:var(--ink);">Raycast Technologies Ltd</strong>
+              <div id="prevEmail" style="font-size:12px; color:var(--ink-secondary);">ap@raycast.com</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:11px; color:var(--ink-tertiary); font-weight:500;">TERMS</div>
+              <strong id="prevTerms" style="color:var(--ink);">Net 30 Days</strong>
+              <div id="prevRail" class="tabular" style="font-size:12px; color:var(--ink-secondary);">Stripe ACH Direct</div>
+            </div>
+          </div>
+
+          <div style="padding:10px 0; border-top:1px solid var(--border-hairline); border-bottom:1px solid var(--border-hairline); display:flex; justify-content:space-between; font-size:13px;">
+            <span id="prevItem">Enterprise Platform License (Annual Pool)</span>
+            <span class="tabular" style="font-weight:600;" id="prevAmt">$9,500.00</span>
+          </div>
+
+          <div class="sheet-total">
+            <span>Total Payable</span>
+            <span class="tabular" id="prevTotal">$9,500.00</span>
+          </div>
+
+          <div style="font-size:12px; color:var(--ink-tertiary); text-align:center;">
+            Cryptographic verification key will be issued upon commit (`sha256`).
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+
+<script>
+  function updateLiveSheet() {
+    document.getElementById("prevCust").textContent = document.getElementById("custOrg").value || "Client Name";
+    document.getElementById("prevEmail").textContent = document.getElementById("custEmail").value || "ap@client.com";
+    document.getElementById("prevRail").textContent = document.getElementById("payRail").value;
+    document.getElementById("prevTerms").textContent = document.getElementById("dueDate").value;
+    document.getElementById("prevItem").textContent = document.getElementById("itemDesc").value || "Service";
+    const amt = parseFloat(document.getElementById("itemAmt").value) || 0;
+    const formatted = "$" + amt.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    document.getElementById("prevAmt").textContent = formatted;
+    document.getElementById("prevTotal").textContent = formatted;
+  }
+
+  function commitInvoice() {
+    alert("Invoice INV-2026-095 successfully committed to Supabase ledger and Stripe payment link generated!");
+    window.location.href = "16_invoices_list.html";
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VeloceOps — Commercial Invoice INV-2026-092</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&f[]=general-sans@500,600,700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400,500,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/veloceops.css">
+  <style>
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1.45fr 1fr;
+      gap: 32px;
+      padding: 32px;
+    }
+    .sheet-doc {
+      background: var(--bg-canvas);
+      border: 1px solid var(--border-canvas);
+      border-radius: 16px;
+      padding: 36px;
+      box-shadow: 0 4px 16px rgba(18, 19, 22, 0.04);
+    }
+    .audit-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 18px;
+    }
+    .timeline-node {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-frame">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div>
+      <div class="brand-switcher">
+        <div style="display:flex; align-items:center;">
+          <div class="brand-mark">AC</div>
+          <div class="brand-info">
+            <div class="brand-title">Acme Cloud Inc.</div>
+            <div class="brand-sub">acme_01 • USD</div>
+          </div>
+        </div>
+        <a href="11_tenant_switcher.html" class="kbd">⌘1</a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-title">Navigation</div>
+        <ul class="nav-list">
+          <li><a href="12_dashboard_overview.html" class="nav-link"><span>Dashboard</span></a></li>
+          <li><a href="16_invoices_list.html" class="nav-link active"><span>Invoices Sub-Ledger</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CANVAS -->
+  <main class="workspace-canvas">
+    <header class="canvas-header">
+      <div class="header-left">
+        <a href="16_invoices_list.html" class="btn" style="padding:4px 8px; font-size:12px;">← Back to Ledger</a>
+        <h1 class="canvas-title">Invoice INV-2026-092</h1>
+        <span class="status-dot-cell"><span class="dot-emerald"></span> Settled via Stripe Webhook</span>
+      </div>
+
+      <div class="header-controls">
+        <button class="btn" onclick="window.print()">Print / PDF</button>
+        <a href="19_customer_portal_view.html" class="btn btn-volt">Open Buyer Portal ↗</a>
+      </div>
+    </header>
+
+    <div class="detail-grid">
+      <!-- DOCUMENT PAPER -->
+      <div class="sheet-doc">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; padding-bottom:20px; border-bottom:2px solid var(--ink); margin-bottom:24px;">
+          <div>
+            <div style="font-family:var(--font-mono); font-size:12px; color:var(--ink-tertiary);">OFFICIAL COMMERCIAL INVOICE</div>
+            <div class="tabular" style="font-family:var(--font-display); font-size:24px; font-weight:600; color:var(--ink); margin-top:2px;">INV-2026-092</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-family:var(--font-display); font-size:16px; font-weight:600;">Acme Cloud Inc.</div>
+            <div style="font-size:13px; color:var(--ink-secondary);">548 Market St, Suite 3900</div>
+            <div style="font-size:13px; color:var(--ink-secondary);">San Francisco, CA 94104</div>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:28px; font-size:13px;">
+          <div>
+            <div style="font-size:12px; font-weight:600; color:var(--ink-tertiary); margin-bottom:4px;">BILLED TO</div>
+            <strong style="font-size:15px; color:var(--ink);">Stripe Inc.</strong>
+            <div style="color:var(--ink-secondary);">Accounts Payable Division</div>
+            <div style="color:var(--ink-secondary);">ap-treasury@stripe.com</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:12px; font-weight:600; color:var(--ink-tertiary); margin-bottom:4px;">PAYMENT METADATA</div>
+            <div>Issued: <strong class="tabular">Oct 21, 2026</strong></div>
+            <div>Settlement Rail: <strong class="tabular">Stripe ACH Direct</strong></div>
+            <div>Hash: <span class="tabular" style="color:var(--ink-tertiary);">sha256:8f9a4b2c</span></div>
+          </div>
+        </div>
+
+        <table class="fintech-table" style="margin-bottom:20px;">
+          <thead>
+            <tr>
+              <th>Item Description</th>
+              <th class="text-right">Qty</th>
+              <th class="text-right">Unit Price</th>
+              <th class="text-right">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Enterprise Platform License (Annual Pool)</td>
+              <td class="tabular text-right">1</td>
+              <td class="tabular text-right">$14,800.00</td>
+              <td class="tabular text-right" style="font-weight:600;">$14,800.00</td>
+            </tr>
+            <tr>
+              <td>Dedicated SOC2 Audit Log &amp; SLA Add-on</td>
+              <td class="tabular text-right">1</td>
+              <td class="tabular text-right">$3,600.00</td>
+              <td class="tabular text-right" style="font-weight:600;">$3,600.00</td>
+            </tr>
+            <tr class="summary-row">
+              <td colspan="3">CONSOLIDATED INVOICE TOTAL</td>
+              <td class="tabular text-right" style="font-size:16px;">$18,400.00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- AUDIT TIMELINE -->
+      <aside style="background:var(--bg-subtle); border:1px solid var(--border-canvas); border-radius:16px; padding:28px;">
+        <div style="font-family:var(--font-display); font-size:16px; font-weight:600; margin-bottom:12px;">Cryptographic Audit Trail</div>
+        <p style="font-size:13px; color:var(--ink-secondary); margin-bottom:18px;">
+          All state transitions are locked via Supabase PostgreSQL triggers and Stripe webhook signatures.
+        </p>
+
+        <div class="audit-timeline">
+          <div class="timeline-node">
+            <span class="status-dot-cell"><span class="dot-emerald"></span></span>
+            <div>
+              <strong>Stripe Webhook Settled (`evt_3Q9xLm`)</strong>
+              <div class="tabular" style="font-size:12px; color:var(--ink-tertiary);">Oct 21, 2026 • 10:14:02 UTC</div>
+              <div style="font-size:12px; color:var(--ink-secondary); margin-top:2px;">Cash credited to operating balance.</div>
+            </div>
+          </div>
+
+          <div class="timeline-node">
+            <span class="status-dot-cell"><span class="dot-emerald"></span></span>
+            <div>
+              <strong>Invoice Viewed by Client</strong>
+              <div class="tabular" style="font-size:12px; color:var(--ink-tertiary);">Oct 21, 2026 • 09:48:15 UTC</div>
+              <div style="font-size:12px; color:var(--ink-secondary); margin-top:2px;">Opened from IP `199.16.156.12` (Stripe HQ).</div>
+            </div>
+          </div>
+
+          <div class="timeline-node">
+            <span class="status-dot-cell"><span class="dot-emerald"></span></span>
+            <div>
+              <strong>Invoice Created &amp; Hash Committed</strong>
+              <div class="tabular" style="font-size:12px; color:var(--ink-tertiary);">Oct 21, 2026 • 09:12:00 UTC</div>
+              <div style="font-size:12px; color:var(--ink-secondary); margin-top:2px;">Committed by `owner@acme.com`.</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+
+</body>
+</html>

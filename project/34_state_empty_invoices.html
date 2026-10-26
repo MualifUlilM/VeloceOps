@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Invoices — Empty State — VeloceOps</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&f[]=general-sans@500,600,700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400,500,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/veloceops.css">
+</head>
+<body>
+
+<div class="app-frame">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div>
+      <div class="brand-switcher">
+        <div style="display:flex; align-items:center;">
+          <div class="brand-mark">AC</div>
+          <div class="brand-info">
+            <div class="brand-title">Acme Cloud Inc.</div>
+            <div class="brand-sub">acme_01 • USD</div>
+          </div>
+        </div>
+        <a href="11_tenant_switcher.html" class="kbd">⌘1</a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-title">Navigation</div>
+        <ul class="nav-list">
+          <li><a href="12_dashboard_overview.html" class="nav-link"><span>Dashboard</span></a></li>
+          <li><a href="16_invoices_list.html" class="nav-link active"><span>Invoices Sub-Ledger</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CANVAS -->
+  <main class="workspace-canvas">
+    <header class="canvas-header">
+      <div class="header-left">
+        <h1 class="canvas-title">Commercial Invoices</h1>
+      </div>
+      <div class="header-controls">
+        <a href="17_invoice_create.html" class="btn btn-volt">+ Issue Commercial Invoice</a>
+      </div>
+    </header>
+
+    <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:96px 24px; text-align:center;">
+      <div style="width:56px; height:56px; border-radius:14px; background:var(--bg-subtle); border:1px solid var(--border-canvas); display:flex; align-items:center; justify-content:center; margin-bottom:18px;">
+        <svg class="icon" viewBox="0 0 24 24" style="width:24px; height:24px; stroke:var(--ink);"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      </div>
+
+      <div style="font-family:var(--font-display); font-size:18px; font-weight:600; color:var(--ink); margin-bottom:6px;">No invoices issued yet</div>
+      <p style="font-size:14px; color:var(--ink-secondary); max-width:420px; line-height:1.5; margin-bottom:24px;">
+        Create your first commercial invoice to generate a cryptographic payment link and start tracking receivables.
+      </p>
+
+      <a href="17_invoice_create.html" class="btn btn-volt" style="padding:10px 18px;">Issue First Invoice →</a>
+    </div>
+  </main>
+</div>
+
+</body>
+</html>

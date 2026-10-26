@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team &amp; RBAC Roles — VeloceOps</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&f[]=general-sans@500,600,700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400,500,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/veloceops.css">
+</head>
+<body>
+
+<div class="app-frame">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div>
+      <div class="brand-switcher">
+        <div style="display:flex; align-items:center;">
+          <div class="brand-mark">AC</div>
+          <div class="brand-info">
+            <div class="brand-title">Acme Cloud Inc.</div>
+            <div class="brand-sub">acme_01 • USD</div>
+          </div>
+        </div>
+        <a href="11_tenant_switcher.html" class="kbd">⌘1</a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-title">Governance &amp; Handover</div>
+        <ul class="nav-list">
+          <li><a href="12_dashboard_overview.html" class="nav-link"><span>Dashboard</span></a></li>
+          <li><a href="06_security_compliance.html" class="nav-link"><span>Supabase RLS Policy</span></a></li>
+          <li><a href="29_settings_team_rbac.html" class="nav-link active"><span>Team &amp; Roles</span></a></li>
+          <li><a href="33_design_system_ui_kit.html" class="nav-link"><span>Design System UI Kit</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CANVAS -->
+  <main class="workspace-canvas">
+    <header class="canvas-header">
+      <div class="header-left">
+        <h1 class="canvas-title">Team Members &amp; RBAC Security Roles</h1>
+        <span class="status-dot-cell"><span class="dot-emerald"></span> 3 Active Accounts</span>
+      </div>
+
+      <div class="header-controls">
+        <button class="btn btn-volt" onclick="alert('Invite link generated!')">+ Invite Member</button>
+      </div>
+    </header>
+
+    <div style="padding:32px;">
+      <table class="fintech-table">
+        <thead>
+          <tr>
+            <th>Member</th>
+            <th>Email</th>
+            <th>Role &amp; Permissions</th>
+            <th>Status</th>
+            <th class="text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Hanif Daffa N.</strong></td>
+            <td class="tabular" style="color:var(--ink-secondary);">hanif@veloceops.com</td>
+            <td><strong style="color:var(--ink);">OWNER</strong> <span style="font-size:12px; color:var(--ink-tertiary);">(Full database mutation &amp; RLS administration)</span></td>
+            <td><span class="status-dot-cell"><span class="dot-emerald"></span> Active</span></td>
+            <td class="text-right"><button class="btn" style="padding:4px 8px; font-size:12px;" disabled>Primary</button></td>
+          </tr>
+          <tr>
+            <td><strong>Sarah Jenkins</strong></td>
+            <td class="tabular" style="color:var(--ink-secondary);">s.jenkins@acmecloud.com</td>
+            <td><strong>FINANCE</strong> <span style="font-size:12px; color:var(--ink-tertiary);">(Create invoices &amp; trigger reconciliation)</span></td>
+            <td><span class="status-dot-cell"><span class="dot-emerald"></span> Active</span></td>
+            <td class="text-right"><button class="btn" style="padding:4px 8px; font-size:12px;" onclick="alert('Managing role')">Edit</button></td>
+          </tr>
+          <tr>
+            <td><strong>KPMG Audit Partner</strong></td>
+            <td class="tabular" style="color:var(--ink-secondary);">auditor@kpmg.com</td>
+            <td><strong>VIEWER</strong> <span style="font-size:12px; color:var(--ink-tertiary);">(Auditor read-only access, zero mutation rights)</span></td>
+            <td><span class="status-dot-cell"><span class="dot-emerald"></span> Active</span></td>
+            <td class="text-right"><button class="btn" style="padding:4px 8px; font-size:12px;" onclick="alert('Managing role')">Edit</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+</body>
+</html>
