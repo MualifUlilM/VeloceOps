@@ -2,7 +2,7 @@
 
 import { Invoice } from '@/types/veloceops';
 import { formatCurrency } from '@/lib/utils';
-import { ExternalLink, Check, Copy, Shield, FileCheck, ArrowUpRight } from 'lucide-react';
+import { ExternalLink, Check, Copy, Shield, FileCheck, ArrowUpRight, Printer } from 'lucide-react';
 import { useState } from 'react';
 import Link from 'next/link';
 
@@ -77,6 +77,15 @@ export function InvoicePaper({ invoice, onMarkAsPaid }: InvoicePaperProps) {
         </div>
 
         <div className="flex items-center gap-2">
+          <button
+            onClick={() => window.print()}
+            className="inline-flex items-center gap-1 text-[11px] font-medium px-2 py-1 rounded bg-[#FFFFFF] border border-[#D0D0C8] hover:bg-[#F2F2EE] transition-colors cursor-pointer text-[#434642]"
+            title="Print or Save as PDF"
+          >
+            <Printer className="w-3 h-3" />
+            <span>Print / PDF</span>
+          </button>
+
           <button
             onClick={handleCopyLink}
             className="inline-flex items-center gap-1 text-[11px] font-medium px-2 py-1 rounded bg-[#FFFFFF] border border-[#D0D0C8] hover:bg-[#F2F2EE] transition-colors cursor-pointer text-[#434642]"

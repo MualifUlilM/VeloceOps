@@ -1,76 +1,85 @@
-# VeloceOps — Multi-Tenant Treasury, Smart Invoicing & AI RevOps
-**Flagship B2B SaaS MVP** engineered with Next.js 15 (App Router), TypeScript, Tailwind CSS v4, shadcn/ui, Supabase (PostgreSQL 16, Auth, RLS), and Stripe Webhooks.
+# VeloceOps — Multi-Tenant Treasury, Smart Invoicing & AI CFO OS
+
+[![CI - Build & Typecheck](https://github.com/MualifUlilM/VeloceOps/actions/workflows/ci.yml/badge.svg)](https://github.com/MualifUlilM/VeloceOps/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Next.js 15](https://img.shields.io/badge/Next.js-15.0-black?logo=next.js)](https://nextjs.org)
+[![PostgreSQL 16](https://img.shields.io/badge/PostgreSQL-16-336791?logo=postgresql)](https://supabase.com)
+[![Stripe](https://img.shields.io/badge/Stripe-Idempotent%20Webhooks-635BFF?logo=stripe)](https://stripe.com)
+
+**Flagship B2B Financial Operating System** engineered with **Next.js 15 (App Router, Server Actions)**, **TypeScript**, **Tailwind CSS v4**, **Supabase (PostgreSQL 16, Row-Level Security, pgvector)**, and **Idempotent Stripe Webhooks**.
+
+---
+
+## 🚀 Key Production Deliverables
+
+* **Enterprise Handover Runbook:** [`HANDOVER_RUNBOOK.md`](./HANDOVER_RUNBOOK.md) — Zero-click production cutover guide for client DevOps & Finance Ops.
+* **Upwork Proposal & Pitch Kit:** [`UPWORK_PROPOSAL_KIT.md`](./UPWORK_PROPOSAL_KIT.md) — Killer proposal hooks, screening question answers, and 60-second Loom script for Hanif Daffa N.
+* **Master Developer Sprint Backlog:** [`SPRINT_BACKLOG_DEVELOPER_VeloceOps.md`](./SPRINT_BACKLOG_DEVELOPER_VeloceOps.md) — 16 tickets tracking Sprints 1–4.
+* **HTML Prototype Hub:** [`project/index.html`](./project/index.html) — 17 standalone responsive HTML screens (100% Impeccable CSS compliance).
+* **Design Tokens & Theme:** [`DESIGNSYSTEM_VeloceOps.md`](./DESIGNSYSTEM_VeloceOps.md) & [`veloceops-theme.json`](./veloceops-theme.json) — Warm Fintech Inset Frame palette (`#F2F2EE`, `#FFFFFF`, `#121316`, `#D4F338`).
 
 ---
 
 ## 🏗️ Repository Architecture
 
 ```
+├── .github/workflows/ci.yml      # 🤖 GitHub Actions CI (Typecheck & Next.js Build)
+├── HANDOVER_RUNBOOK.md           # 📋 Production Client Cutover Guide (Zero Manual Clicks)
+├── UPWORK_PROPOSAL_KIT.md        # 💼 Upwork Proposal Hooks & 60s Loom Script
 ├── project/                      # 🌟 Multi-Page HTML Prototype Hub (17 Screens)
-│   ├── index.html                # Master Interactive Directory (Open in browser)
+│   ├── index.html                # Master Interactive Directory
 │   ├── 01_landing.html           # Public Landing Page & Sandbox Embed
 │   ├── 12_dashboard_overview.html# Consolidated Treasury Command Deck
 │   ├── 16_invoices_list.html     # Smart Invoicing Studio Sub-Ledger
 │   ├── 17_invoice_create.html    # Full-Page Commercial Invoice Builder
 │   ├── 18_invoice_detail.html    # Invoice Detail & Cryptographic Audit
 │   ├── 19_customer_portal_view.html # Buyer Hosted Stripe Checkout
-│   ├── 22_spend_management.html  # OpEx Spend Caps & SaaS Funnel
+│   ├── 22_spend_management.html  # OpEx Spend Caps & Policy Guards
 │   ├── 25_ai_cfo_feed.html       # AI CFO Copilot & Runway Simulator
 │   └── 33_design_system_ui_kit.html # Design System Storybook
 ├── src/                          # 💻 Production Next.js 15 Application
 │   ├── app/
-│   │   ├── (auth)/               # Supabase Auth routes (Login / Magic Link)
-│   │   ├── (dashboard)/          # Authenticated Multi-Tenant Treasury Workspace
-│   │   ├── (marketing)/          # Public Landing & Pricing Pages
+│   │   ├── (auth)/login/         # 1-Click Persona Sign-In (Acme Owner, Nova Finance)
+│   │   ├── (dashboard)/          # Treasury Workspace, Invoices, Spend, AI CFO
+│   │   ├── landing/ & pricing/   # High-converting Marketing Pages
+│   │   ├── portal/[invoiceId]/   # Customer Hosted Checkout Portal
 │   │   ├── api/webhooks/stripe/  # Idempotent Stripe Webhook Handler
 │   │   ├── globals.css           # Warm Fintech Design Tokens
-│   │   └── layout.tsx
+│   │   └── layout.tsx            # Inset App Frame Root
 │   ├── components/               # Modular UI & Feature Components
-│   │   ├── layout/               # Inset App Frame, Sidebar, Canvas Header
-│   │   ├── treasury/             # Metric Strip, Cashflow Trajectory Chart
-│   │   ├── invoices/             # Invoice Table, Invoice Paper Sheet
-│   │   ├── ai-cfo/               # Anomaly Cards & Runway Simulator
-│   │   └── ui/                   # Reusable Primitive Elements (Clean Dot Status)
-│   ├── lib/
-│   │   ├── supabase/             # SSR Client & Server Helpers (Cookies)
-│   │   └── utils.ts              # Currency formatters & cn utility
+│   │   ├── layout/               # AppFrame, Sidebar, CanvasHeader
+│   │   ├── treasury/             # MetricStrip, CashflowChart, SubLedgerTable, InvoicePaper
+│   │   ├── ai-cfo/               # AnomalyPanel & Runway Scenario Simulator
+│   │   └── spend/                # BudgetCapsTable & Spend Throttling
 │   ├── actions/                  # Next.js Server Actions (Zod Schema Validation)
+│   ├── lib/
+│   │   ├── supabase/             # SSR Client & Server Helpers (Asynchronous Cookies)
+│   │   ├── stripe/               # Stripe Client
+│   │   └── data.ts               # Standalone Seed & Sandbox Data
 │   └── types/                    # Strict TypeScript Interfaces
 ├── supabase/                     # 🗄️ Database Migrations & Seeds
 │   ├── migrations/               # PostgreSQL Tables & Strict RLS Policies
-│   └── seed.sql                  # Verified Seed Data (Acme, Nova, Kinetix)
-├── SPRINT_BACKLOG_DEVELOPER_VeloceOps.md # 📋 Sprints 1–4 Task Breakdown (TICK-001 - TICK-016)
-├── BRIEF_Portofolio_Flagship_Hanif_VeloceOps.md # 🎯 Master Project Brief & Handover SOP
-├── DESIGNSYSTEM_VeloceOps.md     # 🎨 Warm Fintech Inset Frame Design Guidelines
-└── veloceops-theme.json          # 🏷️ Standard Design Tokens (JSON)
+│   └── seed.sql                  # 3 Verified Sandbox Tenants (Acme, Nova, Kinetix)
 ```
 
 ---
 
 ## ⚡ Quickstart (Local Development)
 
-### 1. Prerequisites
-- **Node.js:** v20.x or higher
-- **pnpm** (recommended) or **npm**
-- **Docker Desktop** (for local Supabase instance)
-- **Supabase CLI:** `npm install -g supabase`
-
-### 2. Environment Setup
+### 1. Install Dependencies
 ```bash
-cp .env.example .env.local
+npm install
 ```
 
-### 3. Spin Up Local Database
-```bash
-npx supabase start
-npx supabase db reset
-```
-*(This automatically executes `supabase/migrations/*.sql` and seeds the 3 verified sandbox tenants from `supabase/seed.sql`).*
-
-### 4. Run Development Server
+### 2. Run Local Development Server
 ```bash
 npm run dev
-# Visit http://localhost:3000
+# Open http://localhost:3000
+```
+
+### 3. Production Build & Verification
+```bash
+npm run build
 ```
 
 ---
@@ -79,4 +88,4 @@ npm run dev
 1. **Migration-First Rule:** Zero manual dashboard clicks. All schema updates must be saved as `supabase/migrations/<timestamp>_<name>.sql`.
 2. **Strict Multi-Tenant RLS:** Always enforce `tenant_id = (auth.jwt()->>'tenant_id')::uuid`.
 3. **Idempotent Webhooks:** Deduplicate Stripe events using the `processed_events` table before modifying financial balances.
-4. **Clean Dot Status:** Do not use candy bubble pill badges; use clean 6px dot status indicators (`.status-dot-cell`).
+4. **Clean Dot Status:** Do not use candy bubble pill badges; use clean 6px dot status indicators (`● Paid`, `● Overdue`, `● Pending`).

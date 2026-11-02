@@ -5,12 +5,38 @@ import { AppFrame } from '@/components/layout/app-frame';
 import { SubLedgerTable } from '@/components/treasury/subledger-table';
 import { InvoicePaper } from '@/components/treasury/invoice-paper';
 import { Search, Plus, Download, Filter } from 'lucide-react';
-import { InvoiceStatus } from '@/types/veloceops';
+import { Invoice, InvoiceStatus } from '@/types/veloceops';
 import Link from 'next/link';
 
 export default function InvoicesPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<InvoiceStatus | 'ALL'>('ALL');
+
+  const handleExportCSV = (invoicesToExport: Invoice[], tenantSlug: string) => {
+    const headers = ['Invoice Number', 'Customer Name', 'Billing Email', 'Payment Method', 'Status', 'Issued Date', 'Due Date', 'Total Amount', 'Currency'];
+    const rows = invoicesToExport.map((inv) => [
+      inv.invoice_number,
+      `"${inv.customer_name.replace(/"/g, '""')}"`,
+      inv.customer_email,
+      `"${inv.payment_method}"`,
+      inv.status,
+      inv.issued_date,
+      inv.due_date,
+      inv.total_amount.toFixed(2),
+      inv.currency,
+    ]);
+
+    const csvContent = [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', `veloceops-invoices-${tenantSlug}-${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
 
   return (
     <AppFrame
@@ -93,8 +119,9 @@ export default function InvoicesPage() {
 
               <div className="flex items-center gap-2">
                 <button
-                  onClick={() => alert('Exporting verified invoices CSV for audit...')}
+                  onClick={() => handleExportCSV(filteredInvoices, currentTenant.slug)}
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#FFFFFF] text-[#121316] border border-[#D0D0C8] hover:bg-[#F2F2EE] transition-colors cursor-pointer"
+                  title="Download verified invoices CSV"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>Export CSV</span>
