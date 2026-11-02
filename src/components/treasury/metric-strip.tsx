@@ -26,7 +26,7 @@ export function MetricStrip({
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-b border-[#EBEBE6] divide-y sm:divide-y-0 sm:divide-x divide-[#EBEBE6] bg-[#FFFFFF]">
       {/* Metric 1: Operating Cash Balance */}
-      <div className="p-6">
+      <div className="p-4 sm:p-6">
         <div className="flex items-center justify-between mb-2">
           <span className="text-[11px] font-mono uppercase tracking-wider text-[#5C605A] font-semibold">
             Operating Cash
@@ -36,7 +36,7 @@ export function MetricStrip({
             +8.4%
           </span>
         </div>
-        <div className="text-2xl font-bold tracking-tight text-[#121316] font-display tabular">
+        <div className="text-xl sm:text-2xl font-bold tracking-tight text-[#121316] font-display tabular">
           {formatCurrency(operatingCash, currency)}
         </div>
         <p className="text-[11px] text-[#5C605A] mt-1 flex items-center gap-1.5">
@@ -46,7 +46,7 @@ export function MetricStrip({
       </div>
 
       {/* Metric 2: Accounts Receivable */}
-      <div className="p-6">
+      <div className="p-4 sm:p-6">
         <div className="flex items-center justify-between mb-2">
           <span className="text-[11px] font-mono uppercase tracking-wider text-[#5C605A] font-semibold">
             Accounts Receivable
@@ -56,7 +56,7 @@ export function MetricStrip({
             DSO 28d
           </span>
         </div>
-        <div className="text-2xl font-bold tracking-tight text-[#121316] font-display tabular">
+        <div className="text-xl sm:text-2xl font-bold tracking-tight text-[#121316] font-display tabular">
           {formatCurrency(receivables, currency)}
         </div>
         <p className="text-[11px] text-[#5C605A] mt-1 flex items-center gap-1.5">
@@ -66,7 +66,7 @@ export function MetricStrip({
       </div>
 
       {/* Metric 3: Monthly Burn & Runway */}
-      <div className="p-6">
+      <div className="p-4 sm:p-6">
         <div className="flex items-center justify-between mb-2">
           <span className="text-[11px] font-mono uppercase tracking-wider text-[#5C605A] font-semibold">
             Monthly Burn & Runway
@@ -75,7 +75,7 @@ export function MetricStrip({
             {runwayMonths.toFixed(1)} Mos
           </span>
         </div>
-        <div className="text-2xl font-bold tracking-tight text-[#121316] font-display tabular">
+        <div className="text-xl sm:text-2xl font-bold tracking-tight text-[#121316] font-display tabular">
           {formatCurrency(burnRate, currency)}
           <span className="text-xs font-normal text-[#5C605A]"> /mo</span>
         </div>
@@ -85,7 +85,7 @@ export function MetricStrip({
       </div>
 
       {/* Metric 4: Net Contract ARR */}
-      <div className="p-6">
+      <div className="p-4 sm:p-6">
         <div className="flex items-center justify-between mb-2">
           <span className="text-[11px] font-mono uppercase tracking-wider text-[#5C605A] font-semibold">
             Contracted ARR
@@ -95,7 +95,7 @@ export function MetricStrip({
             {nrr}% NRR
           </span>
         </div>
-        <div className="text-2xl font-bold tracking-tight text-[#121316] font-display tabular">
+        <div className="text-xl sm:text-2xl font-bold tracking-tight text-[#121316] font-display tabular">
           {formatCurrency(arr, currency)}
         </div>
         <p className="text-[11px] text-[#5C605A] mt-1">

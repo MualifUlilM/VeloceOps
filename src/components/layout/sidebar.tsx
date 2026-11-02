@@ -10,7 +10,8 @@ import {
   Users2, 
   ShieldCheck, 
   ExternalLink,
-  ChevronRight
+  ChevronRight,
+  X
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Tenant } from '@/types/veloceops';
@@ -19,9 +20,17 @@ interface SidebarProps {
   currentTenant: Tenant;
   onSelectTenant: (tenant: Tenant) => void;
   tenants: Tenant[];
+  isMobileOpen?: boolean;
+  onCloseMobile?: () => void;
 }
 
-export function Sidebar({ currentTenant, onSelectTenant, tenants }: SidebarProps) {
+export function Sidebar({
+  currentTenant,
+  onSelectTenant,
+  tenants,
+  isMobileOpen = false,
+  onCloseMobile,
+}: SidebarProps) {
   const pathname = usePathname();
 
   const navItems = [
@@ -65,12 +74,16 @@ export function Sidebar({ currentTenant, onSelectTenant, tenants }: SidebarProps
     },
   ];
 
-  return (
-    <aside className="w-64 flex-shrink-0 flex flex-col justify-between p-4 pl-5 select-none text-[#121316]">
+  const renderContent = () => (
+    <div className="flex flex-col justify-between h-full select-none text-[#121316]">
       <div>
         {/* Brand Header */}
         <div className="flex items-center justify-between pb-6 pt-2">
-          <Link href="/" className="flex items-center gap-2.5 group">
+          <Link
+            href="/"
+            onClick={onCloseMobile}
+            className="flex items-center gap-2.5 group"
+          >
             <div className="w-7 h-7 rounded-md bg-[#121316] flex items-center justify-center font-bold text-xs text-[#D4F338] shadow-xs group-hover:scale-105 transition-transform">
               VO
             </div>
@@ -83,9 +96,20 @@ export function Sidebar({ currentTenant, onSelectTenant, tenants }: SidebarProps
               </span>
             </div>
           </Link>
-          <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#EAEAE4] text-[#434642] font-semibold">
-            v1.0
-          </span>
+          <div className="flex items-center gap-1.5">
+            <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#EAEAE4] text-[#434642] font-semibold">
+              v1.0
+            </span>
+            {onCloseMobile && (
+              <button
+                onClick={onCloseMobile}
+                className="lg:hidden p-1 rounded-md text-[#5C605A] hover:bg-[#EAEAE4] hover:text-[#121316]"
+                title="Close navigation"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Tenant Switcher Selector */}
@@ -101,7 +125,10 @@ export function Sidebar({ currentTenant, onSelectTenant, tenants }: SidebarProps
             value={currentTenant.id}
             onChange={(e) => {
               const found = tenants.find((t) => t.id === e.target.value);
-              if (found) onSelectTenant(found);
+              if (found) {
+                onSelectTenant(found);
+                if (onCloseMobile) onCloseMobile();
+              }
             }}
             className="w-full bg-[#FFFFFF] border border-[#D0D0C8] text-xs font-semibold rounded-lg px-2.5 py-1.5 text-[#121316] outline-none focus:border-[#121316] transition-colors cursor-pointer"
           >
@@ -125,6 +152,7 @@ export function Sidebar({ currentTenant, onSelectTenant, tenants }: SidebarProps
               <Link
                 key={item.href}
                 href={item.href}
+                onClick={onCloseMobile}
                 className={cn(
                   'flex items-center justify-between px-2.5 py-2 rounded-lg text-[13px] font-medium transition-all group',
                   isActive
@@ -170,6 +198,7 @@ export function Sidebar({ currentTenant, onSelectTenant, tenants }: SidebarProps
               <Link
                 key={item.href}
                 href={item.href}
+                onClick={onCloseMobile}
                 className={cn(
                   'flex items-center justify-between px-2.5 py-2 rounded-lg text-[13px] font-medium transition-all group',
                   isActive
@@ -194,7 +223,7 @@ export function Sidebar({ currentTenant, onSelectTenant, tenants }: SidebarProps
       </div>
 
       {/* Connected Vaults & Sandbox Switcher footer */}
-      <div className="pt-4 border-t border-[#E2E2DC]/80 space-y-3">
+      <div className="pt-4 border-t border-[#E2E2DC]/80 space-y-3 mt-6">
         <div className="p-3 rounded-xl bg-[#FFFFFF] border border-[#E2E2DC] shadow-2xs">
           <div className="flex items-center justify-between mb-1.5">
             <span className="text-[11px] font-medium text-[#5C605A]">Connected Vault</span>
@@ -209,11 +238,11 @@ export function Sidebar({ currentTenant, onSelectTenant, tenants }: SidebarProps
         </div>
 
         <div className="flex items-center justify-between px-1 text-[11px] text-[#5C605A]">
-          <Link href="/landing" className="hover:text-[#121316] transition-colors">
-            Landing Page
+          <Link href="/landing" onClick={onCloseMobile} className="hover:text-[#121316] transition-colors">
+            Landing
           </Link>
           <span className="text-[#E2E2DC]">•</span>
-          <Link href="/pricing" className="hover:text-[#121316] transition-colors">
+          <Link href="/pricing" onClick={onCloseMobile} className="hover:text-[#121316] transition-colors">
             Pricing
           </Link>
           <span className="text-[#E2E2DC]">•</span>
@@ -223,6 +252,31 @@ export function Sidebar({ currentTenant, onSelectTenant, tenants }: SidebarProps
           </Link>
         </div>
       </div>
-    </aside>
+    </div>
+  );
+
+  return (
+    <>
+      {/* Desktop Sidebar: Visible on lg and above */}
+      <aside className="hidden lg:flex w-64 flex-shrink-0 flex-col justify-between p-4 pl-5 select-none text-[#121316]">
+        {renderContent()}
+      </aside>
+
+      {/* Mobile Drawer: Slide-over for small screens */}
+      {isMobileOpen && (
+        <div className="fixed inset-0 z-50 lg:hidden flex">
+          {/* Backdrop blur */}
+          <div
+            className="fixed inset-0 bg-[#121316]/40 backdrop-blur-xs transition-opacity"
+            onClick={onCloseMobile}
+          />
+
+          {/* Drawer container */}
+          <div className="relative w-72 max-w-[85vw] bg-[#F2F2EE] h-full shadow-2xl p-4 flex flex-col justify-between overflow-y-auto z-10 animate-slideRight">
+            {renderContent()}
+          </div>
+        </div>
+      )}
+    </>
   );
 }

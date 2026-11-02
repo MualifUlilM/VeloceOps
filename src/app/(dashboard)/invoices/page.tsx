@@ -11,6 +11,7 @@ import Link from 'next/link';
 export default function InvoicesPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<InvoiceStatus | 'ALL'>('ALL');
+  const [mobileTab, setMobileTab] = useState<'table' | 'paper'>('table');
 
   const handleExportCSV = (invoicesToExport: Invoice[], tenantSlug: string) => {
     const headers = ['Invoice Number', 'Customer Name', 'Billing Email', 'Payment Method', 'Status', 'Issued Date', 'Due Date', 'Total Amount', 'Currency'];
@@ -136,17 +137,52 @@ export default function InvoicesPage() {
               </div>
             </div>
 
+            {/* Mobile View Segmented Tab (Visible on small screens) */}
+            <div className="lg:hidden flex items-center p-1 bg-[#F2F2EE] rounded-xl border border-[#E2E2DC]">
+              <button
+                onClick={() => setMobileTab('table')}
+                className={`flex-1 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+                  mobileTab === 'table'
+                    ? 'bg-[#FFFFFF] text-[#121316] shadow-2xs font-bold'
+                    : 'text-[#5C605A]'
+                }`}
+              >
+                Invoices Table ({filteredInvoices.length})
+              </button>
+              <button
+                onClick={() => setMobileTab('paper')}
+                className={`flex-1 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+                  mobileTab === 'paper'
+                    ? 'bg-[#FFFFFF] text-[#121316] shadow-2xs font-bold'
+                    : 'text-[#5C605A]'
+                }`}
+              >
+                Document {selectedInvoice ? `(${selectedInvoice.invoice_number})` : ''}
+              </button>
+            </div>
+
             {/* Split View */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-              <div className="lg:col-span-7 border border-[#EBEBE6] rounded-xl overflow-hidden shadow-2xs">
+              <div
+                className={`lg:col-span-7 border border-[#EBEBE6] rounded-xl overflow-hidden shadow-2xs ${
+                  mobileTab === 'table' ? 'block' : 'hidden lg:block'
+                }`}
+              >
                 <SubLedgerTable
                   invoices={filteredInvoices}
                   selectedInvoiceId={selectedInvoice?.id || null}
-                  onSelectInvoice={setSelectedInvoice}
+                  onSelectInvoice={(inv) => {
+                    setSelectedInvoice(inv);
+                    setMobileTab('paper');
+                  }}
                 />
               </div>
 
-              <div className="lg:col-span-5 sticky top-4">
+              <div
+                className={`lg:col-span-5 sticky top-4 ${
+                  mobileTab === 'paper' ? 'block' : 'hidden lg:block'
+                }`}
+              >
                 <InvoicePaper invoice={selectedInvoice} onMarkAsPaid={onMarkAsPaid} />
               </div>
             </div>

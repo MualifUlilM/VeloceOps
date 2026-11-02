@@ -44,14 +44,14 @@ export function CashflowChart({ currency }: CashflowChartProps) {
   const maxVal = Math.max(...currentData.map((d) => Math.max(d.inflow, d.outflow)));
 
   return (
-    <div className="p-6 border-b border-[#EBEBE6] bg-[#FFFFFF]">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+    <div className="p-4 sm:p-6 border-b border-[#EBEBE6] bg-[#FFFFFF]">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-4 sm:mb-6">
         <div>
           <div className="flex items-center gap-2">
             <h2 className="text-sm font-bold text-[#121316] font-display">
               Cashflow Velocity & Liquidity Runway
             </h2>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#F8F8F5] text-[#434642] border border-[#E2E2DC]">
+            <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#F8F8F5] text-[#434642] border border-[#E2E2DC]">
               T+0 Reconciled
             </span>
           </div>
@@ -66,7 +66,7 @@ export function CashflowChart({ currency }: CashflowChartProps) {
             <button
               key={t}
               onClick={() => setPeriod(t)}
-              className={`px-3 py-1 text-xs font-mono font-medium rounded-md transition-all cursor-pointer ${
+              className={`px-2.5 sm:px-3 py-1 text-xs font-mono font-medium rounded-md transition-all cursor-pointer ${
                 period === t
                   ? 'bg-[#FFFFFF] text-[#121316] shadow-2xs font-semibold'
                   : 'text-[#5C605A] hover:text-[#121316]'
@@ -79,8 +79,8 @@ export function CashflowChart({ currency }: CashflowChartProps) {
       </div>
 
       {/* SVG / HTML Bar & Trend Representation */}
-      <div className="relative pt-4 pb-2">
-        <div className="h-44 flex items-end gap-3 sm:gap-6 justify-between px-2">
+      <div className="relative pt-4 pb-2 overflow-x-auto">
+        <div className="h-40 sm:h-44 flex items-end gap-2 sm:gap-6 justify-between px-1 sm:px-2 min-w-[320px]">
           {currentData.map((d, idx) => {
             const inflowHeight = (d.inflow / maxVal) * 120;
             const outflowHeight = (d.outflow / maxVal) * 120;

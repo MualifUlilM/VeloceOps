@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Sidebar } from './sidebar';
 import { CanvasHeader } from './canvas-header';
+import { BottomNav } from './bottom-nav';
 import { Tenant, UserRole, Invoice } from '@/types/veloceops';
 import { INITIAL_TENANTS, INITIAL_INVOICES } from '@/lib/data';
 
@@ -33,6 +34,7 @@ export function AppFrame({
   const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(INITIAL_INVOICES[0]);
   const [isSimulating, setIsSimulating] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Filter invoices for current tenant
   const tenantInvoices = invoices.filter((i) => i.tenant_id === currentTenant.id);
@@ -41,24 +43,20 @@ export function AppFrame({
   const handleSimulateWebhook = async () => {
     setIsSimulating(true);
 
-    // Find the first unpaid invoice (pending or overdue)
     const targetInvoice = tenantInvoices.find((i) => i.status !== 'PAID') || tenantInvoices[0];
 
     setTimeout(() => {
       if (targetInvoice) {
-        // 1. Mark as PAID
         setInvoices((prev) =>
           prev.map((inv) =>
             inv.id === targetInvoice.id ? { ...inv, status: 'PAID' } : inv
           )
         );
 
-        // Update selected if matching
         if (selectedInvoice?.id === targetInvoice.id) {
           setSelectedInvoice({ ...targetInvoice, status: 'PAID' });
         }
 
-        // 2. Increment cash balance
         setCurrentTenant((prev) => ({
           ...prev,
           operating_cash: prev.operating_cash + targetInvoice.total_amount,
@@ -96,8 +94,8 @@ export function AppFrame({
   };
 
   return (
-    <div className="min-h-screen bg-[#F2F2EE] flex p-3 md:p-4 gap-4 overflow-x-hidden">
-      {/* Left Sidebar */}
+    <div className="min-h-screen bg-[#F2F2EE] flex p-2 sm:p-3 md:p-4 gap-4 overflow-x-hidden pb-20 lg:pb-4">
+      {/* Sidebar: Desktop + Mobile Drawer */}
       <Sidebar
         currentTenant={currentTenant}
         onSelectTenant={(t) => {
@@ -106,30 +104,33 @@ export function AppFrame({
           setSelectedInvoice(first || null);
         }}
         tenants={tenants}
+        isMobileOpen={isMobileMenuOpen}
+        onCloseMobile={() => setIsMobileMenuOpen(false)}
       />
 
-      {/* Main Inset Canvas (Linear / Attio style: 20px radius) */}
-      <main className="flex-1 min-w-0 bg-[#FFFFFF] rounded-[20px] border border-[#E2E2DC] shadow-sm flex flex-col overflow-hidden">
+      {/* Main Inset Canvas (Linear / Attio style) */}
+      <main className="flex-1 min-w-0 bg-[#FFFFFF] rounded-xl sm:rounded-2xl md:rounded-[20px] border border-[#E2E2DC] shadow-sm flex flex-col overflow-hidden">
         <CanvasHeader
           currentTenant={currentTenant}
           userRole={userRole}
           onSelectRole={setUserRole}
           onSimulateWebhook={handleSimulateWebhook}
           isSimulating={isSimulating}
+          onOpenMobileMenu={() => setIsMobileMenuOpen(true)}
           title={title}
           subtitle={subtitle}
         />
 
         {/* Global Toast Notification */}
         {toastMessage && (
-          <div className="mx-6 mt-4 p-3 rounded-xl bg-[#121316] text-[#FFFFFF] text-xs font-mono flex items-center justify-between shadow-lg animate-fadeIn border border-[#434642]">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#D4F338] animate-pulse"></span>
-              <span>{toastMessage}</span>
+          <div className="mx-4 sm:mx-6 mt-3 sm:mt-4 p-3 rounded-xl bg-[#121316] text-[#FFFFFF] text-xs font-mono flex items-center justify-between shadow-lg animate-fadeIn border border-[#434642]">
+            <div className="flex items-center gap-2 min-w-0">
+              <span className="w-2 h-2 rounded-full bg-[#D4F338] animate-pulse flex-shrink-0"></span>
+              <span className="truncate">{toastMessage}</span>
             </div>
             <button
               onClick={() => setToastMessage(null)}
-              className="text-[#D4F338] hover:underline ml-4 text-[11px] font-bold cursor-pointer"
+              className="text-[#D4F338] hover:underline ml-3 text-[11px] font-bold cursor-pointer flex-shrink-0"
             >
               Dismiss
             </button>
@@ -149,6 +150,9 @@ export function AppFrame({
             : children}
         </div>
       </main>
+
+      {/* Mobile Bottom Navigation */}
+      <BottomNav onOpenMenu={() => setIsMobileMenuOpen(true)} />
     </div>
   );
 }

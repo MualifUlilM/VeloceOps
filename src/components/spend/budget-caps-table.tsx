@@ -11,8 +11,8 @@ interface BudgetCapsTableProps {
 
 export function BudgetCapsTable({ budgetCaps, currency }: BudgetCapsTableProps) {
   return (
-    <div className="p-6 bg-[#FFFFFF]">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+    <div className="p-4 sm:p-6 bg-[#FFFFFF]">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4 sm:mb-6">
         <div>
           <div className="flex items-center gap-2">
             <div className="p-1.5 rounded-md bg-[#121316] text-[#D4F338]">
@@ -31,7 +31,7 @@ export function BudgetCapsTable({ budgetCaps, currency }: BudgetCapsTableProps) 
         </div>
       </div>
 
-      <div className="border border-[#EBEBE6] rounded-xl overflow-hidden">
+      <div className="border border-[#EBEBE6] rounded-xl overflow-x-auto">
         <table className="w-full text-left text-xs">
           <thead className="bg-[#F8F8F5] border-b border-[#EBEBE6] font-mono text-[11px] uppercase tracking-wider text-[#5C605A]">
             <tr>
