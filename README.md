@@ -14,6 +14,7 @@
 
 * **Enterprise Handover Runbook:** [`HANDOVER_RUNBOOK.md`](./HANDOVER_RUNBOOK.md) — Zero-click production cutover guide for client DevOps & Finance Ops.
 * **Upwork Proposal & Pitch Kit:** [`UPWORK_PROPOSAL_KIT.md`](./UPWORK_PROPOSAL_KIT.md) — Killer proposal hooks, screening question answers, and 60-second Loom script for Hanif Daffa N.
+* **Standalone Native Mobile App:** [`mobile/`](./mobile) — React Native (Expo) standalone app for iOS & Android.
 * **Master Developer Sprint Backlog:** [`SPRINT_BACKLOG_DEVELOPER_VeloceOps.md`](./SPRINT_BACKLOG_DEVELOPER_VeloceOps.md) — 16 tickets tracking Sprints 1–4.
 * **HTML Prototype Hub:** [`project/index.html`](./project/index.html) — 17 standalone responsive HTML screens (100% Impeccable CSS compliance).
 * **Design Tokens & Theme:** [`DESIGNSYSTEM_VeloceOps.md`](./DESIGNSYSTEM_VeloceOps.md) & [`veloceops-theme.json`](./veloceops-theme.json) — Warm Fintech Inset Frame palette (`#F2F2EE`, `#FFFFFF`, `#121316`, `#D4F338`).
