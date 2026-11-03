@@ -257,8 +257,8 @@ export function Sidebar({
 
   return (
     <>
-      {/* Desktop Sidebar: Visible on lg and above */}
-      <aside className="hidden lg:flex w-64 flex-shrink-0 flex-col justify-between p-4 pl-5 select-none text-[#121316]">
+      {/* Desktop Sidebar: Visible on lg and above - Sticky pinned viewport */}
+      <aside className="hidden lg:flex w-64 flex-shrink-0 flex-col justify-between p-4 pl-5 select-none text-[#121316] lg:sticky lg:top-4 lg:h-[calc(100vh-2rem)] overflow-y-auto">
         {renderContent()}
       </aside>
 

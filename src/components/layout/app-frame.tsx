@@ -94,7 +94,7 @@ export function AppFrame({
   };
 
   return (
-    <div className="min-h-screen bg-[#F2F2EE] flex flex-col lg:flex-row p-0 sm:p-3 md:p-4 gap-0 lg:gap-4 overflow-x-hidden pb-16 lg:pb-4 w-full max-w-full">
+    <div className="min-h-screen lg:h-screen bg-[#F2F2EE] flex flex-col lg:flex-row p-0 sm:p-3 md:p-4 gap-0 lg:gap-4 overflow-x-hidden lg:overflow-hidden pb-16 lg:pb-4 w-full max-w-full">
       {/* Sidebar: Desktop + Mobile Drawer */}
       <Sidebar
         currentTenant={currentTenant}
@@ -109,7 +109,7 @@ export function AppFrame({
       />
 
       {/* Main Inset Canvas (Linear / Attio style) */}
-      <main className="flex-1 min-w-0 w-full bg-[#FFFFFF] rounded-none sm:rounded-2xl md:rounded-[20px] border-0 sm:border border-[#E2E2DC] shadow-none sm:shadow-sm flex flex-col overflow-x-hidden">
+      <main className="flex-1 min-w-0 w-full bg-[#FFFFFF] rounded-none sm:rounded-2xl md:rounded-[20px] border-0 sm:border border-[#E2E2DC] shadow-none sm:shadow-sm flex flex-col overflow-hidden lg:h-full">
         <CanvasHeader
           currentTenant={currentTenant}
           userRole={userRole}
