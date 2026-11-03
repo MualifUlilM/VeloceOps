@@ -23,7 +23,7 @@ export function AnomalyPanel({ anomalies: initialAnomalies, currency }: AnomalyP
   };
 
   return (
-    <div className="p-3.5 sm:p-6 bg-[#FFFFFF] border-b border-[#EBEBE6] w-full max-w-full overflow-hidden box-border">
+    <div className="p-4 sm:p-6 bg-[#FFFFFF] border-b border-[#EBEBE6] w-full max-w-full overflow-hidden box-border">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4 sm:mb-6">
         <div>
           <div className="flex items-center gap-2">

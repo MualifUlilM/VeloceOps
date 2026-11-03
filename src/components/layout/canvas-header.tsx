@@ -26,7 +26,7 @@ export function CanvasHeader({
   subtitle = 'Real-time multi-tenant cash position, sub-ledger receivables, and AI CFO surveillance.',
 }: CanvasHeaderProps) {
   return (
-    <header className="px-3 sm:px-6 py-2.5 sm:py-5 border-b border-[#EBEBE6] flex flex-col md:flex-row md:items-center md:justify-between gap-2.5 sm:gap-4 bg-[#FFFFFF] w-full">
+    <header className="px-4 sm:px-6 py-3.5 sm:py-5 border-b border-[#EBEBE6] flex flex-col md:flex-row md:items-center md:justify-between gap-3 sm:gap-4 bg-[#FFFFFF] w-full">
       <div className="flex items-start justify-between gap-2 min-w-0 w-full">
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-1.5 sm:gap-2 mb-0.5 sm:mb-1 flex-wrap">
@@ -65,7 +65,7 @@ export function CanvasHeader({
         </div>
       </div>
 
-      <div className="flex items-center gap-1.5 sm:gap-2.5 flex-wrap pt-0.5 md:pt-0 w-full md:w-auto justify-start">
+      <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap pt-0.5 md:pt-0 w-full md:w-auto justify-start">
         {/* Role Switcher */}
         <div className="flex items-center gap-1 bg-[#F8F8F5] border border-[#E2E2DC] px-2 py-1 rounded-lg text-[11px]">
           <span className="text-[9px] sm:text-[10px] font-mono text-[#5C605A] uppercase">Role:</span>

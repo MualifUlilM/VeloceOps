@@ -56,11 +56,11 @@ export function SubLedgerTable({
       <table className="w-full text-left text-xs border-collapse table-fixed">
         <thead>
           <tr className="border-b border-[#EBEBE6] bg-[#F8F8F5] text-[#5C605A] font-mono text-[9px] sm:text-[11px] uppercase tracking-wider">
-            <th className="py-2 sm:py-3 px-2 sm:px-4 font-semibold w-[52%] sm:w-auto">Counterparty</th>
+            <th className="py-2.5 sm:py-3 px-3 sm:px-4 font-semibold w-[50%] sm:w-auto">Counterparty</th>
             <th className="hidden sm:table-cell py-2.5 sm:py-3 px-3 sm:px-4 font-semibold">Invoice No.</th>
-            <th className="py-2 sm:py-3 px-1.5 sm:px-4 font-semibold w-[22%] sm:w-auto">Status</th>
+            <th className="py-2.5 sm:py-3 px-2 sm:px-4 font-semibold w-[22%] sm:w-auto">Status</th>
             <th className="hidden md:table-cell py-2.5 sm:py-3 px-3 sm:px-4 font-semibold">Due Date</th>
-            <th className="py-2 sm:py-3 px-2 sm:px-4 font-semibold text-right w-[26%] sm:w-auto">Amount</th>
+            <th className="py-2.5 sm:py-3 px-3 sm:px-4 font-semibold text-right w-[28%] sm:w-auto">Amount</th>
             <th className="hidden sm:table-cell py-2.5 sm:py-3 px-1 sm:px-2 w-6"></th>
           </tr>
         </thead>
@@ -78,7 +78,7 @@ export function SubLedgerTable({
                 }`}
               >
                 {/* Counterparty avatar and name */}
-                <td className="py-2 sm:py-3 px-2 sm:px-4 min-w-0">
+                <td className="py-2.5 sm:py-3 px-3 sm:px-4 min-w-0">
                   <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0">
                     <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-md bg-[#F2F2EE] border border-[#E2E2DC] flex items-center justify-center font-mono font-bold text-[9px] sm:text-[10px] text-[#121316] flex-shrink-0">
                       {getInitials(inv.customer_name)}
@@ -101,7 +101,7 @@ export function SubLedgerTable({
                 </td>
 
                 {/* Status Dot */}
-                <td className="py-2 sm:py-3 px-1.5 sm:px-4 whitespace-nowrap min-w-0">
+                <td className="py-2.5 sm:py-3 px-2 sm:px-4 whitespace-nowrap min-w-0">
                   {renderStatusDot(inv.status)}
                 </td>
 
@@ -111,7 +111,7 @@ export function SubLedgerTable({
                 </td>
 
                 {/* Amount */}
-                <td className="py-2 sm:py-3 px-2 sm:px-4 text-right font-mono text-[11px] sm:text-[13px] font-bold text-[#121316] tabular whitespace-nowrap">
+                <td className="py-2.5 sm:py-3 px-3 sm:px-4 text-right font-mono text-[11px] sm:text-[13px] font-bold text-[#121316] tabular whitespace-nowrap">
                   {formatCurrency(inv.total_amount, inv.currency)}
                 </td>
 

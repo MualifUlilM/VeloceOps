@@ -58,7 +58,7 @@ export default function InvoicesPage() {
           .reduce((acc, i) => acc + i.total_amount, 0);
 
         return (
-          <div className="p-3.5 sm:p-6 space-y-4 sm:space-y-6 w-full max-w-full overflow-hidden box-border">
+          <div className="p-4 sm:p-6 space-y-4 sm:space-y-6 w-full max-w-full overflow-hidden box-border">
             {/* Quick KPI Row */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 w-full">
               <div className="p-3.5 sm:p-4 rounded-xl border border-[#E2E2DC] bg-[#F8F8F5]">

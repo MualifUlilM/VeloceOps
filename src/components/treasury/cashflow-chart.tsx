@@ -44,7 +44,7 @@ export function CashflowChart({ currency }: CashflowChartProps) {
   const maxVal = Math.max(...currentData.map((d) => Math.max(d.inflow, d.outflow)));
 
   return (
-    <div className="p-3 sm:p-6 border-b border-[#EBEBE6] bg-[#FFFFFF] w-full max-w-full overflow-hidden box-border">
+    <div className="p-4 sm:p-6 border-b border-[#EBEBE6] bg-[#FFFFFF] w-full max-w-full overflow-hidden box-border">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5 sm:gap-4 mb-3 sm:mb-6">
         <div>
           <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
@@ -80,7 +80,7 @@ export function CashflowChart({ currency }: CashflowChartProps) {
 
       {/* SVG / HTML Bar & Trend Representation */}
       <div className="relative pt-2 pb-1 w-full max-w-full overflow-hidden">
-        <div className="h-32 sm:h-44 flex items-end gap-1 sm:gap-4 justify-between px-0.5 sm:px-2 w-full max-w-full">
+        <div className="h-32 sm:h-44 flex items-end gap-1.5 sm:gap-4 justify-between px-2 sm:px-4 w-full max-w-full">
           {currentData.map((d, idx) => {
             const inflowHeight = (d.inflow / maxVal) * 105;
             const outflowHeight = (d.outflow / maxVal) * 105;

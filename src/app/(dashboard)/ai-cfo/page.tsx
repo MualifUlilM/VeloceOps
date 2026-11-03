@@ -18,7 +18,7 @@ export default function AiCfoPage() {
               currency={currentTenant.currency}
             />
 
-            <div className="p-3.5 sm:p-6 bg-[#FFFFFF] border-t border-[#EBEBE6] w-full max-w-full overflow-hidden">
+            <div className="p-4 sm:p-6 bg-[#FFFFFF] border-t border-[#EBEBE6] w-full max-w-full overflow-hidden">
               <div className="flex items-center gap-2 mb-3">
                 <BrainCircuit className="w-4 h-4 text-[#121316] flex-shrink-0" />
                 <h3 className="text-sm font-bold text-[#121316] font-display">

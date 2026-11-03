@@ -26,7 +26,7 @@ export function MetricStrip({
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 border-b border-[#EBEBE6] divide-x divide-y lg:divide-y-0 divide-[#EBEBE6] bg-[#FFFFFF] w-full max-w-full overflow-hidden">
       {/* Metric 1: Operating Cash Balance */}
-      <div className="p-2.5 sm:p-5 min-w-0">
+      <div className="p-4 sm:p-5 min-w-0">
         <div className="flex items-center justify-between mb-0.5 sm:mb-2 gap-1">
           <span className="text-[9px] sm:text-[11px] font-mono uppercase tracking-wider text-[#5C605A] font-semibold truncate">
             Operating Cash
@@ -46,7 +46,7 @@ export function MetricStrip({
       </div>
 
       {/* Metric 2: Accounts Receivable */}
-      <div className="p-2.5 sm:p-5 min-w-0">
+      <div className="p-4 sm:p-5 min-w-0">
         <div className="flex items-center justify-between mb-0.5 sm:mb-2 gap-1">
           <span className="text-[9px] sm:text-[11px] font-mono uppercase tracking-wider text-[#5C605A] font-semibold truncate">
             Receivables
@@ -66,7 +66,7 @@ export function MetricStrip({
       </div>
 
       {/* Metric 3: Monthly Burn & Runway */}
-      <div className="p-2.5 sm:p-5 min-w-0">
+      <div className="p-4 sm:p-5 min-w-0">
         <div className="flex items-center justify-between mb-0.5 sm:mb-2 gap-1">
           <span className="text-[9px] sm:text-[11px] font-mono uppercase tracking-wider text-[#5C605A] font-semibold truncate">
             Monthly Burn
@@ -84,7 +84,7 @@ export function MetricStrip({
       </div>
 
       {/* Metric 4: Net Contract ARR */}
-      <div className="p-2.5 sm:p-5 min-w-0">
+      <div className="p-4 sm:p-5 min-w-0">
         <div className="flex items-center justify-between mb-0.5 sm:mb-2 gap-1">
           <span className="text-[9px] sm:text-[11px] font-mono uppercase tracking-wider text-[#5C605A] font-semibold truncate">
             Contracted ARR

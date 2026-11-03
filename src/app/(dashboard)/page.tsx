@@ -57,7 +57,7 @@ export default function DashboardPage() {
             <CashflowChart currency={currentTenant.currency} />
 
             {/* 3. Sub-Ledger Master / Detail Split View */}
-            <div className="p-3 sm:p-6 border-b border-[#EBEBE6] bg-[#FFFFFF] w-full max-w-full overflow-hidden box-border">
+            <div className="p-4 sm:p-6 border-b border-[#EBEBE6] bg-[#FFFFFF] w-full max-w-full overflow-hidden box-border">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5 sm:gap-4 mb-3 sm:mb-4">
                 <div>
                   <h2 className="text-sm sm:text-base font-bold text-[#121316] font-display">
