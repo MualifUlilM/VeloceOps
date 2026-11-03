@@ -2,362 +2,347 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>VeloceOps Mobile — B2B Treasury &amp; Invoicing OS (Mobile Edition)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VeloceOps — iPhone 16 Pro Native Simulator</title>
   <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&f[]=general-sans@500,600,700&display=swap" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/veloceops.css">
   <style>
-    body {
-      background: var(--bg-shell);
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
+    }
+    body {
+      background: #EAEAE4;
       font-family: var(--font-sans);
       color: var(--ink);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 16px;
       -webkit-font-smoothing: antialiased;
     }
 
-    .mobile-simulator-wrap {
-      max-width: 420px;
-      margin: 24px auto 80px auto;
-      padding: 12px;
+    /* IPHONE 16 PRO HARDWARE CHASSIS */
+    .iphone-frame {
+      width: 380px;
+      height: 820px;
+      background: #18191D;
+      border-radius: 52px;
+      padding: 10px;
+      box-shadow: 0 25px 60px rgba(18, 19, 22, 0.22), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+      position: relative;
+      display: flex;
+      flex-direction: column;
     }
 
-    @media (max-width: 480px) {
-      .mobile-simulator-wrap {
-        margin: 0 auto;
-        padding: 8px 8px 80px 8px;
-        max-width: 100%;
-      }
-    }
-
-    .device-shell {
+    /* SCREEN GLASS */
+    .iphone-screen {
+      flex: 1;
       background: var(--bg-shell);
-      border-radius: 28px;
-      padding: 6px;
-      border: 1px solid var(--border-canvas);
-      box-shadow: 0 12px 32px rgba(18, 19, 22, 0.08);
+      border-radius: 42px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* STATUS BAR + DYNAMIC ISLAND */
+    .iphone-statusbar {
+      height: 44px;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      background: var(--bg-shell);
+      z-index: 20;
+    }
+    .dynamic-island {
+      width: 105px;
+      height: 26px;
+      background: #000000;
+      border-radius: 20px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 9px;
+    }
+
+    /* INSET SCROLLABLE APP CANVAS */
+    .app-scrollable {
+      flex: 1;
+      overflow-y: auto;
+      padding: 6px 8px 12px 8px;
+      scrollbar-width: none;
+    }
+    .app-scrollable::-webkit-scrollbar {
+      display: none;
     }
 
     .canvas-card {
       background: var(--bg-canvas);
-      border-radius: 22px;
+      border-radius: 18px;
       border: 1px solid var(--border-canvas);
       overflow: hidden;
-      min-height: calc(100vh - 120px);
-      display: flex;
-      flex-col: column;
+      box-shadow: 0 1px 3px rgba(18, 19, 22, 0.04);
     }
 
-    .mobile-topbar {
-      padding: 16px;
+    /* APP TOPBAR */
+    .app-topbar {
+      padding: 14px;
       border-bottom: 1px solid var(--border-hairline);
-      background: var(--bg-canvas);
     }
 
-    .metric-scroll-strip {
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      padding: 14px 16px;
+    /* METRIC 2x2 GRID */
+    .metric-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       border-bottom: 1px solid var(--border-hairline);
-      scrollbar-width: none;
     }
-    .metric-scroll-strip::-webkit-scrollbar {
-      display: none;
+    .metric-box {
+      padding: 12px;
+      border-right: 1px solid var(--border-hairline);
+      border-bottom: 1px solid var(--border-hairline);
+    }
+    .metric-box:nth-child(2), .metric-box:nth-child(4) {
+      border-right: none;
+    }
+    .metric-box:nth-child(3), .metric-box:nth-child(4) {
+      border-bottom: none;
+    }
+    .m-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      text-transform: uppercase;
+      color: var(--ink-tertiary);
+      font-weight: 600;
+    }
+    .m-value {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ink);
+      margin: 2px 0;
+    }
+    .m-sub {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--ink-secondary);
     }
 
-    .mobile-metric-pill {
-      flex: 0 0 140px;
-      background: var(--bg-subtle);
-      border: 1px solid var(--border-canvas);
-      border-radius: 12px;
-      padding: 10px 12px;
-    }
-
-    .mobile-subledger-item {
-      padding: 12px 16px;
+    /* LIST */
+    .tx-row {
+      padding: 10px 14px;
       border-bottom: 1px solid var(--border-hairline);
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       cursor: pointer;
-      transition: background 0.12s;
     }
-    .mobile-subledger-item:hover, .mobile-subledger-item:active {
+    .tx-row:hover {
       background: var(--bg-hover);
     }
 
-    .bottom-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(12px);
+    /* CONTAINED BOTTOM BAR */
+    .bottom-nav {
+      height: 56px;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
       border-top: 1px solid var(--border-canvas);
       display: flex;
       justify-content: space-around;
-      padding: 8px 12px 14px 12px;
-      z-index: 99;
+      align-items: center;
+      padding: 4px 6px;
     }
-
-    .bottom-tab {
+    .b-tab {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 2px;
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 600;
       color: var(--ink-tertiary);
       text-decoration: none;
+      gap: 2px;
     }
-    .bottom-tab.active {
+    .b-tab.active {
       color: var(--ink);
     }
-    .bottom-icon {
-      font-size: 16px;
-    }
 
-    /* Modal Sheet for Mobile Invoice Detail */
-    .sheet-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(18, 19, 22, 0.5);
-      backdrop-filter: blur(4px);
-      display: none;
-      z-index: 100;
-      align-items: flex-end;
-    }
-    .sheet-overlay.open {
-      display: flex;
-    }
-    .sheet-content {
-      background: var(--bg-canvas);
-      border-radius: 24px 24px 0 0;
-      width: 100%;
-      max-height: 85vh;
-      overflow-y: auto;
-      padding: 20px;
-      box-shadow: 0 -8px 32px rgba(0,0,0,0.15);
-      animation: sheetUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    @keyframes sheetUp {
-      from { transform: translateY(100%); }
-      to { transform: translateY(0); }
+    /* HOME INDICATOR */
+    .home-indicator {
+      width: 120px;
+      height: 4px;
+      background: #121316;
+      border-radius: 2px;
+      margin: 6px auto 4px auto;
     }
   </style>
 </head>
 <body>
 
-<div class="mobile-simulator-wrap">
-  <!-- DEVICE VIEW FRAME -->
-  <div class="device-shell">
-    <div class="canvas-card">
+  <!-- IPHONE 16 PRO PHONE FRAME -->
+  <div class="iphone-frame">
+    <div class="iphone-screen">
       
-      <!-- TOP STATUS / TENANT -->
-      <div class="mobile-topbar">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-          <div style="display:flex; align-items:center; gap:8px;">
-            <div style="width:26px; height:26px; background:#121316; color:#D4F338; border-radius:6px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:11px;">VO</div>
-            <span style="font-weight:700; font-size:14px; font-family:var(--font-display);">VeloceOps</span>
-          </div>
-
-          <!-- RLS Dot -->
-          <div style="display:flex; align-items:center; gap:6px; font-family:var(--font-mono); font-size:10px; color:var(--ink-secondary);">
-            <span style="width:6px; height:6px; border-radius:50%; background:#0B6B41;"></span>
-            <span>acme_01 (OWNER)</span>
-          </div>
+      <!-- STATUS BAR -->
+      <div class="iphone-statusbar">
+        <span>9:41</span>
+        <div class="dynamic-island"></div>
+        <div style="display:flex; gap:4px; font-size:11px;">
+          <span>5G</span>
+          <span>100%</span>
         </div>
+      </div>
 
-        <div style="display:flex; justify-content:space-between; align-items:flex-end;">
-          <div>
-            <span style="font-family:var(--font-mono); font-size:10px; color:var(--ink-tertiary); text-transform:uppercase;">Operating Liquidity</span>
-            <div style="font-family:var(--font-display); font-size:26px; font-weight:700; color:var(--ink); margin-top:2px;">
-              $148,920<span style="font-size:16px; font-weight:500; color:var(--ink-tertiary);">.00</span>
+      <!-- INSET SCROLLABLE WORKSPACE -->
+      <div class="app-scrollable">
+        <div class="canvas-card">
+          
+          <!-- TOPBAR -->
+          <div class="app-topbar">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <div style="display:flex; align-items:center; gap:6px;">
+                <div style="width:24px; height:24px; background:#121316; color:#D4F338; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700;">VO</div>
+                <span style="font-size:13px; font-weight:700;">VeloceOps</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:5px; font-family:var(--font-mono); font-size:10px;">
+                <span style="width:6px; height:6px; border-radius:50%; background:#0B6B41;"></span>
+                <span>acme_01 (OWNER)</span>
+              </div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:flex-end;">
+              <div>
+                <span style="font-family:var(--font-mono); font-size:9px; text-transform:uppercase; color:var(--ink-tertiary);">Operating Cash</span>
+                <div style="font-family:var(--font-display); font-size:24px; font-weight:800; color:var(--ink);">$148,920.00</div>
+              </div>
+              <button onclick="alert('Webhook Simulated! +$18,400.00 reconciled.')" style="background:var(--volt); border:1px solid var(--volt-border); padding:5px 10px; border-radius:7px; font-size:10px; font-weight:700; cursor:pointer;">
+                ⚡ Sync
+              </button>
             </div>
           </div>
-          <button onclick="simulateMobileReconcile()" style="background:var(--volt); border:1px solid var(--volt-border); font-size:11px; font-weight:700; padding:6px 12px; border-radius:8px; cursor:pointer;">
-            ⚡ Reconcile
-          </button>
-        </div>
-      </div>
 
-      <!-- HORIZONTAL SCROLL METRICS -->
-      <div class="metric-scroll-strip">
-        <div class="mobile-metric-pill">
-          <span style="font-family:var(--font-mono); font-size:10px; color:var(--ink-tertiary); text-transform:uppercase; display:block;">Receivables (AR)</span>
-          <span style="font-family:var(--font-display); font-size:15px; font-weight:700; color:var(--ink); margin-top:4px; display:block;">$31,450.00</span>
-          <span style="font-family:var(--font-mono); font-size:10px; color:#8C4608;">● 2 Overdue</span>
-        </div>
-        <div class="mobile-metric-pill">
-          <span style="font-family:var(--font-mono); font-size:10px; color:var(--ink-tertiary); text-transform:uppercase; display:block;">Monthly Burn</span>
-          <span style="font-family:var(--font-display); font-size:15px; font-weight:700; color:var(--ink); margin-top:4px; display:block;">$42,380.00</span>
-          <span style="font-family:var(--font-mono); font-size:10px; color:var(--ink-secondary);">14.2 Mos Runway</span>
-        </div>
-        <div class="mobile-metric-pill">
-          <span style="font-family:var(--font-mono); font-size:10px; color:var(--ink-tertiary); text-transform:uppercase; display:block;">Net ARR</span>
-          <span style="font-family:var(--font-display); font-size:15px; font-weight:700; color:var(--ink); margin-top:4px; display:block;">$528,000.00</span>
-          <span style="font-family:var(--font-mono); font-size:10px; color:#0B6B41;">+109.4% NRR</span>
-        </div>
-      </div>
+          <!-- 2x2 METRIC GRID -->
+          <div class="metric-grid">
+            <div class="metric-box">
+              <span class="m-label">Receivables (AR)</span>
+              <div class="m-value">$31,450.00</div>
+              <span class="m-sub" style="color:#8C4608;">● 2 Overdue</span>
+            </div>
+            <div class="metric-box">
+              <span class="m-label">Monthly Burn</span>
+              <div class="m-value">$42,380.00</div>
+              <span class="m-sub">14.2 Mo Runway</span>
+            </div>
+            <div class="metric-box">
+              <span class="m-label">Contracted ARR</span>
+              <div class="m-value">$528,000.00</div>
+              <span class="m-sub" style="color:#0B6B41;">+109.4% NRR</span>
+            </div>
+            <div class="metric-box">
+              <span class="m-label">Active Headcount</span>
+              <div class="m-value">12 Core FTE</div>
+              <span class="m-sub">Q4 Zero-Cap</span>
+            </div>
+          </div>
 
-      <!-- AI CFO QUICK BANNER -->
-      <div style="margin:14px 16px; padding:12px; background:#F8F8F5; border:1px solid var(--border-canvas); border-radius:12px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-          <span style="font-size:11px; font-weight:700; color:#121316; display:flex; align-items:center; gap:4px;">
-            <span>✨</span> AI CFO Alert
-          </span>
-          <span style="font-family:var(--font-mono); font-size:10px; color:#B91C1C; font-weight:600;">+0.8 Mo Impact</span>
-        </div>
-        <p style="font-size:11px; color:var(--ink-secondary); margin:0; line-height:1.4;">
-          Linear Orbit Ltd is 14d overdue ($14,200). Tap to send 1-click escalation.
-        </p>
-      </div>
+          <!-- AI CFO ALERT -->
+          <div style="margin:10px 12px; padding:10px; background:#F8F8F5; border:1px solid var(--border-canvas); border-radius:10px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:3px;">
+              <span style="font-size:11px; font-weight:700;">✨ AI CFO Alert</span>
+              <span style="font-family:var(--font-mono); font-size:9px; color:#0B6B41; font-weight:600;">+0.8 Mo Runway</span>
+            </div>
+            <p style="font-size:10px; color:var(--ink-secondary); line-height:1.4; margin:0;">
+              Linear Orbit Ltd 14d overdue ($14,200). Tap to send automated notice.
+            </p>
+          </div>
 
-      <!-- SUB-LEDGER RECEIVABLES -->
-      <div style="padding:0 16px 8px 16px; display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-family:var(--font-mono); font-size:11px; font-weight:600; text-transform:uppercase; color:var(--ink-tertiary);">Active Sub-Ledger (5)</span>
-        <span style="font-family:var(--font-mono); font-size:10px; color:var(--ink-tertiary);">Tap row to inspect</span>
-      </div>
+          <!-- SUB-LEDGER TRANSACTIONS -->
+          <div style="padding:4px 12px 6px 12px; display:flex; justify-content:space-between;">
+            <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; color:var(--ink-tertiary);">Sub-Ledger Transactions</span>
+            <span style="font-family:var(--font-mono); font-size:9px; color:var(--ink-tertiary);">3 Active</span>
+          </div>
 
-      <div id="invoiceList">
-        <!-- INV 1 -->
-        <div class="mobile-subledger-item" onclick="openInvoiceSheet('INV-2026-092', 'Stripe Inc.', '$18,400.00', 'PAID', 'Stripe ACH Direct')">
           <div>
-            <div style="font-weight:700; font-size:13px; color:var(--ink);">Stripe Inc.</div>
-            <div style="font-family:var(--font-mono); font-size:10px; color:var(--ink-tertiary);">INV-2026-092 • Net 14d</div>
-          </div>
-          <div style="text-align:right;">
-            <div style="font-family:var(--font-mono); font-weight:700; font-size:13px;">$18,400.00</div>
-            <span style="font-family:var(--font-mono); font-size:10px; color:#0B6B41;">● Paid</span>
-          </div>
-        </div>
+            <div class="tx-row" onclick="alert('Viewing Stripe Inc. Invoice #INV-2026-092')">
+              <div>
+                <div style="font-size:12px; font-weight:700;">Stripe Inc.</div>
+                <div style="font-family:var(--font-mono); font-size:9px; color:var(--ink-tertiary);">INV-2026-092 • ACH Direct</div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-family:var(--font-mono); font-size:12px; font-weight:700;">$18,400.00</div>
+                <span style="font-family:var(--font-mono); font-size:9px; color:#0B6B41;">● Paid</span>
+              </div>
+            </div>
 
-        <!-- INV 2 -->
-        <div class="mobile-subledger-item" onclick="openInvoiceSheet('INV-2026-091', 'Vercel Enterprise', '$12,450.00', 'PENDING', 'Fedwire Transfer')">
-          <div>
-            <div style="font-weight:700; font-size:13px; color:var(--ink);">Vercel Enterprise</div>
-            <div style="font-family:var(--font-mono); font-size:10px; color:var(--ink-tertiary);">INV-2026-091 • Due Nov 02</div>
-          </div>
-          <div style="text-align:right;">
-            <div style="font-family:var(--font-mono); font-weight:700; font-size:13px;">$12,450.00</div>
-            <span style="font-family:var(--font-mono); font-size:10px; color:#8C4608;">● Pending</span>
-          </div>
-        </div>
+            <div class="tx-row" onclick="alert('Viewing Vercel Enterprise Invoice #INV-2026-091')">
+              <div>
+                <div style="font-size:12px; font-weight:700;">Vercel Enterprise</div>
+                <div style="font-family:var(--font-mono); font-size:9px; color:var(--ink-tertiary);">INV-2026-091 • Wire</div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-family:var(--font-mono); font-size:12px; font-weight:700;">$12,450.00</div>
+                <span style="font-family:var(--font-mono); font-size:9px; color:#8C4608;">● Pending</span>
+              </div>
+            </div>
 
-        <!-- INV 3 -->
-        <div class="mobile-subledger-item" onclick="openInvoiceSheet('INV-2026-089', 'Linear Orbit Ltd', '$14,200.00', 'OVERDUE', 'Stripe Checkout')">
-          <div>
-            <div style="font-weight:700; font-size:13px; color:var(--ink);">Linear Orbit Ltd</div>
-            <div style="font-family:var(--font-mono); font-size:10px; color:var(--ink-tertiary);">INV-2026-089 • Due Oct 10</div>
+            <div class="tx-row" onclick="alert('Viewing Linear Orbit Invoice #INV-2026-089')">
+              <div>
+                <div style="font-size:12px; font-weight:700;">Linear Orbit Ltd</div>
+                <div style="font-family:var(--font-mono); font-size:9px; color:var(--ink-tertiary);">INV-2026-089 • Card</div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-family:var(--font-mono); font-size:12px; font-weight:700;">$14,200.00</div>
+                <span style="font-family:var(--font-mono); font-size:9px; color:#B91C1C;">● Overdue</span>
+              </div>
+            </div>
           </div>
-          <div style="text-align:right;">
-            <div style="font-family:var(--font-mono); font-weight:700; font-size:13px;">$14,200.00</div>
-            <span style="font-family:var(--font-mono); font-size:10px; color:#B91C1C;">● Overdue</span>
-          </div>
+
         </div>
       </div>
+
+      <!-- BOTTOM NAVIGATION -->
+      <nav class="bottom-nav">
+        <a href="#" class="b-tab active">
+          <span>🏛️</span>
+          <span>Treasury</span>
+        </a>
+        <a href="#" class="b-tab">
+          <span>📄</span>
+          <span>Invoices</span>
+        </a>
+        <a href="#" class="b-tab">
+          <span>📊</span>
+          <span>Spend</span>
+        </a>
+        <a href="#" class="b-tab">
+          <span>✨</span>
+          <span>AI CFO</span>
+        </a>
+        <a href="#" class="b-tab">
+          <span>⚙️</span>
+          <span>Tenant</span>
+        </a>
+      </nav>
+
+      <!-- HOME BAR -->
+      <div class="home-indicator"></div>
 
     </div>
   </div>
-</div>
 
-<!-- INVOICE INSPECTOR BOTTOM SHEET (MODAL) -->
-<div id="sheetOverlay" class="sheet-overlay" onclick="closeInvoiceSheet(event)">
-  <div class="sheet-content" onclick="event.stopPropagation()">
-    <div style="width:36px; height:4px; border-radius:2px; background:#D0D0C8; margin:0 auto 16px auto;"></div>
-    
-    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
-      <div>
-        <span id="sheetInvoiceNum" style="font-family:var(--font-mono); font-size:12px; font-weight:700; color:var(--ink);">INV-2026-092</span>
-        <h3 id="sheetCustomer" style="font-size:16px; font-weight:700; margin:2px 0 0 0;">Stripe Inc.</h3>
-      </div>
-      <span id="sheetStatusBadge" style="font-family:var(--font-mono); font-size:11px; font-weight:600; color:#0B6B41;">● Paid</span>
-    </div>
-
-    <div style="padding:12px; background:#F8F8F5; border-radius:10px; margin-bottom:16px;">
-      <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
-        <span style="color:var(--ink-tertiary);">Total Payable:</span>
-        <span id="sheetAmount" style="font-family:var(--font-mono); font-weight:700;">$18,400.00</span>
-      </div>
-      <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--ink-tertiary); font-family:var(--font-mono);">
-        <span>Settlement Rails:</span>
-        <span id="sheetRails">Stripe ACH Direct</span>
-      </div>
-    </div>
-
-    <div style="margin-bottom:16px; font-family:var(--font-mono); font-size:10px; color:var(--ink-tertiary); word-break:break-all; background:#FFFFFF; border:1px solid var(--border-hairline); padding:8px; border-radius:8px;">
-      SHA-256 Audit: 7e9a8f4c2b1e0d3f6a5b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f
-    </div>
-
-    <div style="display:flex; gap:8px;">
-      <button onclick="alert('Exporting PDF...')" style="flex:1; padding:10px; background:#F2F2EE; border:1px solid var(--border-canvas); border-radius:10px; font-weight:600; font-size:12px; cursor:pointer;">
-        Download PDF
-      </button>
-      <button onclick="closeInvoiceSheet()" style="flex:1; padding:10px; background:#121316; color:#FFFFFF; border:none; border-radius:10px; font-weight:600; font-size:12px; cursor:pointer;">
-        Close Inspector
-      </button>
-    </div>
+  <div style="margin-top:16px; text-align:center; font-family:var(--font-mono); font-size:11px; color:#5C605A;">
+    VeloceOps Mobile OS — iPhone 16 Pro Viewport Simulator
   </div>
-</div>
-
-<!-- FIXED BOTTOM BAR -->
-<nav class="bottom-bar">
-  <a href="index.html" class="bottom-tab active">
-    <span class="bottom-icon">🏛️</span>
-    <span>Treasury</span>
-  </a>
-  <a href="16_invoices_list.html" class="bottom-tab">
-    <span class="bottom-icon">📄</span>
-    <span>Invoices</span>
-  </a>
-  <a href="22_spend_management.html" class="bottom-tab">
-    <span class="bottom-icon">📊</span>
-    <span>Spend</span>
-  </a>
-  <a href="25_ai_cfo_feed.html" class="bottom-tab">
-    <span class="bottom-icon">✨</span>
-    <span>AI CFO</span>
-  </a>
-  <a href="11_tenant_switcher.html" class="bottom-tab">
-    <span class="bottom-icon">⚙️</span>
-    <span>Tenant</span>
-  </a>
-</nav>
-
-<script>
-  function openInvoiceSheet(num, customer, amount, status, rails) {
-    document.getElementById('sheetInvoiceNum').innerText = num;
-    document.getElementById('sheetCustomer').innerText = customer;
-    document.getElementById('sheetAmount').innerText = amount;
-    document.getElementById('sheetRails').innerText = rails;
-    
-    const badge = document.getElementById('sheetStatusBadge');
-    if (status === 'PAID') {
-      badge.innerText = '● Paid';
-      badge.style.color = '#0B6B41';
-    } else if (status === 'OVERDUE') {
-      badge.innerText = '● Overdue';
-      badge.style.color = '#B91C1C';
-    } else {
-      badge.innerText = '● Pending';
-      badge.style.color = '#8C4608';
-    }
-
-    document.getElementById('sheetOverlay').classList.add('open');
-  }
-
-  function closeInvoiceSheet() {
-    document.getElementById('sheetOverlay').classList.remove('open');
-  }
-
-  function simulateMobileReconcile() {
-    alert('Webhook Simulated! Vercel Enterprise invoice marked as PAID. +$12,450.00 added to Operating Cash.');
-  }
-</script>
 
 </body>
 </html>
