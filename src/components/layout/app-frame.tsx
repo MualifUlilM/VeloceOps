@@ -94,7 +94,7 @@ export function AppFrame({
   };
 
   return (
-    <div className="min-h-screen bg-[#F2F2EE] flex p-2 sm:p-3 md:p-4 gap-4 overflow-x-hidden pb-20 lg:pb-4">
+    <div className="min-h-screen bg-[#F2F2EE] flex flex-col lg:flex-row p-2 sm:p-3 md:p-4 gap-2 lg:gap-4 overflow-x-hidden pb-20 lg:pb-4 w-full max-w-full box-border">
       {/* Sidebar: Desktop + Mobile Drawer */}
       <Sidebar
         currentTenant={currentTenant}
@@ -109,7 +109,7 @@ export function AppFrame({
       />
 
       {/* Main Inset Canvas (Linear / Attio style) */}
-      <main className="flex-1 min-w-0 bg-[#FFFFFF] rounded-xl sm:rounded-2xl md:rounded-[20px] border border-[#E2E2DC] shadow-sm flex flex-col overflow-hidden">
+      <main className="flex-1 min-w-0 w-full max-w-full bg-[#FFFFFF] rounded-xl sm:rounded-2xl md:rounded-[20px] border border-[#E2E2DC] shadow-sm flex flex-col overflow-x-hidden">
         <CanvasHeader
           currentTenant={currentTenant}
           userRole={userRole}
@@ -123,7 +123,7 @@ export function AppFrame({
 
         {/* Global Toast Notification */}
         {toastMessage && (
-          <div className="mx-4 sm:mx-6 mt-3 sm:mt-4 p-3 rounded-xl bg-[#121316] text-[#FFFFFF] text-xs font-mono flex items-center justify-between shadow-lg animate-fadeIn border border-[#434642]">
+          <div className="mx-3 sm:mx-6 mt-3 sm:mt-4 p-3 rounded-xl bg-[#121316] text-[#FFFFFF] text-xs font-mono flex items-center justify-between shadow-lg animate-fadeIn border border-[#434642]">
             <div className="flex items-center gap-2 min-w-0">
               <span className="w-2 h-2 rounded-full bg-[#D4F338] animate-pulse flex-shrink-0"></span>
               <span className="truncate">{toastMessage}</span>
@@ -137,7 +137,7 @@ export function AppFrame({
           </div>
         )}
 
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto overflow-x-hidden w-full max-w-full">
           {renderCanvasContent
             ? renderCanvasContent({
                 currentTenant,

@@ -58,55 +58,55 @@ export default function InvoicesPage() {
           .reduce((acc, i) => acc + i.total_amount, 0);
 
         return (
-          <div className="p-6 space-y-6">
+          <div className="p-3.5 sm:p-6 space-y-4 sm:space-y-6 w-full max-w-full overflow-hidden box-border">
             {/* Quick KPI Row */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="p-4 rounded-xl border border-[#E2E2DC] bg-[#F8F8F5]">
-                <span className="text-[11px] font-mono uppercase text-[#5C605A] block mb-1">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 w-full">
+              <div className="p-3.5 sm:p-4 rounded-xl border border-[#E2E2DC] bg-[#F8F8F5]">
+                <span className="text-[10px] sm:text-[11px] font-mono uppercase text-[#5C605A] block mb-1 font-semibold">
                   Total Receivables Pool
                 </span>
-                <span className="text-xl font-bold font-display text-[#121316] tabular">
+                <span className="text-lg sm:text-xl font-bold font-display text-[#121316] tabular">
                   ${totalInvoiced.toLocaleString()}
                 </span>
               </div>
-              <div className="p-4 rounded-xl border border-[#E2E2DC] bg-[#F8F8F5]">
-                <span className="text-[11px] font-mono uppercase text-[#5C605A] block mb-1">
+              <div className="p-3.5 sm:p-4 rounded-xl border border-[#E2E2DC] bg-[#F8F8F5]">
+                <span className="text-[10px] sm:text-[11px] font-mono uppercase text-[#5C605A] block mb-1 font-semibold">
                   Settled Collections
                 </span>
-                <span className="text-xl font-bold font-display text-[#0B6B41] tabular">
+                <span className="text-lg sm:text-xl font-bold font-display text-[#0B6B41] tabular">
                   ${totalPaid.toLocaleString()}
                 </span>
               </div>
-              <div className="p-4 rounded-xl border border-[#E2E2DC] bg-[#F8F8F5]">
-                <span className="text-[11px] font-mono uppercase text-[#5C605A] block mb-1">
+              <div className="p-3.5 sm:p-4 rounded-xl border border-[#E2E2DC] bg-[#F8F8F5]">
+                <span className="text-[10px] sm:text-[11px] font-mono uppercase text-[#5C605A] block mb-1 font-semibold">
                   Outstanding & Overdue
                 </span>
-                <span className="text-xl font-bold font-display text-[#B91C1C] tabular">
+                <span className="text-lg sm:text-xl font-bold font-display text-[#B91C1C] tabular">
                   ${(totalInvoiced - totalPaid).toLocaleString()}
                 </span>
               </div>
             </div>
 
             {/* Filter Header */}
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div className="flex items-center gap-2.5">
-                <div className="relative">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 sm:gap-4 w-full">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto">
+                <div className="relative flex-1 sm:w-56">
                   <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-[#5C605A]" />
                   <input
                     type="text"
                     placeholder="Search invoice or customer..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-8 pr-3 py-1.5 text-xs bg-[#FFFFFF] border border-[#E2E2DC] rounded-lg text-[#121316] placeholder-[#5C605A] outline-none focus:border-[#121316] transition-colors w-60"
+                    className="pl-8 pr-3 py-1.5 text-xs bg-[#FFFFFF] border border-[#E2E2DC] rounded-lg text-[#121316] placeholder-[#5C605A] outline-none focus:border-[#121316] transition-colors w-full"
                   />
                 </div>
 
-                <div className="flex items-center bg-[#F8F8F5] border border-[#E2E2DC] rounded-lg p-1 text-xs">
+                <div className="flex items-center justify-between sm:justify-start bg-[#F8F8F5] border border-[#E2E2DC] rounded-lg p-1 text-xs">
                   {(['ALL', 'PENDING', 'OVERDUE', 'PAID'] as const).map((s) => (
                     <button
                       key={s}
                       onClick={() => setStatusFilter(s)}
-                      className={`px-2 py-0.5 rounded text-[11px] font-mono transition-colors cursor-pointer ${
+                      className={`flex-1 sm:flex-none px-2 py-0.5 rounded text-[10px] sm:text-[11px] font-mono transition-colors cursor-pointer text-center ${
                         statusFilter === s
                           ? 'bg-[#FFFFFF] text-[#121316] font-bold shadow-2xs'
                           : 'text-[#5C605A] hover:text-[#121316]'
@@ -118,7 +118,7 @@ export default function InvoicesPage() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center justify-between sm:justify-end gap-2 w-full md:w-auto">
                 <button
                   onClick={() => handleExportCSV(filteredInvoices, currentTenant.slug)}
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#FFFFFF] text-[#121316] border border-[#D0D0C8] hover:bg-[#F2F2EE] transition-colors cursor-pointer"
@@ -162,9 +162,9 @@ export default function InvoicesPage() {
             </div>
 
             {/* Split View */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start w-full min-w-0">
               <div
-                className={`lg:col-span-7 border border-[#EBEBE6] rounded-xl overflow-hidden shadow-2xs ${
+                className={`lg:col-span-7 border border-[#EBEBE6] rounded-xl overflow-hidden shadow-2xs min-w-0 w-full ${
                   mobileTab === 'table' ? 'block' : 'hidden lg:block'
                 }`}
               >
@@ -179,7 +179,7 @@ export default function InvoicesPage() {
               </div>
 
               <div
-                className={`lg:col-span-5 sticky top-4 ${
+                className={`lg:col-span-5 sticky top-4 min-w-0 w-full ${
                   mobileTab === 'paper' ? 'block' : 'hidden lg:block'
                 }`}
               >

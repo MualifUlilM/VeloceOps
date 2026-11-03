@@ -44,7 +44,7 @@ export function CashflowChart({ currency }: CashflowChartProps) {
   const maxVal = Math.max(...currentData.map((d) => Math.max(d.inflow, d.outflow)));
 
   return (
-    <div className="p-4 sm:p-6 border-b border-[#EBEBE6] bg-[#FFFFFF]">
+    <div className="p-3.5 sm:p-6 border-b border-[#EBEBE6] bg-[#FFFFFF] w-full max-w-full overflow-hidden box-border">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-4 sm:mb-6">
         <div>
           <div className="flex items-center gap-2">
@@ -79,14 +79,14 @@ export function CashflowChart({ currency }: CashflowChartProps) {
       </div>
 
       {/* SVG / HTML Bar & Trend Representation */}
-      <div className="relative pt-4 pb-2 overflow-x-auto">
-        <div className="h-40 sm:h-44 flex items-end gap-2 sm:gap-6 justify-between px-1 sm:px-2 min-w-[320px]">
+      <div className="relative pt-4 pb-2 overflow-x-auto w-full max-w-full">
+        <div className="h-36 sm:h-44 flex items-end gap-1.5 sm:gap-6 justify-between px-1 sm:px-2 min-w-[280px]">
           {currentData.map((d, idx) => {
-            const inflowHeight = (d.inflow / maxVal) * 120;
-            const outflowHeight = (d.outflow / maxVal) * 120;
+            const inflowHeight = (d.inflow / maxVal) * 110;
+            const outflowHeight = (d.outflow / maxVal) * 110;
 
             return (
-              <div key={idx} className="flex-1 flex flex-col items-center group relative">
+              <div key={idx} className="flex-1 flex flex-col items-center group relative min-w-0">
                 {/* Tooltip on hover */}
                 <div className="opacity-0 group-hover:opacity-100 transition-opacity absolute -top-12 z-20 pointer-events-none bg-[#121316] text-[#FFFFFF] text-[10px] font-mono px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap">
                   <div>Inflow: {formatCurrency(d.inflow, currency)}</div>
@@ -94,21 +94,21 @@ export function CashflowChart({ currency }: CashflowChartProps) {
                 </div>
 
                 {/* Bars */}
-                <div className="w-full flex items-end justify-center gap-1.5">
+                <div className="w-full flex items-end justify-center gap-1 sm:gap-1.5">
                   {/* Inflow bar (Volt Lime) */}
                   <div
                     style={{ height: `${Math.max(8, inflowHeight)}px` }}
-                    className="w-1/2 max-w-[18px] bg-[#D4F338] rounded-t-sm border-t border-x border-[#B5D618] transition-all group-hover:brightness-105"
+                    className="w-1/2 max-w-[16px] sm:max-w-[18px] bg-[#D4F338] rounded-t-sm border-t border-x border-[#B5D618] transition-all group-hover:brightness-105"
                   />
                   {/* Outflow bar (Charcoal) */}
                   <div
                     style={{ height: `${Math.max(8, outflowHeight)}px` }}
-                    className="w-1/2 max-w-[18px] bg-[#121316] rounded-t-sm border-t border-x border-[#434642] transition-all group-hover:brightness-125"
+                    className="w-1/2 max-w-[16px] sm:max-w-[18px] bg-[#121316] rounded-t-sm border-t border-x border-[#434642] transition-all group-hover:brightness-125"
                   />
                 </div>
 
                 {/* X-Axis Label */}
-                <span className="text-[10px] font-mono text-[#5C605A] mt-2 group-hover:text-[#121316] transition-colors">
+                <span className="text-[9px] sm:text-[10px] font-mono text-[#5C605A] mt-2 group-hover:text-[#121316] transition-colors truncate max-w-full">
                   {d.label}
                 </span>
               </div>
@@ -117,14 +117,14 @@ export function CashflowChart({ currency }: CashflowChartProps) {
         </div>
 
         {/* Legend */}
-        <div className="flex items-center justify-end gap-5 mt-4 pt-4 border-t border-[#EBEBE6] text-xs">
-          <div className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-xs bg-[#D4F338] border border-[#B5D618]" />
-            <span className="text-xs text-[#434642]">Customer Inflows (ACH/Stripe)</span>
+        <div className="flex flex-wrap items-center justify-between sm:justify-end gap-2.5 sm:gap-5 mt-4 pt-3 border-t border-[#EBEBE6] text-xs">
+          <div className="flex items-center gap-1.5">
+            <span className="w-2.5 h-2.5 rounded-xs bg-[#D4F338] border border-[#B5D618] flex-shrink-0" />
+            <span className="text-[11px] sm:text-xs text-[#434642]">Customer Inflows</span>
           </div>
-          <div className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-xs bg-[#121316]" />
-            <span className="text-xs text-[#434642]">Payroll & Cloud Outflows</span>
+          <div className="flex items-center gap-1.5">
+            <span className="w-2.5 h-2.5 rounded-xs bg-[#121316] flex-shrink-0" />
+            <span className="text-[11px] sm:text-xs text-[#434642]">Payroll & Outflows</span>
           </div>
         </div>
       </div>

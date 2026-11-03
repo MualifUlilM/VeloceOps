@@ -23,7 +23,7 @@ export function AnomalyPanel({ anomalies: initialAnomalies, currency }: AnomalyP
   };
 
   return (
-    <div className="p-4 sm:p-6 bg-[#FFFFFF] border-b border-[#EBEBE6]">
+    <div className="p-3.5 sm:p-6 bg-[#FFFFFF] border-b border-[#EBEBE6] w-full max-w-full overflow-hidden box-border">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4 sm:mb-6">
         <div>
           <div className="flex items-center gap-2">
@@ -51,7 +51,7 @@ export function AnomalyPanel({ anomalies: initialAnomalies, currency }: AnomalyP
       </div>
 
       {/* Grid of Detected Anomalies */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
         {anomalies.map((ano) => {
           const isResolved = resolvedIds.includes(ano.id);
           const isOverdue = ano.kind === 'OVERDUE_RECEIVABLE';
@@ -59,24 +59,24 @@ export function AnomalyPanel({ anomalies: initialAnomalies, currency }: AnomalyP
           return (
             <div
               key={ano.id}
-              className={`p-4 rounded-xl border transition-all ${
+              className={`p-3.5 sm:p-4 rounded-xl border transition-all min-w-0 ${
                 isResolved
                   ? 'bg-[#F8F8F5]/60 border-[#E2E2DC] opacity-60'
                   : 'bg-[#FFFFFF] border-[#E2E2DC] shadow-xs hover:border-[#D0D0C8]'
               }`}
             >
               <div className="flex items-start justify-between gap-3 mb-2">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 min-w-0">
                   <span
-                    className={`w-2 h-2 rounded-full ${
+                    className={`w-2 h-2 rounded-full flex-shrink-0 ${
                       isResolved ? 'bg-[#0B6B41]' : isOverdue ? 'bg-[#B91C1C]' : 'bg-[#8C4608]'
                     }`}
                   />
-                  <span className="text-[10px] font-mono font-bold tracking-wider uppercase text-[#5C605A]">
+                  <span className="text-[10px] font-mono font-bold tracking-wider uppercase text-[#5C605A] truncate">
                     {ano.kind.replace('_', ' ')}
                   </span>
                 </div>
-                <span className="text-xs font-mono font-bold text-[#121316] tabular">
+                <span className="text-xs font-mono font-bold text-[#121316] tabular flex-shrink-0">
                   {formatCurrency(ano.amount, currency)}
                 </span>
               </div>
@@ -88,7 +88,7 @@ export function AnomalyPanel({ anomalies: initialAnomalies, currency }: AnomalyP
                 {ano.description}
               </p>
 
-              <div className="flex items-center justify-between pt-3 border-t border-[#EBEBE6] text-xs">
+              <div className="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-[#EBEBE6] text-xs">
                 <div>
                   {ano.runwayImpactMonths && (
                     <span className="text-[11px] font-mono text-[#0B6B41] font-semibold">
@@ -110,7 +110,7 @@ export function AnomalyPanel({ anomalies: initialAnomalies, currency }: AnomalyP
                 ) : (
                   <button
                     onClick={() => handleExecuteAction(ano)}
-                    className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold bg-[#121316] text-[#FFFFFF] hover:bg-[#434642] active:scale-95 transition-all cursor-pointer"
+                    className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold bg-[#121316] text-[#FFFFFF] hover:bg-[#434642] active:scale-95 transition-all cursor-pointer flex-shrink-0"
                   >
                     <span>{ano.actionLabel}</span>
                     <ArrowRight className="w-3 h-3 text-[#D4F338]" />
@@ -123,11 +123,11 @@ export function AnomalyPanel({ anomalies: initialAnomalies, currency }: AnomalyP
       </div>
 
       {/* Interactive Runway Scenario Simulator */}
-      <div className="mt-6 p-4 rounded-xl bg-[#F8F8F5] border border-[#E2E2DC]">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="mt-6 p-3.5 sm:p-4 rounded-xl bg-[#F8F8F5] border border-[#E2E2DC] w-full max-w-full">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 sm:gap-4">
           <div>
             <div className="flex items-center gap-2">
-              <Sliders className="w-3.5 h-3.5 text-[#121316]" />
+              <Sliders className="w-3.5 h-3.5 text-[#121316] flex-shrink-0" />
               <span className="text-xs font-bold text-[#121316]">
                 Interactive Runway Scenario Simulator
               </span>
@@ -137,9 +137,9 @@ export function AnomalyPanel({ anomalies: initialAnomalies, currency }: AnomalyP
             </p>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center justify-between sm:justify-end gap-3 sm:gap-4 w-full md:w-auto">
             <div className="flex items-center gap-2">
-              <span className="text-xs font-mono text-[#5C605A]">Target Extension:</span>
+              <span className="text-[11px] sm:text-xs font-mono text-[#5C605A]">Target:</span>
               <input
                 type="range"
                 min="0.2"
@@ -147,13 +147,13 @@ export function AnomalyPanel({ anomalies: initialAnomalies, currency }: AnomalyP
                 step="0.1"
                 value={scenarioRunwayAdd}
                 onChange={(e) => setScenarioRunwayAdd(parseFloat(e.target.value))}
-                className="w-28 accent-[#121316] cursor-pointer"
+                className="w-24 sm:w-28 accent-[#121316] cursor-pointer"
               />
-              <span className="font-mono text-xs font-bold text-[#121316] tabular w-14">
+              <span className="font-mono text-xs font-bold text-[#121316] tabular">
                 +{scenarioRunwayAdd.toFixed(1)} Mos
               </span>
             </div>
-            <div className="px-2.5 py-1 rounded bg-[#D4F338] text-[#121316] text-xs font-mono font-bold border border-[#B5D618]">
+            <div className="px-2.5 py-1 rounded bg-[#D4F338] text-[#121316] text-xs font-mono font-bold border border-[#B5D618] flex-shrink-0">
               Dec 2027 Projected
             </div>
           </div>
