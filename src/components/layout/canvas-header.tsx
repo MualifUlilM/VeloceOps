@@ -26,10 +26,10 @@ export function CanvasHeader({
   subtitle = 'Real-time multi-tenant cash position, sub-ledger receivables, and AI CFO surveillance.',
 }: CanvasHeaderProps) {
   return (
-    <header className="px-3.5 py-3 sm:px-6 sm:py-5 border-b border-[#EBEBE6] flex flex-col md:flex-row md:items-center md:justify-between gap-3 sm:gap-4 bg-[#FFFFFF] rounded-t-xl sm:rounded-t-[20px] w-full max-w-full box-border">
+    <header className="px-3 sm:px-6 py-2.5 sm:py-5 border-b border-[#EBEBE6] flex flex-col md:flex-row md:items-center md:justify-between gap-2.5 sm:gap-4 bg-[#FFFFFF] w-full">
       <div className="flex items-start justify-between gap-2 min-w-0 w-full">
         <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-1.5 sm:gap-2 mb-1 flex-wrap">
+          <div className="flex items-center gap-1.5 sm:gap-2 mb-0.5 sm:mb-1 flex-wrap">
             {onOpenMobileMenu && (
               <button
                 onClick={onOpenMobileMenu}
@@ -39,16 +39,16 @@ export function CanvasHeader({
                 <Menu className="w-4 h-4" />
               </button>
             )}
-            <span className="text-[10px] sm:text-[11px] font-mono uppercase tracking-wider text-[#5C605A]">
+            <span className="text-[9px] sm:text-[11px] font-mono uppercase tracking-wider text-[#5C605A]">
               Overview
             </span>
             <span className="text-[#5C605A] text-xs">/</span>
-            <span className="text-[10px] sm:text-[11px] font-mono uppercase tracking-wider text-[#121316] font-semibold truncate max-w-[100px] sm:max-w-none">
+            <span className="text-[9px] sm:text-[11px] font-mono uppercase tracking-wider text-[#121316] font-semibold truncate max-w-[90px] sm:max-w-none">
               {currentTenant.name}
             </span>
             <span className="text-[#E2E2DC]">•</span>
             {/* CLEAN DOT INDICATOR - NO BUBBLE PILL */}
-            <div className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-mono text-[#434642] flex-wrap">
+            <div className="inline-flex items-center gap-1 text-[9px] sm:text-[11px] font-mono text-[#434642] flex-wrap">
               <span className="w-1.5 h-1.5 rounded-full bg-[#0B6B41] flex-shrink-0"></span>
               <span className="hidden sm:inline">Protected by RLS</span>
               <span className="text-[#5C605A] hidden sm:inline">•</span>
@@ -59,49 +59,47 @@ export function CanvasHeader({
           <h1 className="text-base sm:text-xl font-bold tracking-tight text-[#121316] font-display truncate">
             {title}
           </h1>
-          <p className="text-xs text-[#5C605A] mt-0.5 line-clamp-1 sm:line-clamp-none max-w-xl">
+          <p className="text-[11px] sm:text-xs text-[#5C605A] mt-0.5 line-clamp-1 sm:line-clamp-none max-w-xl">
             {subtitle}
           </p>
         </div>
       </div>
 
-      <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap pt-1 md:pt-0 w-full md:w-auto justify-between sm:justify-start">
-        <div className="flex items-center gap-2 flex-wrap">
-          {/* Role Switcher */}
-          <div className="flex items-center gap-1.5 bg-[#F8F8F5] border border-[#E2E2DC] px-2 py-1 rounded-lg text-xs">
-            <span className="text-[10px] sm:text-[11px] font-mono text-[#5C605A] uppercase">Role:</span>
-            <select
-              value={userRole}
-              onChange={(e) => onSelectRole(e.target.value as UserRole)}
-              className="bg-transparent font-semibold text-[#121316] outline-none cursor-pointer text-xs"
-            >
-              <option value="OWNER">OWNER</option>
-              <option value="FINANCE">FINANCE</option>
-              <option value="VIEWER">VIEWER</option>
-            </select>
-          </div>
-
-          {/* Simulate Stripe Webhook Button */}
-          {onSimulateWebhook && (
-            <button
-              onClick={onSimulateWebhook}
-              disabled={isSimulating}
-              className="inline-flex items-center gap-1 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-xs font-semibold bg-[#F8F8F5] text-[#121316] border border-[#D0D0C8] hover:bg-[#EAEAE4] active:scale-[0.98] transition-all cursor-pointer disabled:opacity-50"
-              title="Simulate Stripe invoice.paid webhook"
-            >
-              <Zap className={`w-3.5 h-3.5 text-[#8C4608] ${isSimulating ? 'animate-spin' : ''}`} />
-              <span className="hidden sm:inline">{isSimulating ? 'Reconciling...' : 'Simulate Webhook'}</span>
-              <span className="sm:hidden">{isSimulating ? 'Syncing' : 'Webhook'}</span>
-            </button>
-          )}
+      <div className="flex items-center gap-1.5 sm:gap-2.5 flex-wrap pt-0.5 md:pt-0 w-full md:w-auto justify-start">
+        {/* Role Switcher */}
+        <div className="flex items-center gap-1 bg-[#F8F8F5] border border-[#E2E2DC] px-2 py-1 rounded-lg text-[11px]">
+          <span className="text-[9px] sm:text-[10px] font-mono text-[#5C605A] uppercase">Role:</span>
+          <select
+            value={userRole}
+            onChange={(e) => onSelectRole(e.target.value as UserRole)}
+            className="bg-transparent font-semibold text-[#121316] outline-none cursor-pointer text-[11px]"
+          >
+            <option value="OWNER">OWNER</option>
+            <option value="FINANCE">FINANCE</option>
+            <option value="VIEWER">VIEWER</option>
+          </select>
         </div>
+
+        {/* Simulate Stripe Webhook Button */}
+        {onSimulateWebhook && (
+          <button
+            onClick={onSimulateWebhook}
+            disabled={isSimulating}
+            className="inline-flex items-center gap-1 px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] font-semibold bg-[#F8F8F5] text-[#121316] border border-[#D0D0C8] hover:bg-[#EAEAE4] active:scale-[0.98] transition-all cursor-pointer disabled:opacity-50"
+            title="Simulate Stripe invoice.paid webhook"
+          >
+            <Zap className={`w-3 h-3 text-[#8C4608] ${isSimulating ? 'animate-spin' : ''}`} />
+            <span className="hidden sm:inline">{isSimulating ? 'Reconciling...' : 'Simulate Webhook'}</span>
+            <span className="sm:hidden">{isSimulating ? 'Syncing' : 'Webhook'}</span>
+          </button>
+        )}
 
         {/* Create Invoice Action */}
         <Link
           href="/invoices/new"
-          className="inline-flex items-center gap-1 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-lg text-xs font-bold bg-[#D4F338] text-[#121316] border border-[#B5D618] hover:bg-[#C5E627] active:scale-[0.98] transition-all shadow-2xs"
+          className="inline-flex items-center gap-1 px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-lg text-[11px] font-bold bg-[#D4F338] text-[#121316] border border-[#B5D618] hover:bg-[#C5E627] active:scale-[0.98] transition-all shadow-2xs ml-auto sm:ml-0"
         >
-          <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
+          <Plus className="w-3 h-3 stroke-[2.5]" />
           <span>New Invoice</span>
         </Link>
       </div>

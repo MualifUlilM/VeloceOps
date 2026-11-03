@@ -1,9 +1,16 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
   title: 'VeloceOps — High-Velocity B2B Treasury & Smart Invoicing Operating System',
   description: 'Multi-tenant B2B financial operating system powered by PostgreSQL Row-Level Security, Stripe Webhooks, and AI CFO Copilot.',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({
@@ -12,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="overflow-x-hidden">
       <head>
         <link rel="preconnect" href="https://api.fontshare.com" />
         <link
@@ -26,7 +33,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-screen bg-[#F2F2EE] text-[#121316] antialiased selection:bg-[#D4F338] selection:text-[#121316]">
+      <body className="min-h-screen bg-[#F2F2EE] text-[#121316] antialiased selection:bg-[#D4F338] selection:text-[#121316] overflow-x-hidden w-full max-w-full">
         {children}
       </body>
     </html>

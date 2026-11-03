@@ -57,19 +57,19 @@ export default function DashboardPage() {
             <CashflowChart currency={currentTenant.currency} />
 
             {/* 3. Sub-Ledger Master / Detail Split View */}
-            <div className="p-3.5 sm:p-6 border-b border-[#EBEBE6] bg-[#FFFFFF] w-full max-w-full overflow-hidden box-border">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-4">
+            <div className="p-3 sm:p-6 border-b border-[#EBEBE6] bg-[#FFFFFF] w-full max-w-full overflow-hidden box-border">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5 sm:gap-4 mb-3 sm:mb-4">
                 <div>
-                  <h2 className="text-base font-bold text-[#121316] font-display">
+                  <h2 className="text-sm sm:text-base font-bold text-[#121316] font-display">
                     Accounts Receivable Sub-Ledger
                   </h2>
-                  <p className="text-xs text-[#5C605A] mt-0.5">
-                    Click any counterparty row to inspect the cryptographic invoice document and payment state.
+                  <p className="text-[11px] sm:text-xs text-[#5C605A] mt-0.5 line-clamp-1 sm:line-clamp-none">
+                    Click any counterparty row to inspect cryptographic document and payment state.
                   </p>
                 </div>
 
                 {/* Search & Filter Toolbar */}
-                <div className="flex flex-col xs:flex-row items-stretch xs:items-center gap-2 w-full sm:w-auto">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
                   <div className="relative flex-1">
                     <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-[#5C605A]" />
                     <input
@@ -77,16 +77,16 @@ export default function DashboardPage() {
                       placeholder="Filter counterparties..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="pl-8 pr-3 py-1.5 text-xs bg-[#F8F8F5] border border-[#E2E2DC] rounded-lg text-[#121316] placeholder-[#5C605A] outline-none focus:border-[#121316] transition-colors w-full sm:w-48"
+                      className="pl-8 pr-2.5 py-1 text-xs bg-[#F8F8F5] border border-[#E2E2DC] rounded-lg text-[#121316] placeholder-[#5C605A] outline-none focus:border-[#121316] transition-colors w-full sm:w-44"
                     />
                   </div>
 
-                  <div className="flex items-center justify-between sm:justify-start bg-[#F8F8F5] border border-[#E2E2DC] rounded-lg p-1 text-xs">
+                  <div className="grid grid-cols-4 sm:flex items-center bg-[#F8F8F5] border border-[#E2E2DC] rounded-lg p-0.5 text-xs w-full sm:w-auto">
                     {(['ALL', 'PENDING', 'OVERDUE', 'PAID'] as const).map((s) => (
                       <button
                         key={s}
                         onClick={() => setStatusFilter(s)}
-                        className={`flex-1 sm:flex-none px-2 py-0.5 rounded text-[10px] sm:text-[11px] font-mono transition-colors cursor-pointer text-center ${
+                        className={`px-1.5 sm:px-2 py-1 sm:py-0.5 rounded text-[10px] sm:text-[11px] font-mono transition-colors cursor-pointer text-center whitespace-nowrap ${
                           statusFilter === s
                             ? 'bg-[#FFFFFF] text-[#121316] font-bold shadow-2xs'
                             : 'text-[#5C605A] hover:text-[#121316]'
@@ -100,20 +100,20 @@ export default function DashboardPage() {
               </div>
 
               {/* Mobile View Segmented Tab (Visible on small screens) */}
-              <div className="lg:hidden flex items-center p-1 bg-[#F2F2EE] rounded-xl border border-[#E2E2DC] mb-4">
+              <div className="lg:hidden flex items-center p-0.5 sm:p-1 bg-[#F2F2EE] rounded-xl border border-[#E2E2DC] mb-3 w-full">
                 <button
                   onClick={() => setMobileTab('table')}
-                  className={`flex-1 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+                  className={`flex-1 py-1.5 text-[11px] font-semibold rounded-lg transition-all truncate px-1 ${
                     mobileTab === 'table'
                       ? 'bg-[#FFFFFF] text-[#121316] shadow-2xs font-bold'
                       : 'text-[#5C605A]'
                   }`}
                 >
-                  Sub-Ledger Table ({filteredInvoices.length})
+                  Sub-Ledger ({filteredInvoices.length})
                 </button>
                 <button
                   onClick={() => setMobileTab('paper')}
-                  className={`flex-1 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+                  className={`flex-1 py-1.5 text-[11px] font-semibold rounded-lg transition-all truncate px-1 ${
                     mobileTab === 'paper'
                       ? 'bg-[#FFFFFF] text-[#121316] shadow-2xs font-bold'
                       : 'text-[#5C605A]'
