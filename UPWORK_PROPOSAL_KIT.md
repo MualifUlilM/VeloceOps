@@ -1,19 +1,22 @@
 # VeloceOps — Upwork Flagship Portfolio & Proposal Kit
 **Freelancer Profile:** Hanif Daffa N. (`~012dd0073fa520988c`)  
 **Target Clients:** US/EU B2B SaaS Founders, Fintech Scaleups, Series A/B Technical Leads  
-**Repository:** [https://github.com/MualifUlilM/VeloceOps](https://github.com/MualifUlilM/VeloceOps)
+**Live Interactive Demo:** [https://veloce-ops-ochre.vercel.app](https://veloce-ops-ochre.vercel.app)  
+**GitHub Repository:** [https://github.com/MualifUlilM/VeloceOps](https://github.com/MualifUlilM/VeloceOps)
 
 ---
 
 ## 1. High-Converting Proposal Opening (First 2 Lines)
 
 ### Variant A — Fintech & Treasury Jobs (Recommended)
-> "Hi [Client Name] — I just built and deployed **VeloceOps**, a production B2B Treasury & Smart Invoicing OS with multi-tenant PostgreSQL Row-Level Security, idempotent Stripe webhooks, and live sub-ledger reconciliation: [GitHub](https://github.com/MualifUlilM/VeloceOps).
+> "Hi [Client Name] — I just engineered and deployed **VeloceOps**, a production B2B Treasury & Smart Invoicing OS with multi-tenant PostgreSQL Row-Level Security, idempotent Stripe webhooks, and live sub-ledger reconciliation:
+> 🔗 **Live Interactive Demo:** [https://veloce-ops-ochre.vercel.app](https://veloce-ops-ochre.vercel.app) (GitHub: [github.com/MualifUlilM/VeloceOps](https://github.com/MualifUlilM/VeloceOps))
 > 
 > Most SaaS invoicing architectures suffer from silent duplicate charges on webhook replays or data leakage across organizations. In VeloceOps, both are guarded at the database kernel level with zero manual dashboard clicks."
 
 ### Variant B — Next.js 15 & Supabase SaaS Jobs
-> "Hi [Client Name] — Instead of showing you conceptual Figma mockups, here is a production Next.js 15 + Supabase + Stripe app I engineered with complete multi-tenant RLS isolation, Zod server actions, and automated financial ledgers: [GitHub](https://github.com/MualifUlilM/VeloceOps).
+> "Hi [Client Name] — Instead of showing you conceptual Figma mockups, here is a production Next.js 15 + Supabase + Stripe app I engineered with complete multi-tenant RLS isolation, Zod server actions, and automated financial ledgers:
+> 🔗 **Live Demo:** [https://veloce-ops-ochre.vercel.app](https://veloce-ops-ochre.vercel.app) (Clean mobile + desktop responsive)
 > 
 > I can ship your MVP with this exact same architecture in 2–3 weeks."
 

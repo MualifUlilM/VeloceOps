@@ -1,11 +1,13 @@
 # VeloceOps — Multi-Tenant Treasury, Smart Invoicing & AI CFO OS
 
 [![CI - Build & Typecheck](https://github.com/MualifUlilM/VeloceOps/actions/workflows/ci.yml/badge.svg)](https://github.com/MualifUlilM/VeloceOps/actions/workflows/ci.yml)
+[![Live Demo - Vercel](https://img.shields.io/badge/Live_Demo-veloce--ops--ochre.vercel.app-121316?style=flat&logo=vercel&logoColor=D4F338)](https://veloce-ops-ochre.vercel.app)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Next.js 15](https://img.shields.io/badge/Next.js-15.0-black?logo=next.js)](https://nextjs.org)
 [![PostgreSQL 16](https://img.shields.io/badge/PostgreSQL-16-336791?logo=postgresql)](https://supabase.com)
 [![Stripe](https://img.shields.io/badge/Stripe-Idempotent%20Webhooks-635BFF?logo=stripe)](https://stripe.com)
 
+**Live Demo URL:** [https://veloce-ops-ochre.vercel.app](https://veloce-ops-ochre.vercel.app)  
 **Flagship B2B Financial Operating System** engineered with **Next.js 15 (App Router, Server Actions)**, **TypeScript**, **Tailwind CSS v4**, **Supabase (PostgreSQL 16, Row-Level Security, pgvector)**, and **Idempotent Stripe Webhooks**.
 
 ---
