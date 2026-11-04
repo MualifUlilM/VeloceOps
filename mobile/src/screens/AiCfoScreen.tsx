@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -6,24 +6,134 @@ import {
   StyleSheet,
   TouchableOpacity,
   SafeAreaView,
+  TextInput,
+  ActivityIndicator,
   Alert,
 } from 'react-native';
 import { Tenant, AnomalyDetection } from '../types';
 import { colors } from '../theme';
 import { formatCurrency, INITIAL_ANOMALIES } from '../data';
 
+const API_BASE_URL = 'https://veloce-ops-ochre.vercel.app';
+
 interface AiCfoScreenProps {
   currentTenant: Tenant;
 }
 
+interface AiRecommendation {
+  id: string;
+  priority: string;
+  title: string;
+  impact: string;
+  action: string;
+}
+
 export function AiCfoScreen({ currentTenant }: AiCfoScreenProps) {
-  const [anomalies, setAnomalies] = useState(INITIAL_ANOMALIES);
+  const [anomalies, setAnomalies] = useState<AnomalyDetection[]>(INITIAL_ANOMALIES);
+  const [recommendations, setRecommendations] = useState<AiRecommendation[]>([]);
   const [resolved, setResolved] = useState<string[]>([]);
   const [scenarioRunway, setScenarioRunway] = useState(1.2);
 
-  const handleAction = (ano: AnomalyDetection) => {
+  // AI Copilot Q&A state
+  const [question, setQuestion] = useState('');
+  const [isLoadingAi, setIsLoadingAi] = useState(false);
+  const [aiAnswer, setAiAnswer] = useState<{
+    query: string;
+    answer: string;
+    estimated_impact?: string;
+    key_actions?: string[];
+  } | null>(null);
+
+  // Fetch live surveillance & recommendations from API
+  useEffect(() => {
+    async function fetchSurveillance() {
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/ai-cfo`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'surveillance',
+            tenant_id: currentTenant.id,
+            context: {
+              operating_cash: currentTenant.operating_cash,
+              currency: currentTenant.currency,
+            },
+          }),
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.anomalies && data.anomalies.length > 0) {
+            setAnomalies(data.anomalies);
+          }
+          if (data.recommendations && data.recommendations.length > 0) {
+            setRecommendations(data.recommendations);
+          }
+        }
+      } catch (err) {
+        // Fallback to local data gracefully
+      }
+    }
+    fetchSurveillance();
+  }, [currentTenant.id]);
+
+  const handleAction = async (ano: AnomalyDetection) => {
     setResolved((prev) => [...prev, ano.id]);
-    Alert.alert('Action Executed', `${ano.actionLabel} has been dispatched successfully.`);
+
+    try {
+      await fetch(`${API_BASE_URL}/api/ai-cfo`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'resolve',
+          tenant_id: currentTenant.id,
+          anomaly_id: ano.id,
+        }),
+      });
+    } catch {
+      // Offline fallback
+    }
+
+    Alert.alert('Action Executed', `${ano.actionLabel} has been dispatched to subledger.`);
+  };
+
+  const handleAskCfo = async (promptQuery?: string) => {
+    const q = promptQuery || question;
+    if (!q.trim()) return;
+
+    setIsLoadingAi(true);
+    setQuestion('');
+
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/ai-cfo`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'ask',
+          query: q,
+          tenant_id: currentTenant.id,
+          context: {
+            operating_cash: currentTenant.operating_cash,
+            currency: currentTenant.currency,
+          },
+        }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setAiAnswer({
+          query: q,
+          answer: data.answer,
+          estimated_impact: data.estimated_impact,
+          key_actions: data.key_actions,
+        });
+      } else {
+        Alert.alert('Error', 'Failed to retrieve AI CFO response.');
+      }
+    } catch (err: any) {
+      Alert.alert('Network Error', err.message || 'Could not connect to AI CFO API.');
+    } finally {
+      setIsLoadingAi(false);
+    }
   };
 
   return (
@@ -31,15 +141,84 @@ export function AiCfoScreen({ currentTenant }: AiCfoScreenProps) {
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
           <Text style={styles.title}>AI CFO Surveillance</Text>
-          <Text style={styles.subtitle}>pgvector Anomaly Heuristics</Text>
+          <Text style={styles.subtitle}>Autonomous Financial Guard • API v1.2</Text>
         </View>
 
         {/* AI Banner */}
         <View style={styles.banner}>
           <Text style={styles.bannerTitle}>✨ Autonomous Financial Guard</Text>
           <Text style={styles.bannerDesc}>
-            VeloceOps scans cross-border invoice payment cadence and AWS NAT egress to eliminate cash leaks.
+            VeloceOps continuously analyzes AR default latency and AWS egress spikes via the live `/api/ai-cfo` endpoint.
           </Text>
+        </View>
+
+        {/* AI Copilot Interactive Query Box */}
+        <View style={styles.copilotBox}>
+          <Text style={styles.copilotTitle}>Ask AI CFO Copilot</Text>
+          <Text style={styles.copilotSubtitle}>Instant executive guidance for cashflow & runway</Text>
+
+          <View style={styles.inputRow}>
+            <TextInput
+              style={styles.copilotInput}
+              placeholder="e.g. How to extend runway by 6 months?"
+              placeholderTextColor={colors.inkTertiary}
+              value={question}
+              onChangeText={setQuestion}
+              onSubmitEditing={() => handleAskCfo()}
+            />
+            <TouchableOpacity
+              style={[styles.askBtn, isLoadingAi ? styles.askBtnDisabled : null]}
+              onPress={() => handleAskCfo()}
+              disabled={isLoadingAi}
+            >
+              {isLoadingAi ? (
+                <ActivityIndicator size="small" color={colors.ink} />
+              ) : (
+                <Text style={styles.askBtnText}>Ask</Text>
+              )}
+            </TouchableOpacity>
+          </View>
+
+          {/* Quick Prompt Pills */}
+          <View style={styles.quickPromptsRow}>
+            {[
+              'Extend runway 6 mos',
+              'Prune Cloud Spend',
+              'Linear Orbit Risk',
+            ].map((qp) => (
+              <TouchableOpacity
+                key={qp}
+                style={styles.quickPill}
+                onPress={() => handleAskCfo(qp)}
+              >
+                <Text style={styles.quickPillText}>{qp}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+
+          {/* Live AI Answer Display */}
+          {aiAnswer && (
+            <View style={styles.aiResultCard}>
+              <View style={styles.aiResultHeader}>
+                <Text style={styles.aiResultTag}>AI CFO Response</Text>
+                {aiAnswer.estimated_impact && (
+                  <Text style={styles.aiResultImpact}>{aiAnswer.estimated_impact}</Text>
+                )}
+              </View>
+              <Text style={styles.aiResultText}>{aiAnswer.answer}</Text>
+
+              {aiAnswer.key_actions && aiAnswer.key_actions.length > 0 && (
+                <View style={styles.keyActionsWrap}>
+                  <Text style={styles.keyActionsTitle}>Recommended Actions:</Text>
+                  {aiAnswer.key_actions.map((act, idx) => (
+                    <Text key={idx} style={styles.keyActionItem}>
+                      • {act}
+                    </Text>
+                  ))}
+                </View>
+              )}
+            </View>
+          )}
         </View>
 
         {/* Anomaly Feed */}
@@ -89,6 +268,23 @@ export function AiCfoScreen({ currentTenant }: AiCfoScreenProps) {
             </View>
           );
         })}
+
+        {/* Live Strategic Recommendations */}
+        {recommendations.length > 0 && (
+          <View style={styles.recContainer}>
+            <Text style={styles.sectionTitle}>Strategic Actions ({recommendations.length})</Text>
+            {recommendations.map((rec) => (
+              <View key={rec.id} style={styles.recCard}>
+                <View style={styles.recTop}>
+                  <Text style={styles.recTitle}>{rec.title}</Text>
+                  <Text style={styles.recPriority}>{rec.priority}</Text>
+                </View>
+                <Text style={styles.recImpact}>{rec.impact}</Text>
+                <Text style={styles.recActionText}>Action: {rec.action}</Text>
+              </View>
+            ))}
+          </View>
+        )}
 
         {/* Runway Scenario Simulator */}
         <View style={styles.simulatorCard}>
@@ -163,6 +359,128 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: colors.canvas,
     lineHeight: 16,
+  },
+  copilotBox: {
+    backgroundColor: colors.canvas,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: colors.borderCanvas,
+    padding: 14,
+    marginBottom: 16,
+  },
+  copilotTitle: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: colors.ink,
+  },
+  copilotSubtitle: {
+    fontSize: 10,
+    fontFamily: 'Courier',
+    color: colors.inkTertiary,
+    marginBottom: 10,
+    marginTop: 2,
+  },
+  inputRow: {
+    flexDirection: 'row',
+    gap: 8,
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  copilotInput: {
+    flex: 1,
+    backgroundColor: colors.subtle,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: colors.borderCanvas,
+    paddingHorizontal: 10,
+    paddingVertical: 7,
+    fontSize: 12,
+    color: colors.ink,
+  },
+  askBtn: {
+    backgroundColor: colors.volt,
+    borderRadius: 10,
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  askBtnDisabled: {
+    opacity: 0.6,
+  },
+  askBtnText: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: colors.ink,
+  },
+  quickPromptsRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+    marginBottom: 8,
+  },
+  quickPill: {
+    backgroundColor: colors.subtle,
+    borderWidth: 1,
+    borderColor: colors.borderCanvas,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 6,
+  },
+  quickPillText: {
+    fontSize: 10,
+    fontFamily: 'Courier',
+    color: colors.inkSecondary,
+  },
+  aiResultCard: {
+    marginTop: 8,
+    backgroundColor: colors.subtle,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: colors.borderCanvas,
+    padding: 12,
+  },
+  aiResultHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 6,
+  },
+  aiResultTag: {
+    fontSize: 10,
+    fontFamily: 'Courier',
+    fontWeight: '700',
+    color: colors.ink,
+    textTransform: 'uppercase',
+  },
+  aiResultImpact: {
+    fontSize: 10,
+    fontFamily: 'Courier',
+    fontWeight: '700',
+    color: colors.emerald,
+  },
+  aiResultText: {
+    fontSize: 12,
+    color: colors.ink,
+    lineHeight: 18,
+    marginBottom: 8,
+  },
+  keyActionsWrap: {
+    borderTopWidth: 1,
+    borderTopColor: colors.borderHairline,
+    paddingTop: 6,
+  },
+  keyActionsTitle: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: colors.ink,
+    marginBottom: 4,
+  },
+  keyActionItem: {
+    fontSize: 11,
+    color: colors.inkSecondary,
+    lineHeight: 16,
+    marginBottom: 2,
   },
   sectionTitle: {
     fontSize: 11,
@@ -252,6 +570,49 @@ const styles = StyleSheet.create({
     fontFamily: 'Courier',
     fontWeight: '700',
     color: colors.emerald,
+  },
+  recContainer: {
+    marginVertical: 6,
+  },
+  recCard: {
+    backgroundColor: colors.canvas,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: colors.borderCanvas,
+    padding: 12,
+    marginBottom: 8,
+  },
+  recTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  recTitle: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: colors.ink,
+  },
+  recPriority: {
+    fontSize: 9,
+    fontFamily: 'Courier',
+    fontWeight: '700',
+    color: colors.volt,
+    backgroundColor: colors.ink,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
+  },
+  recImpact: {
+    fontSize: 11,
+    fontFamily: 'Courier',
+    fontWeight: '700',
+    color: colors.emerald,
+    marginBottom: 4,
+  },
+  recActionText: {
+    fontSize: 10,
+    color: colors.inkSecondary,
   },
   simulatorCard: {
     backgroundColor: colors.subtle,
