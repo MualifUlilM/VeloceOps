@@ -14,17 +14,21 @@ export default function LoginPage() {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    // Set auth cookie
+    document.cookie = 'veloce_auth_session=1; path=/; max-age=86400; SameSite=Lax';
     setTimeout(() => {
-      router.push('/');
-    }, 600);
+      window.location.href = '/';
+    }, 500);
   };
 
-  const handleQuickLogin = (demoEmail: string) => {
+  const handleQuickLogin = (demoEmail: string, role = 'OWNER') => {
     setEmail(demoEmail);
     setIsLoading(true);
+    // Set auth cookie
+    document.cookie = `veloce_auth_session=1; path=/; max-age=86400; SameSite=Lax`;
     setTimeout(() => {
-      router.push('/');
-    }, 400);
+      window.location.href = '/';
+    }, 350);
   };
 
   return (

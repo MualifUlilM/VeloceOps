@@ -11,7 +11,8 @@ import {
   ShieldCheck, 
   ExternalLink,
   ChevronRight,
-  X
+  X,
+  LogOut
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Tenant } from '@/types/veloceops';
@@ -236,6 +237,17 @@ export function Sidebar({
             **** 4892 • Auto-Reconcile ON
           </div>
         </div>
+
+        <button
+          onClick={() => {
+            document.cookie = 'veloce_auth_session=; path=/; max-age=0';
+            window.location.href = '/login';
+          }}
+          className="w-full flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg text-[11px] font-mono text-[#5C605A] hover:text-[#B91C1C] hover:bg-[#FEE2E2]/60 transition-colors border border-transparent hover:border-[#FCA5A5]/40 cursor-pointer"
+        >
+          <LogOut className="w-3.5 h-3.5" />
+          <span>Sign Out / Switch User</span>
+        </button>
 
         <div className="flex items-center justify-between px-1 text-[11px] text-[#5C605A]">
           <Link href="/landing" onClick={onCloseMobile} className="hover:text-[#121316] transition-colors">
