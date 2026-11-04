@@ -1,0 +1,41 @@
+name: Supabase Keep-Alive Anti-Pause Engine
+
+on:
+  schedule:
+    # Runs every 2 days at 04:00 UTC (11:00 WIB)
+    - cron: '0 4 */2 * *'
+  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+
+jobs:
+  ping-supabase:
+    name: Ping Database & Retain Activity
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Ping Tenants Endpoint (Queries Supabase PostgreSQL)
+        run: |
+          echo "Pinging VeloceOps Tenants API..."
+          RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}" "https://veloce-ops-ochre.vercel.app/api/tenants")
+          echo "$RESPONSE"
+          STATUS=$(echo "$RESPONSE" | grep "HTTP_STATUS" | cut -d':' -f2)
+          if [ "$STATUS" -ne 200 ]; then
+            echo "Warning: Expected HTTP 200, got $STATUS"
+          else
+            echo "Success: Tenants query executed on Supabase."
+          fi
+
+      - name: Ping Spend API (Queries Budget Caps on Supabase)
+        run: |
+          echo "Pinging VeloceOps Spend API..."
+          RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}" "https://veloce-ops-ochre.vercel.app/api/spend")
+          echo "$RESPONSE"
+          STATUS=$(echo "$RESPONSE" | grep "HTTP_STATUS" | cut -d':' -f2)
+          if [ "$STATUS" -ne 200 ]; then
+            echo "Warning: Expected HTTP 200, got $STATUS"
+          else
+            echo "Success: Budget Caps query executed on Supabase."
+          fi
+
+      - name: Summary
+        run: |
+          echo "Supabase keep-alive pulse dispatched successfully at $(date -u)"
