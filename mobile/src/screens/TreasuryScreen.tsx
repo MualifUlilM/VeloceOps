@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -7,12 +7,15 @@ import {
   TouchableOpacity,
   SafeAreaView,
   StatusBar,
+  RefreshControl,
 } from 'react-native';
 import { Tenant, Invoice } from '../types';
 import { colors } from '../theme';
 import { formatCurrency } from '../data';
 import { MetricCard } from '../components/MetricCard';
 import { InvoiceDetailModal } from '../components/InvoiceDetailModal';
+
+const API_BASE_URL = 'https://veloce-ops-ochre.vercel.app';
 
 interface TreasuryScreenProps {
   currentTenant: Tenant;
@@ -21,6 +24,14 @@ interface TreasuryScreenProps {
   invoices: Invoice[];
   onSimulateWebhook: () => void;
   onMarkPaid: (id: string) => void;
+}
+
+interface TreasuryMetrics {
+  operating_cash: number;
+  net_monthly_burn: number;
+  mrr: number;
+  implied_runway_months: number;
+  health_status: string;
 }
 
 export function TreasuryScreen({
@@ -32,11 +43,40 @@ export function TreasuryScreen({
   onMarkPaid,
 }: TreasuryScreenProps) {
   const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
+  const [metrics, setMetrics] = useState<TreasuryMetrics | null>(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const tenantInvoices = invoices.filter((i) => i.tenant_id === currentTenant.id);
   const receivables = tenantInvoices
     .filter((i) => i.status !== 'PAID')
     .reduce((acc, i) => acc + i.total_amount, 0);
+
+  const overdueCount = tenantInvoices.filter((i) => i.status === 'OVERDUE').length;
+  const pendingCount = tenantInvoices.filter((i) => i.status === 'PENDING').length;
+
+  const fetchTreasury = useCallback(async () => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/treasury?tenant_id=${currentTenant.id}`);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.treasury) {
+          setMetrics(data.treasury);
+        }
+      }
+    } catch {
+      // Continue with local calculation
+    }
+  }, [currentTenant.id]);
+
+  useEffect(() => {
+    fetchTreasury();
+  }, [fetchTreasury]);
+
+  const onRefresh = async () => {
+    setIsRefreshing(true);
+    await fetchTreasury();
+    setIsRefreshing(false);
+  };
 
   const getInitials = (name: string) =>
     name
@@ -46,11 +86,20 @@ export function TreasuryScreen({
       .join('')
       .toUpperCase();
 
+  const monthlyBurn = metrics?.net_monthly_burn ?? 124500.0;
+  const runwayMonths = metrics?.implied_runway_months ?? (monthlyBurn > 0 ? Number((currentTenant.operating_cash / monthlyBurn).toFixed(1)) : 14.2);
+  const mrr = metrics?.mrr ?? 62000.0;
+  const arr = mrr * 12;
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="dark-content" backgroundColor={colors.shell} />
 
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={styles.container}
+        showsVerticalScrollIndicator={false}
+        refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />}
+      >
         {/* Inset Canvas Container */}
         <View style={styles.canvas}>
           {/* Header */}
@@ -61,7 +110,7 @@ export function TreasuryScreen({
               </View>
               <View>
                 <Text style={styles.brandTitle}>VeloceOps</Text>
-                <Text style={styles.brandSubtitle}>B2B Treasury Mobile</Text>
+                <Text style={styles.brandSubtitle}>B2B Treasury Mobile • API Live</Text>
               </View>
             </View>
 
@@ -110,19 +159,19 @@ export function TreasuryScreen({
               <MetricCard
                 label="Accounts Receivable"
                 value={formatCurrency(receivables, currentTenant.currency)}
-                subtext="2 Overdue • 1 Pending"
+                subtext={`${overdueCount} Overdue • ${pendingCount} Pending`}
                 accent={colors.amber}
               />
               <MetricCard
-                label="Monthly Burn"
-                value="$42,380.00"
-                subtext="14.2 Mos Runway"
+                label="Monthly Net Burn"
+                value={formatCurrency(monthlyBurn, currentTenant.currency)}
+                subtext={`${runwayMonths} Mos Runway`}
                 accent={colors.inkSecondary}
               />
               <MetricCard
                 label="Contracted ARR"
-                value="$528,000.00"
-                subtext="+109.4% NRR"
+                value={formatCurrency(arr, currentTenant.currency)}
+                subtext={`+${formatCurrency(mrr, currentTenant.currency)} MRR`}
                 accent={colors.emerald}
               />
             </ScrollView>
@@ -179,14 +228,12 @@ export function TreasuryScreen({
 
                   <View style={{ flex: 1, marginLeft: 10 }}>
                     <Text style={styles.rowCustomer}>{inv.customer_name}</Text>
-                    <Text style={styles.rowNumber}>
-                      {inv.invoice_number} • {inv.payment_method}
-                    </Text>
+                    <Text style={styles.rowNumber}>{inv.invoice_number}</Text>
                   </View>
 
                   <View style={{ alignItems: 'flex-end' }}>
                     <Text style={styles.rowAmount}>
-                      {formatCurrency(inv.total_amount, inv.currency)}
+                      {formatCurrency(inv.total_amount, currentTenant.currency)}
                     </Text>
                     <View style={styles.dotWrap}>
                       <View style={[styles.statusDot, { backgroundColor: dotColor }]} />
@@ -200,7 +247,7 @@ export function TreasuryScreen({
         </View>
       </ScrollView>
 
-      {/* Invoice Detail Inspector Bottom Sheet */}
+      {/* Invoice Detail Modal Sheet */}
       <InvoiceDetailModal
         visible={!!selectedInvoice}
         invoice={selectedInvoice}
@@ -219,15 +266,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+    marginBottom: 40,
   },
   canvas: {
     backgroundColor: colors.canvas,
-    borderRadius: 20,
+    borderRadius: 18,
     borderWidth: 1,
     borderColor: colors.borderCanvas,
     overflow: 'hidden',
-    paddingBottom: 24,
-    marginBottom: 40,
   },
   header: {
     flexDirection: 'row',
@@ -245,8 +291,8 @@ const styles = StyleSheet.create({
   logo: {
     width: 28,
     height: 28,
-    borderRadius: 7,
     backgroundColor: colors.ink,
+    borderRadius: 6,
     justifyContent: 'center',
     alignItems: 'center',
   },
