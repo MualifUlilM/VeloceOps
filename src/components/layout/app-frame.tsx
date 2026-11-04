@@ -1,11 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Sidebar } from './sidebar';
 import { CanvasHeader } from './canvas-header';
 import { BottomNav } from './bottom-nav';
 import { Tenant, UserRole, Invoice } from '@/types/veloceops';
 import { INITIAL_TENANTS, INITIAL_INVOICES } from '@/lib/data';
+import { createClient } from '@/lib/supabase/client';
 
 interface AppFrameProps {
   children?: React.ReactNode;
@@ -36,6 +37,33 @@ export function AppFrame({
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // Load real data from Supabase if configured
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const supabase = createClient();
+        if (!supabase) return;
+
+        const { data: dbTenants, error: tenantErr } = await supabase.from('tenants').select('*');
+        if (!tenantErr && dbTenants && dbTenants.length > 0) {
+          setTenants(dbTenants as Tenant[]);
+          setCurrentTenant(dbTenants[0] as Tenant);
+        }
+
+        const { data: dbInvoices, error: invErr } = await supabase
+          .from('invoices')
+          .select('*, items:invoice_items(*)');
+        if (!invErr && dbInvoices && dbInvoices.length > 0) {
+          setInvoices(dbInvoices as Invoice[]);
+          setSelectedInvoice(dbInvoices[0] as Invoice);
+        }
+      } catch (err) {
+        // Fall back gracefully to INITIAL_TENANTS
+      }
+    }
+    loadData();
+  }, []);
+
   // Filter invoices for current tenant
   const tenantInvoices = invoices.filter((i) => i.tenant_id === currentTenant.id);
 
@@ -45,7 +73,7 @@ export function AppFrame({
 
     const targetInvoice = tenantInvoices.find((i) => i.status !== 'PAID') || tenantInvoices[0];
 
-    setTimeout(() => {
+    setTimeout(async () => {
       if (targetInvoice) {
         setInvoices((prev) =>
           prev.map((inv) =>
@@ -62,6 +90,19 @@ export function AppFrame({
           operating_cash: prev.operating_cash + targetInvoice.total_amount,
         }));
 
+        // Persist to Supabase if connected
+        try {
+          const supabase = createClient();
+          if (supabase) {
+            await supabase.from('invoices').update({ status: 'PAID' }).eq('id', targetInvoice.id);
+            await supabase.from('tenants').update({
+              operating_cash: currentTenant.operating_cash + targetInvoice.total_amount,
+            }).eq('id', currentTenant.id);
+          }
+        } catch (e) {
+          // Ignore if offline
+        }
+
         setToastMessage(
           `Webhook Reconciled! ${targetInvoice.invoice_number} paid via Stripe ACH. +$${targetInvoice.total_amount.toLocaleString()} added to cash balance.`
         );
@@ -74,7 +115,7 @@ export function AppFrame({
     }, 700);
   };
 
-  const handleMarkAsPaid = (invoiceId: string) => {
+  const handleMarkAsPaid = async (invoiceId: string) => {
     setInvoices((prev) =>
       prev.map((inv) => {
         if (inv.id === invoiceId) {
@@ -87,6 +128,16 @@ export function AppFrame({
 
     if (selectedInvoice?.id === invoiceId) {
       setSelectedInvoice((prev) => (prev ? { ...prev, status: 'PAID' } : null));
+    }
+
+    // Persist to Supabase if connected
+    try {
+      const supabase = createClient();
+      if (supabase) {
+        await supabase.from('invoices').update({ status: 'PAID' }).eq('id', invoiceId);
+      }
+    } catch (e) {
+      // Ignore if offline
     }
 
     setToastMessage(`Invoice #${invoiceId.slice(0, 8)} manually marked as reconciled.`);
